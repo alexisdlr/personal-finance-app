@@ -20,7 +20,7 @@ function main() {
         // Crear un usuario primero
         const user = yield prisma.user.create({
             data: {
-                email: 'example@example.com',
+                email: 'example2@example.com',
                 firstName: 'Example-User',
                 lastName: "Examp",
                 password: "1111",
@@ -70,7 +70,7 @@ function main() {
                     total: pot.total,
                     theme: pot.theme,
                     user: { connect: { id: user.id } }, // Conectar con el usuario
-                    balance: {}, // Conectar con el balance
+                    balance: { connect: { id: balance.id } }, // Conectar con el balance
                 },
             });
         }
