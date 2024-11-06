@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int          @id @default(autoincrement()) // Identificador único para cada usuario
+  email       String       @unique // Correo electrónico único
+  password    String       // Contraseña (deberías encriptarla antes de guardarla)
+  firstName   String
+  lastName    String
+  createdAt   DateTime     @default(now()) // Fecha de creación
+  updatedAt   DateTime     @updatedAt // Fecha de la última actualización
+  balances    Balance[]     
+  transactions Transaction[] // Relación uno a muchos con transacciones
+  pots        Pot[]         // Relación uno a muchos con pots (cajas de ahorro)
+  budgets     Budget[]      // Relación uno a muchos con presupuestos
+}
+
+model Balance {
+  id         Int           @id @default(autoincrement())
+  current    Float         
+  income     Float
+  expenses   Float
+  transactions Transaction[]
+  pots        Pot[]
+  userId      Int
+  user        User         @relation(fields: [userId], references: [id]) // Relación con el usuario
+}
+
+model Transaction {
+  id         Int       @id @default(autoincrement())
+  avatar     String
+  name       String
+  category   String
+  date       DateTime
+  amount     Float
+  recurring  Boolean
+  balanceId  Int
+  balance    Balance   @relation(fields: [balanceId], references: [id])
+  userId     Int
+  user       User      @relation(fields: [userId], references: [id]) // Relación con el usuario
+}
+
+model Budget {
+  id        Int      @id @default(autoincrement())
+  category  String
+  maximum   Float
+  theme     String
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id]) // Relación con el usuario
+}
+
+model Pot {
+  id       Int     @id @default(autoincrement())
+  name     String 
+  target   Float
+  total    Float
+  theme    String
+  balanceId Int
+  balance  Balance @relation(fields: [balanceId], references: [id])
+  userId   Int
+  user     User    @relation(fields: [userId], references: [id]) // Relación con el usuario
+}
