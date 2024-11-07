@@ -10,7 +10,7 @@ export default function AuthLayout({
       {/* LEFT */}
 
       <div className="w-full lg:h-full lg:rounded-xl overflow-hidden lg:w-[40%] flex items-center lg:justify-start lg:bg-auth lg:bg-cover lg:bg-top lg:relative">
-        <div className="lg:hidden bg-grey-900 flex items-center justify-center p-2 w-full h-[60px]">
+        <div className="lg:hidden bg-grey-900 flex items-center justify-center p-2 w-full h-[60px] rounded-b-xl">
           <Image src="/images/logo-large.svg" width={121} height={21} alt="logo" className="" />
         </div>
         <Image src="/images/logo-large.svg" width={121} height={21} alt="logo" className="hidden lg:block absolute top-8 left-6" />

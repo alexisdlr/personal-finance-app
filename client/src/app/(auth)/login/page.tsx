@@ -5,9 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { UserSchemaLogin } from "@/lib/validator";
-import useLogin from "@/hooks/useUser";
+import useLogin from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { MotionDiv } from "@/components/animated/motion-div";
 
 type Props = {}
 
@@ -39,7 +40,10 @@ const LoginPage = (props: Props) => {
   };
 
   return (
-    <div className="w-full max-w-xl bg-white p-8 rounded-xl">
+    <MotionDiv
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="w-full max-w-xl bg-white p-8 rounded-xl">
       <div className="flex flex-col items-start gap-8">
         <div>
           <h1 className="text-2xl text-grey-900 font-bold">Login</h1>
@@ -48,22 +52,22 @@ const LoginPage = (props: Props) => {
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="email" className="font-bold text-xs text-grey-500">Email</label>
             <input type="text" {...register("email")} className="w-full rounded-lg ring-1 ring-beige-500 outline-none px-4 py-2" />
-            {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+            {errors.email && <p className="text-red-500 text-xs transition-all">{errors.email.message}</p>}
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="password" className="font-bold text-xs text-grey-500" >Password</label>
             <input type="password" {...register("password")} className="w-full rounded-lg ring-1 ring-beige-500 outline-none px-4 py-2" />
-            {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+            {errors.password && <p className="text-red-500 text-xs transition-all">{errors.password.message}</p>}
           </div>
           <div>
-            <Button type="submit" className="w-full bg-grey-900 text-white py-4 rounded-lg">Login</Button>
+            <Button type="submit" className="w-full font-semibold text-sm">Login</Button>
           </div>
         </form>
         <div className="text-sm w-full flex items-center justify-center text-grey-500">
-          <p>Need to create an Account? <Link href="/sign-up" className="font-bold text-grey-900 underline">Sign Up</Link></p>
+          <p>Need to create an Account? <Link href="/sign-up" className="font-bold text-grey-900 underline">Login</Link></p>
         </div>
       </div>
-    </div>
+    </MotionDiv>
   )
 }
 

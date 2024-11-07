@@ -1,12 +1,13 @@
+import { cn } from "@/lib/utils";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   type?: "button" | "submit";
-  classname?: string;
+  className?: string;
 };
 
-const Button: React.FC<ButtonProps> = ({ type = "button", classname, ...props }) => {
+const Button: React.FC<ButtonProps> = ({ type = "button", className, ...props }) => {
   return (
-    <button type={type} className={classname} {...props}>
+    <button type={type} className={cn(className, `transition hover:opacity-75 duration-200 bg-grey-900 text-white py-4 rounded-lg`)} {...props}>
       {props.children}
     </button>
   );
