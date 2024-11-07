@@ -7,7 +7,9 @@ import morgan from "morgan";
 import cors from 'cors'
 /* ROUTE IMPORTS */
 import authRoutes from './routes/auth.routes'
-import authenticateToken from "./middleware/auth-middleware";
+import {authenticateToken} from "./middleware/auth-middleware";
+import { errorHandler } from "./middleware/error-handler";
+
 /* CONFIGURATIONS */
 dotenv.config();
 const app = express();
@@ -25,10 +27,13 @@ app.use(cors({
 }));
 
 /* ROUTES */
+
 app.use("/api", authRoutes); // http://localhost:8000/api/login
+app.use("/api/crud", authenticateToken)
 // app.use("/products", productRoutes); // http://localhost:8000/products
 // app.use("/users", userRoutes); // http://localhost:8000/users
 // app.use("/expenses", expenseRoutes); // http://localhost:8000/expenses
+app.use(errorHandler);
 
 /* SERVER */
 const port = Number(process.env.PORT) || 8000;

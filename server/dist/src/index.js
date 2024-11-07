@@ -12,6 +12,8 @@ const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 /* ROUTE IMPORTS */
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
+const auth_middleware_1 = require("./middleware/auth-middleware");
+const error_handler_1 = require("./middleware/error-handler");
 /* CONFIGURATIONS */
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -28,9 +30,11 @@ app.use((0, cors_1.default)({
 }));
 /* ROUTES */
 app.use("/api", auth_routes_1.default); // http://localhost:8000/api/login
+app.use("/api/crud", auth_middleware_1.authenticateToken);
 // app.use("/products", productRoutes); // http://localhost:8000/products
 // app.use("/users", userRoutes); // http://localhost:8000/users
 // app.use("/expenses", expenseRoutes); // http://localhost:8000/expenses
+app.use(error_handler_1.errorHandler);
 /* SERVER */
 const port = Number(process.env.PORT) || 8000;
 app.listen(port, () => {
