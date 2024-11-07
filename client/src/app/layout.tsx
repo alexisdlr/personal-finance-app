@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import ReactQueryProvider from "@/components/providers/react-query-provider";
+import ToastProvider from "@/components/providers/toast-provider";
 
 const publicSans = localFont({
   src: "./fonts/PublicSans-VariableFont_wght.ttf",
@@ -26,6 +27,7 @@ export default function RootLayout({
         className={`${publicSans.variable}`}
       >
         <ReactQueryProvider>
+          <ToastProvider />
           {children}
         </ReactQueryProvider>
       </body>
