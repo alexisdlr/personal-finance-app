@@ -20,7 +20,7 @@ export const getOverview: RequestHandler = async (
         userId: Number(userId),
       },
       orderBy: {
-        total: "asc",
+        total: "desc",
       },
     });
     const balance = await prisma.balance.findFirst({
@@ -32,7 +32,7 @@ export const getOverview: RequestHandler = async (
     const budgets = await prisma.budget.findMany({
       where: { userId: Number(userId) },
       orderBy: {
-        category: "asc",
+        category: "desc",
       },
     });
     const transactions = await prisma.transaction.findMany({

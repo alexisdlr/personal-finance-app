@@ -14,6 +14,7 @@ interface GlobalState {
     balance: Balance;
     transactions: Transaction[];
   }) => void;
+  deleteState: () => void;
 }
 
 export const useGlobalState = create<GlobalState>()(
@@ -23,12 +24,19 @@ export const useGlobalState = create<GlobalState>()(
       pots: [],
       transactions: [],
       budgets: [],
+      deleteState: () =>
+        set({
+          pots: [],
+          budgets: [],
+          transactions: [],
+          balance: null,
+        }),
       setGlobalData: (data) =>
         set({
           pots: data.pots,
           budgets: data.budgets,
           transactions: data.transactions,
-          balance: data.balance
+          balance: data.balance,
         }),
     }),
     {
