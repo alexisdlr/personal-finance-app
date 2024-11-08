@@ -93,6 +93,7 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             message: "User registered successfully",
             user: {
                 name: newUser.firstName,
+                lastName: newUser.lastName,
                 email: newUser.email,
                 id: newUser.id,
             },

@@ -64,7 +64,7 @@ const LoginPage = (props: Props) => {
           </div>
         </form>
         <div className="text-sm w-full flex items-center justify-center text-grey-500">
-          <p>Need to create an Account? <Link href="/sign-up" className="font-bold text-grey-900 underline">Login</Link></p>
+          <p>Need to create an Account? <Link href="/sign-up" className="font-bold text-grey-900 underline">Sign Up</Link></p>
         </div>
       </div>
     </MotionDiv>

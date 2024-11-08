@@ -7,6 +7,9 @@ import useLogout from "@/hooks/useLogout";
 import toast from "react-hot-toast";
 import { MotionDiv } from "@/components/animated/motion-div";
 import CardBalance from "@/components/card-balance";
+import Link from "next/link";
+import Image from "next/image";
+import TotalSaved from "@/components/total-saved";
 
 export default function Home() {
   const router = useRouter()
@@ -58,6 +61,26 @@ export default function Home() {
           <CardBalance type="Expenses" value={89283.33} classname="bg-white text-grey-500 shadow-lg" />
         </div>
       </MotionDiv>
+
+      {/* POTS SECTION */}
+      <MotionDiv
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="py-8 w-full">
+        <div className="flex flex-col bg-white p-8 rounded-xl gap-5 items-center">
+          <div className="w-full flex justify-between">
+            <h2 className="text-grey-900 font-bold text-3xl">Pots</h2>
+            <div className="flex gap-2 items-center">
+              <Link href='/pots' className="text-sm text-grey-500 transition-all duration-200 hover:underline">See Details</Link>
+              <Image src={'/images/icon-caret-right.svg'} alt="caret left" width={6} height={6} />
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row">
+            <TotalSaved />
+          </div>
+        </div>
+      </MotionDiv>
+
     </div>
   );
 }

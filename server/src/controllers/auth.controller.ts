@@ -95,6 +95,7 @@ export const signUp: RequestHandler = async (req: Request, res: Response): Promi
       message: "User registered successfully",
       user: {
         name: newUser.firstName,
+        lastName: newUser.lastName,
         email: newUser.email,
         id: newUser.id,
       },
