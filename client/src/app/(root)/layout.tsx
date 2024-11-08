@@ -32,7 +32,7 @@ export default function OverviewLayout({
   // Espera a que isAuthLoaded sea true antes de mostrar la UI
   if (!isAuthLoaded) return null
   return (
-    <div className=" bg-beige-100 h-screen w-full flex flex-col-reverse md:flex-row justify-end">
+    <div className=" bg-beige-100 h-full w-full flex flex-col-reverse md:flex-row justify-end">
       {/* LEFT */}
 
       <div className="fixed z-50 bottom-0 left-0 xl:top-0 xl:left-0 w-full md:h-full md:w-[8%] lg:w-[16%] xl:w-[18%] py-2 md:py-6 md:pr-4 bg-grey-900 rounded-t-xl md:rounded-t-none md:rounded-e-xl md:rounded-r-xl">

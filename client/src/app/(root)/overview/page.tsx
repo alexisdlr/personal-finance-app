@@ -13,6 +13,7 @@ import useFetchOverviewData from "@/hooks/use-get-overview-data";
 import { useEffect } from "react";
 import Pots from "@/components/pots";
 import { Pot } from "@/types/global";
+import Transactions from "@/components/transactions-overview";
 
 export default function Home() {
   const overviewQuery = useFetchOverviewData()
@@ -44,7 +45,7 @@ export default function Home() {
     }
   }
 
-  const { balance, pots } = useGlobalState()
+  const { balance, pots, transactions } = useGlobalState()
 
   const totalSaved = pots.reduce((sum, item) => sum + item.total, 0);
 
@@ -109,8 +110,8 @@ export default function Home() {
                   <Image src={'/images/icon-caret-right.svg'} alt="caret left" width={6} height={6} />
                 </div>
               </div>
-              <div className="w-full flex flex-col gap-6 md:flex-row justify-between">
-                Transactions items
+              <div className="w-full flex flex-col gap-4">
+                <Transactions transactions={transactions} />
               </div>
             </div>
           </MotionDiv>
