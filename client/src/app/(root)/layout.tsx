@@ -24,6 +24,8 @@ export default function OverviewLayout({
     // Solo redirige cuando isAuthLoaded sea true
     if (isAuthLoaded && !isAuthenticated) {
       router.push("/login");
+    } else {
+      router.push("/overview")
     }
   }, [isAuthenticated, isAuthLoaded, router]);
 

@@ -17,22 +17,13 @@ const data_json_1 = __importDefault(require("./data.json"));
 const prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        // Crear un usuario primero
-        const user = yield prisma.user.create({
-            data: {
-                email: 'example2@example.com',
-                firstName: 'Example-User',
-                lastName: "Examp",
-                password: "1111",
-            },
-        });
         // Insertar balance
         const balance = yield prisma.balance.create({
             data: {
                 current: data_json_1.default.balance.current,
                 income: data_json_1.default.balance.income,
                 expenses: data_json_1.default.balance.expenses,
-                user: { connect: { id: user.id } }, // Conectar con el usuario
+                user: { connect: { id: 6 } }, // Conectar con el usuario
             },
         });
         // Insertar transacciones
@@ -45,7 +36,7 @@ function main() {
                     date: new Date(transaction.date),
                     amount: transaction.amount,
                     recurring: transaction.recurring,
-                    user: { connect: { id: user.id } }, // Conectar con el usuario
+                    user: { connect: { id: 6 } }, // Conectar con el usuario
                     balance: { connect: { id: balance.id } }, // Conectar con el balance
                 },
             });
@@ -57,7 +48,7 @@ function main() {
                     category: budget.category,
                     maximum: budget.maximum,
                     theme: budget.theme,
-                    user: { connect: { id: user.id } }, // Conectar con el usuario
+                    user: { connect: { id: 6 } }, // Conectar con el usuario
                 },
             });
         }
@@ -69,7 +60,7 @@ function main() {
                     target: pot.target,
                     total: pot.total,
                     theme: pot.theme,
-                    user: { connect: { id: user.id } }, // Conectar con el usuario
+                    user: { connect: { id: 6 } }, // Conectar con el usuario
                     balance: { connect: { id: balance.id } }, // Conectar con el balance
                 },
             });

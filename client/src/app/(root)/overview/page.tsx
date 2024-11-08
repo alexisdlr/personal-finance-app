@@ -1,5 +1,4 @@
 "use client"
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth-store";
 import Button from "@/components/auth/button";
@@ -10,15 +9,23 @@ import CardBalance from "@/components/card-balance";
 import Link from "next/link";
 import Image from "next/image";
 import TotalSaved from "@/components/total-saved";
+import { useGlobalState } from "@/store/global-store";
+import useFetchOverviewData from "@/hooks/use-get-overview-data";
+import { useEffect } from "react";
+import Pots from "@/components/pots";
 
 export default function Home() {
+  const overviewQuery = useFetchOverviewData()
+  const setGlobalData = useGlobalState((state) => state.setGlobalData);
   const router = useRouter()
-  const { mutateAsync: logout } = useLogout(); // Uso del hook `useLogin`
 
-  const { user } = useAuthStore()
+  const { mutateAsync: logout } = useLogout();
 
-
-  if (!user) return null; // Evita el renderizado mientras redirige
+  useEffect(() => {
+    if (overviewQuery.isSuccess) {
+      setGlobalData(overviewQuery.data.data)
+    }
+  }, [])
 
   const handleLogout = async () => {
     try {
@@ -36,6 +43,8 @@ export default function Home() {
       toast.error(error.message);
     }
   }
+
+  const { balance, pots } = useGlobalState()
 
   return (
     <div className="w-full h-full pt-6 px-6 lg:px-10 flex flex-col">
@@ -56,9 +65,9 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         className="py-8 w-full">
         <div className="flex flex-col md:flex-row justify-start lg:justify-between gap-5 flex-wrap items-center">
-          <CardBalance type="Current Balance" value={40000.33} />
-          <CardBalance type="Income" value={429339.33} classname="bg-white text-grey-500 shadow-lg" />
-          <CardBalance type="Expenses" value={89283.33} classname="bg-white text-grey-500 shadow-lg" />
+          <CardBalance type="Current Balance" value={balance?.current} />
+          <CardBalance type="Income" value={balance?.income} classname="bg-white text-grey-500 shadow-lg" />
+          <CardBalance type="Expenses" value={balance?.expenses} classname="bg-white text-grey-500 shadow-lg" />
         </div>
       </MotionDiv>
 
@@ -77,6 +86,7 @@ export default function Home() {
           </div>
           <div className="flex flex-col md:flex-row">
             <TotalSaved />
+            <Pots pots={pots} />
           </div>
         </div>
       </MotionDiv>

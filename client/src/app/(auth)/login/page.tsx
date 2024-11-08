@@ -9,14 +9,14 @@ import useLogin from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { MotionDiv } from "@/components/animated/motion-div";
+import { Loader2 } from "lucide-react";
 
-type Props = {}
 
-const LoginPage = (props: Props) => {
+const LoginPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isLoading },
   } = useForm<z.infer<typeof UserSchemaLogin>>({
     resolver: zodResolver(UserSchemaLogin),
   });
@@ -60,7 +60,14 @@ const LoginPage = (props: Props) => {
             {errors.password && <p className="text-red-500 text-xs transition-all">{errors.password.message}</p>}
           </div>
           <div>
-            <Button type="submit" className="w-full font-semibold text-sm">Login</Button>
+            {
+              isLoading ? (
+                <div className="flex items-center justify-center w-full min-h-full bg-beige-100">
+                  <Loader2 className="animate-spin duration-300 text-grey-900" />
+                </div>) : (
+                <Button type="submit" className="w-full font-semibold text-sm">Login</Button>
+              )
+            }
           </div>
         </form>
         <div className="text-sm w-full flex items-center justify-center text-grey-500">

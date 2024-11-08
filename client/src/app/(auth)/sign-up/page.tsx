@@ -56,18 +56,23 @@ const SignUp = () => {
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="name" className="font-bold text-xs text-grey-500">Name</label>
             <input type="text" {...register("name")} className="w-full rounded-lg ring-1 ring-beige-500 outline-none px-4 py-2" />
+            {errors.name && <p className="text-red-500 text-xs transition-all">{errors.name.message}</p>}
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="lastName" className="font-bold text-xs text-grey-500">Last Name</label>
             <input type="text"{...register("lastName")} className="w-full rounded-lg ring-1 ring-beige-500 outline-none px-4 py-2" />
+            {errors.lastName && <p className="text-red-500 text-xs transition-all">{errors.lastName.message}</p>}
+
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="email" className="font-bold text-xs text-grey-500">Email</label>
             <input type="text" {...register("email")} className="w-full rounded-lg ring-1 ring-beige-500 outline-none px-4 py-2" />
+            {errors.email && <p className="text-red-500 text-xs transition-all">{errors.email.message}</p>}
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label htmlFor="password" className="font-bold text-xs text-grey-500">Create password</label>
             <input type="password" {...register("password")} className="w-full rounded-lg ring-1 ring-beige-500 outline-none px-4 py-2" />
+            {errors.password && <p className="text-red-500 text-xs transition-all">{errors.password.message}</p>}
           </div>
           <div>
             <Button type="submit" className="w-full font-semibold text-sm">Create Account</Button>

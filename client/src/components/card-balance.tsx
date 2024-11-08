@@ -3,7 +3,7 @@ import React from 'react'
 
 type CardBalanceProps = {
   type: "Current Balance" | "Income" | "Expenses",
-  value: number,
+  value: number | undefined,
   classname?: string
 }
 
