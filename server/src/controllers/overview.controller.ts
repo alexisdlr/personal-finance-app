@@ -46,7 +46,7 @@ export const getOverview: RequestHandler = async (
     });
 
     if (!pots || !budgets || !transactions || !balance) {
-      res.status(500).json({ message: "No results found!" });
+      res.status(500).json({ error: "No results found!" });
       return;
     }
 

@@ -1,7 +1,6 @@
 import {
   useMutation,
-  UseMutationResult,
-  useQueryClient,
+
 } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/auth-store";
 import post from "@/services/axios";
@@ -39,7 +38,6 @@ const useLogin = () => {
       return response;
     },
     onSuccess: (data: LoginResponse) => {
-      console.log(data);  // Verifica que los datos sean correctos
       login(data.user);
     },
   });

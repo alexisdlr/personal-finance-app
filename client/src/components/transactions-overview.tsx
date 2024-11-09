@@ -37,7 +37,12 @@ const Transactions = ({ transactions }: TransactionsProps) => {
   return (
     <div className='mt-2 flex flex-col gap-6 items-start justify-start'>
       {
-        transactions.slice(0, 5).map(t => (
+        transactions.length === 0 && (
+          <h2 className='text-grey-500 text-sm'>No results found...</h2>
+        )
+      }
+      {
+        transactions &&  transactions.slice(0, 5).map(t => (
           <TransactionItem key={t.id} transaction={t} />
         ))
       }

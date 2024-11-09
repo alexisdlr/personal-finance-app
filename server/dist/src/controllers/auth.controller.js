@@ -22,7 +22,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password } = req.body;
         const user = yield prisma.user.findUnique({ where: { email } });
         if (!user || !(yield bcryptjs_1.default.compare(password, user.password))) {
-            res.status(401).json({ message: "Invalid Credentials" });
+            res.status(401).json({ error: "Invalid Credentials" });
             return;
         }
         const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {

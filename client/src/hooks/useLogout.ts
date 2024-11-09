@@ -22,9 +22,9 @@ const useLogout = () => {
     },
     onSuccess: (data: LogoutResponse) => {
       console.log(data);  // Opcional: para depuración
+      deleteState();
       // Limpia el estado de autenticación en el cliente
       logout();
-      deleteState();
     },
     onError: (error: Error) => {
       console.error("Error during logout:", error.message);

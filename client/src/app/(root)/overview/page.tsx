@@ -11,8 +11,7 @@ import TotalSaved from "@/components/total-saved";
 import { useGlobalState } from "@/store/global-store";
 import useFetchOverviewData from "@/hooks/use-get-overview-data";
 import { useEffect } from "react";
-import Pots from "@/components/pots";
-import { Pot } from "@/types/global";
+import Pots from "@/components/pots-overview";
 import Transactions from "@/components/transactions-overview";
 
 export default function Home() {
@@ -23,10 +22,13 @@ export default function Home() {
   const { mutateAsync: logout } = useLogout();
 
   useEffect(() => {
-    if (overviewQuery.isSuccess) {
-      setGlobalData(overviewQuery.data.data)
+    // Verificar que overviewQuery.data esté definido antes de acceder a 'error'
+    if (overviewQuery.data && overviewQuery.data.error) return;
+
+    if (overviewQuery.isSuccess && overviewQuery.data) {
+      setGlobalData(overviewQuery.data.data);
     }
-  }, [])
+  }, [overviewQuery.isSuccess, overviewQuery.data, setGlobalData]);
 
   const handleLogout = async () => {
     try {

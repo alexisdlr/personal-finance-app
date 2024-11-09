@@ -12,7 +12,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      res.status(401).json({ message: "Invalid Credentials" });
+      res.status(401).json({ error: "Invalid Credentials" });
       return
     }
 

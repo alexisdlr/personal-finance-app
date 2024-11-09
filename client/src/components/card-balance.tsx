@@ -14,7 +14,7 @@ const CardBalance = ({ type, value, classname }: CardBalanceProps) => {
         {type}
       </span>
       <span className={`font-bold text-3xl leading-[120%] ${type === 'Current Balance' ? 'text-white': 'text-grey-900'}`}>
-        ${value}
+        ${value || 0}
       </span>
     </div>
   )
