@@ -1,7 +1,6 @@
 
-type Props = {}
 
-const PotsPage = (props: Props) => {
+const PotsPage = () => {
   return (
     <div>PotsPage</div>
   )

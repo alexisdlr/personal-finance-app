@@ -1,7 +1,6 @@
 
-type Props = {}
 
-const RecurringPage = (props: Props) => {
+const RecurringPage = () => {
   return (
     <div>RecurringPage</div>
   )
