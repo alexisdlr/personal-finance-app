@@ -5,10 +5,10 @@ import post from "@/services/axios";
 const url = process.env.NEXT_PUBLIC_API_URL + "/sign-up";
 
 interface RegisterData {
-  name: string;
-  lastName: string;
-  email: string;
-  password: string;
+  name?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
 }
 
 interface RegisterResponse {

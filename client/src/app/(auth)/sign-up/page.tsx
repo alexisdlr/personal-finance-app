@@ -18,7 +18,7 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading},
+    formState: { errors},
   } = useForm<z.infer<typeof UserSchemaSignUp>>({
     resolver: zodResolver(UserSchemaSignUp),
   });

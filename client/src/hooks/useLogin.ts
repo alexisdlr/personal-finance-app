@@ -8,8 +8,8 @@ import post from "@/services/axios";
 const url = process.env.NEXT_PUBLIC_API_URL + "/login";
 
 interface LoginData {
-  password: string;
-  email: string;
+  password?: string;
+  email?: string;
 }
 
 interface User {
