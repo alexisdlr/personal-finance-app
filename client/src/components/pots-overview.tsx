@@ -13,8 +13,8 @@ type PotItemProps = {
 const PotItem = ({ cat, value, theme }: PotItemProps) => {
   return (
     <div className="flex items-center gap-3">
-      <div className={`w-2 h-full rounded-xl`} style={{ backgroundColor: theme }} />
-      <div className="flex flex-col items-start justify-center p-2 xl:px-6 xl:pl-1 rounded-lg">
+      <div className={`w-1 h-full rounded-xl`} style={{ backgroundColor: theme }} />
+      <div className="flex flex-col h-full gap-2 items-start justify-center p-2 xl:px-6 xl:pl-1 rounded-lg">
         <span className="text-grey-500 text-xs">{cat}</span>
         <span className="text-base text-grey-900 font-bold">${value}</span>
       </div>

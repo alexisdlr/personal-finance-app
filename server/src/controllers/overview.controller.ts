@@ -31,6 +31,7 @@ export const getOverview: RequestHandler = async (
 
     const budgets = await prisma.budget.findMany({
       where: { userId: Number(userId) },
+     
       orderBy: {
         category: "desc",
       },
