@@ -1,6 +1,5 @@
 // components/BudgetChart.tsx
 import { Budget, Transaction } from '@/types/global';
-import React, { useEffect, useState } from 'react';
 
 type BudgetChartProps = {
   budgets: Budget[]
