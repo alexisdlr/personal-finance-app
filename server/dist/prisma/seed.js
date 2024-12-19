@@ -23,7 +23,7 @@ function main() {
                 current: data_json_1.default.balance.current,
                 income: data_json_1.default.balance.income,
                 expenses: data_json_1.default.balance.expenses,
-                user: { connect: { id: 6 } }, // Conectar con el usuario
+                user: { connect: { id: 9 } }, // Conectar con el usuario
             },
         });
         // Insertar transacciones

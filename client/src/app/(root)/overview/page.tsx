@@ -20,11 +20,14 @@ export default function Home() {
   const setGlobalData = useGlobalState((state) => state.setGlobalData);
   const router = useRouter()
 
+  console.log(overviewQuery, 'overview query');
+
   const { mutateAsync: logout } = useLogout();
 
   useEffect(() => {
     // Verificar que overviewQuery.data esté definido antes de acceder a 'error'
-    if (overviewQuery.data && overviewQuery.data.error) return;
+    if (!overviewQuery.data) return;
+    if (overviewQuery.error) return;
 
     if (overviewQuery.isSuccess && overviewQuery.data) {
       setGlobalData(overviewQuery.data.data);

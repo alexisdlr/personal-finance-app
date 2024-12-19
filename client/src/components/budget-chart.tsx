@@ -7,21 +7,21 @@ type BudgetChartProps = {
 }
 
 const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
-  
-  const totalSpent = budgets.slice(0,4).reduce((sum, budget) => {
-    const categorySpent = transactions
+
+  const totalSpent = budgets.slice(0, 4).reduce((sum, budget) => {
+    const categorySpent = transactions.slice(0, 4)
       .filter((transaction) => transaction.category === budget.category)
       .reduce((acc, transaction) => acc + transaction.amount, 0);
     return sum + categorySpent;
   }, 0);
 
-  const totalBudgetLimit = budgets.reduce((sum, budget) => sum + budget.maximum, 0);
-  const percentageSpent = (totalSpent / totalBudgetLimit) * 100;
+  console.log(totalSpent, 'totalSpent')
 
+  const totalBudgetLimit = budgets.reduce((sum, budget) => sum + budget.maximum, 0);
   // SVG circle properties
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (percentageSpent / 100) * circumference;
+  let offset = 0; // Offset inicial para cada segmento
 
   return (
     <div className="bg-white rounded-lg w-full h-full flex flex-col lg:flex-row justify-between gap-2">
@@ -29,24 +29,32 @@ const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
       <div className="relative flex items-center justify-center w-38 h-38 mx-auto ">
         <svg className="w-full h-full transform -rotate-90">
           <circle
-            cx="50%"
-            cy="50%"
+            cx="60"
+            cy="60"
             r={radius}
-            fill="none"
-            stroke="#d1d5db" // color del "trail"
+            fill="transparent"
+            stroke="#e5e7eb"
             strokeWidth="10"
           />
-          <circle
-            cx="50%"
-            cy="50%"
-            r={radius}
-            fill="none"
-            stroke="#3b82f6" // color del "path"
-            strokeWidth="10"
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
-            style={{ transition: 'stroke-dashoffset 0.5s ease' }}
-          />
+          {/* Dibujar cada segmento */}
+          {budgets.map((category, index) => {
+            const segmentLength = (category.maximum / totalBudgetLimit) * circumference;
+            const circle = (
+              <circle
+                key={index}
+                cx="60"
+                cy="60"
+                r={radius}
+                fill="transparent"
+                stroke={category.theme}
+                strokeWidth="10"
+                strokeDasharray={`${segmentLength} ${circumference}`}
+                strokeDashoffset={-offset}
+              />
+            );
+            offset += segmentLength; // Actualizar el offset para el siguiente segmento
+            return circle;
+          })}
         </svg>
         <div className="absolute text-center">
           <span className="text-xl font-bold">${totalSpent}</span>

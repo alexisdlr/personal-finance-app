@@ -10,7 +10,7 @@ async function main() {
       current: data.balance.current,
       income: data.balance.income,
       expenses: data.balance.expenses,
-      user: { connect: { id: 6 } }, // Conectar con el usuario
+      user: { connect: { id: 9 } }, // Conectar con el usuario
     },
   });
 
