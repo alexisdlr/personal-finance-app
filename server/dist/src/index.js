@@ -28,7 +28,7 @@ app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
     origin: process.env.FRONTEND_URL, // Agrega la URL de tu frontend de Next.js, por ejemplo, "http://localhost:3000"
-    credentials: true // Permite el envío de cookies y encabezados de autenticación
+    credentials: true, // Permite el envío de cookies y encabezados de autenticación
 }));
 /* ROUTES */
 app.use("/api", auth_routes_1.default); // http://localhost:8000/api/login
@@ -39,7 +39,7 @@ app.use("/api/overview", auth_middleware_1.authenticateToken, overview_routes_1.
 // app.use("/expenses", expenseRoutes); // http://localhost:8000/expenses
 app.use(error_handler_1.errorHandler);
 /* SERVER */
-const port = Number(process.env.PORT) || 8000;
+const { PORT: port = "" } = process.env;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

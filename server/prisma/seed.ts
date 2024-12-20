@@ -10,7 +10,7 @@ async function main() {
       current: data.balance.current,
       income: data.balance.income,
       expenses: data.balance.expenses,
-      user: { connect: { id: 9 } }, // Conectar con el usuario
+      user: { connect: { id: 1 } }, // Conectar con el usuario
     },
   });
 
@@ -25,7 +25,7 @@ async function main() {
         date: new Date(transaction.date),
         amount: transaction.amount,
         recurring: transaction.recurring,
-        user: { connect: { id: 6 } }, // Conectar con el usuario
+        user: { connect: { id: 1 } }, // Conectar con el usuario
         balance: { connect: { id: balance.id } } , // Conectar con el balance
       },
     });
@@ -38,7 +38,7 @@ async function main() {
         category: budget.category,
         maximum: budget.maximum,
         theme: budget.theme,
-        user: { connect: { id: 6 } }, // Conectar con el usuario
+        user: { connect: { id: 1 } }, // Conectar con el usuario
       },
     });
   }
@@ -51,7 +51,7 @@ async function main() {
         target: pot.target,
         total: pot.total,
         theme: pot.theme,
-        user: { connect: { id: 6 } }, // Conectar con el usuario
+        user: { connect: { id: 1 } }, // Conectar con el usuario
         balance: { connect: {id: balance.id} }, // Conectar con el balance
       },
     });
