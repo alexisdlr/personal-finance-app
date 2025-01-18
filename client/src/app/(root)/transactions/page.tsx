@@ -1,8 +1,11 @@
+import Table from "@/components/table"
 
 
 const TransacionsPage = () => {
   return (
-    <div>TransacionsPage</div>
+    <div>
+      <h1>Transactions</h1>
+    </div>
   )
 }
 
