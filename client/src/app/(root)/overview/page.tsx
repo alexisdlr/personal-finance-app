@@ -20,8 +20,6 @@ export default function Home() {
   const setGlobalData = useGlobalState((state) => state.setGlobalData);
   const router = useRouter()
 
-  console.log(overviewQuery, 'overview query');
-
   const { mutateAsync: logout } = useLogout();
 
   useEffect(() => {
