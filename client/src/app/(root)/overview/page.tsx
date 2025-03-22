@@ -61,7 +61,7 @@ export default function Home() {
       >
 
         <header className="flex justify-between items-center">
-          <h1 className="text-grey-900 font-bold text-3xl" >Overview</h1>
+          <h1 className="text-grey-900 font-bold text-3xl" >Welcome to Overview</h1>
           <Button className="px-8 text-xs font-semibold" onClick={handleLogout}>Logout</Button>
         </header>
       </MotionDiv>

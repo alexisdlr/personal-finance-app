@@ -27,7 +27,7 @@ const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
     <div className="bg-white rounded-lg w-full h-full flex flex-col lg:flex-row justify-between gap-2">
 
       <div className="relative flex items-center justify-center w-38 h-38 mx-auto ">
-        <svg className="w-full h-full transform -rotate-90">
+        <svg className="w-full transform -rotate-90" viewBox="0 0 120 120">
           <circle
             cx="60"
             cy="60"
