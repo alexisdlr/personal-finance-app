@@ -33,7 +33,7 @@ const config: Config = {
   			'blue': '#3F82B2'
   		},
   		backgroundImage: {
-  			auth: 'url('/images/illustration-authentication.svg')'
+  			auth: "url('/images/illustration-authentication.svg')"
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
