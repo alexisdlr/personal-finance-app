@@ -16,6 +16,7 @@ const auth_middleware_1 = require("./middleware/auth-middleware");
 const error_handler_1 = require("./middleware/error-handler");
 const pots_routes_1 = __importDefault(require("./routes/pots.routes"));
 const overview_routes_1 = __importDefault(require("./routes/overview.routes"));
+const check_session_routes_1 = __importDefault(require("./routes/check_session.routes"));
 /* CONFIGURATIONS */
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -34,6 +35,7 @@ app.use((0, cors_1.default)({
 app.use("/api", auth_routes_1.default); // http://localhost:8000/api/login
 app.use("/api/pots", auth_middleware_1.authenticateToken, pots_routes_1.default);
 app.use("/api/overview", auth_middleware_1.authenticateToken, overview_routes_1.default);
+app.use("/api", check_session_routes_1.default);
 // app.use("/products", productRoutes); // http://localhost:8000/products
 // app.use("/users", userRoutes); // http://localhost:8000/users
 // app.use("/expenses", expenseRoutes); // http://localhost:8000/expenses

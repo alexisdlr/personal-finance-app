@@ -42,7 +42,7 @@ const TransacionsPage = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-grey-900 font-bold text-3xl">Transactions</h1>
+        <h1 className="text-grey-900 font-bold text-3xl mt-2 mb-4">Transactions</h1>
       </MotionDiv>
 
       <MotionDiv>

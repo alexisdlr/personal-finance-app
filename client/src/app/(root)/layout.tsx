@@ -11,26 +11,24 @@ export default function OverviewLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isAuthenticated, setAuthLoaded, isAuthLoaded } = useAuthStore();
+  const { isAuthenticated, isAuthLoaded, checkAuth } = useAuthStore();
 
   const router = useRouter();
 
   useEffect(() => {
-    // Indica que la autenticación ha sido cargada
-    setAuthLoaded();
-  }, [setAuthLoaded]);
+    checkAuth(); // Verifica autenticación con el backend (Express) al cargar la página
+  }, [checkAuth]);
 
   useEffect(() => {
-    // Solo redirige cuando isAuthLoaded sea true
-    if (isAuthLoaded && !isAuthenticated) {
-      router.push("/login");
-    } else {
-      router.push("/overview")
+    if (isAuthLoaded) {
+      if (!isAuthenticated) {
+        router.push("/login");
+      }
     }
   }, [isAuthenticated, isAuthLoaded, router]);
 
-  // Espera a que isAuthLoaded sea true antes de mostrar la UI
-  if (!isAuthLoaded) return null
+  if (!isAuthLoaded) return null; // No renderiza hasta que se valide la sesión
+
   return (
     <div className=" bg-beige-100 h-full w-full flex flex-col-reverse md:flex-row justify-end">
       {/* LEFT */}

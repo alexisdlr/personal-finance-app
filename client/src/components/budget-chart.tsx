@@ -8,20 +8,26 @@ type BudgetChartProps = {
 
 const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
 
+  // Calcular el total gastado
+  console.log(transactions, 'transactions')
+
   const totalSpent = budgets.slice(0, 4).reduce((sum, budget) => {
-    const categorySpent = transactions.slice(0, 4)
+    const categorySpent = transactions
       .filter((transaction) => transaction.category === budget.category)
       .reduce((acc, transaction) => acc + transaction.amount, 0);
     return sum + categorySpent;
   }, 0);
 
-  console.log(totalSpent, 'totalSpent')
+
 
   const totalBudgetLimit = budgets.reduce((sum, budget) => sum + budget.maximum, 0);
   // SVG circle properties
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
   let offset = 0; // Offset inicial para cada segmento
+
+  console.log(totalSpent, 'totalSpent')
+  console.log(totalBudgetLimit, 'totalBudgetLimit')
 
   return (
     <div className="bg-white rounded-lg w-full h-full flex flex-col lg:flex-row justify-between gap-2">
@@ -57,13 +63,13 @@ const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
           })}
         </svg>
         <div className="absolute text-center">
-          <span className="text-xl font-bold">${totalSpent}</span>
+          <span className="text-xl font-bold">${Math.abs(totalSpent).toFixed(2)}</span>
           <p className="text-sm text-gray-500">of ${totalBudgetLimit} limit</p>
         </div>
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2.5 relative grid grid-cols-2 gap-2 w-full h-full">
         {budgets.slice(0, 4).map((budget) => (
-          <div className="flex gap-2 justify-start w-full h-full max-h-10" key={budget.id}>
+          <div className="flex gap-2 justify-start w-full h-full sm:max-h-10 lg:max-h-12" key={budget.id}>
             <span
               className="w-1 h-full rounded-xl"
               style={{ backgroundColor: budget.theme }}
@@ -72,7 +78,7 @@ const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
               <div className="flex items-center gap-2 h-full">
                 <span className="text-[10px] text-grey-500">{budget.category}</span>
               </div>
-              <span className="text-sm font-bold text-gray-900">${budget.maximum.toFixed(2)}</span>
+              <span className="text-sm font-bold text-gray-900 text-left">${budget.maximum.toFixed(2)}</span>
             </div>
           </div>
         ))}

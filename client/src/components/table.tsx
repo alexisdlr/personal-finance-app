@@ -123,7 +123,7 @@ const Table = <T extends { id: string | number }>({
 
 
   return (
-    <div className="overflow-x-auto custom-scrollbar">
+    <div className="overflow-x-auto custom-scrollbar bg-white rounded-lg shadow-lg p-4">  
       <table className="min-w-full divide-y divide-gray-200 border border-gray-300">
         <thead className="bg-gray-50">
           {table.getHeaderGroups().map((headerGroup) => (

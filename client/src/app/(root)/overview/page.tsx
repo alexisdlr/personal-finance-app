@@ -54,14 +54,14 @@ export default function Home() {
   const totalSaved = pots.reduce((sum, item) => sum + item.total, 0);
 
   return (
-    <div className="w-full h-full pt-6 px-6 lg:px-10 flex flex-col">
+    <div className="w-full h-full pt-6 pb-[200px] md:pb-0 px-6 lg:px-10 flex flex-col">
       <MotionDiv
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
 
         <header className="flex justify-between items-center">
-          <h1 className="text-grey-900 font-bold text-3xl" >Welcome to Overview</h1>
+          <h1 className="text-grey-900 font-bold text-3xl" >Overview</h1>
           <Button className="px-8 text-xs font-semibold" onClick={handleLogout}>Logout</Button>
         </header>
       </MotionDiv>
