@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import Pots from "@/components/pots-overview";
 import Transactions from "@/components/transactions-overview";
 import BudgetChart from "@/components/budget-chart";
+import RecurringBills from "@/components/overview/recurring-bills";
 
 export default function Home() {
   const overviewQuery = useFetchOverviewData()
@@ -49,10 +50,16 @@ export default function Home() {
     }
   }
 
-  const { balance, pots, transactions, budgets } = useGlobalState()
+  const { balance, pots, transactions, budgets, paidBills, totalUpcoming, dueSoon } = useGlobalState()
 
   const totalSaved = pots.reduce((sum, item) => sum + item.total, 0);
 
+  console.log(paidBills, totalUpcoming, dueSoon)
+  const recurringData = {
+    paidBills: paidBills,
+    totalUpcoming: totalUpcoming,
+    dueSoon: dueSoon
+  }
   return (
     <div className="w-full h-full pt-6 pb-[200px] md:pb-0 px-6 lg:px-10 flex flex-col">
       <MotionDiv
@@ -64,7 +71,7 @@ export default function Home() {
           <h1 className="text-grey-900 font-bold text-3xl" >Overview</h1>
           <Button className="px-8 text-xs font-semibold" onClick={handleLogout}>Logout</Button>
         </header>
-      </MotionDiv>
+      </MotionDiv> 
 
       {/* BALANCE SECTION */}
       <MotionDiv
@@ -138,6 +145,26 @@ export default function Home() {
               </div>
               <div className="w-full h-full flex flex-col gap-3 md:flex-row justify-between">
                 <BudgetChart budgets={budgets} transactions={transactions} />
+              </div>
+            </div>
+          </MotionDiv>
+
+          {/* RECURRING BILLS SECTION */}
+          <MotionDiv
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="py-6 w-full">
+            <div className="flex flex-col bg-white p-8 rounded-xl gap-5 items-center">
+              <div className="w-full flex justify-between">
+                <h2 className="text-grey-900 font-bold text-3xl">Recurring Bills</h2>
+                <div className="flex gap-2 items-center">
+                  <Link href='/budgets' className="text-sm lg:text-md text-grey-500 transition-all duration-200 hover:underline">See Details</Link>
+                  <Image src={'/images/icon-caret-right.svg'} alt="caret left" width={6} height={6} />
+                </div>
+              </div>
+              <div className="w-full h-full flex flex-col gap-3 md:flex-row justify-between">
+                {/* <BudgetChart budgets={budgets} transactions={transactions} /> */}
+                <RecurringBills recurringData={recurringData} />
               </div>
             </div>
           </MotionDiv>

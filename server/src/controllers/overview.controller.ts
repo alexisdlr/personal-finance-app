@@ -46,6 +46,30 @@ export const getOverview: RequestHandler = async (
       },
     });
 
+
+    const today = new Date();
+    const upcomingDate = new Date();
+    upcomingDate.setDate(today.getDate() + 7); // Próximos 7 días
+
+    const recurringBills = await prisma.transaction.findMany({
+      where: {
+        userId: Number(userId),
+        recurring: true,
+      },
+    });
+
+    const paidBills = recurringBills
+      .filter((t) => t.amount < 0)
+      .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+
+    const totalUpcoming = recurringBills
+      .filter((t) => t.amount > 0)
+      .reduce((sum, t) => sum + t.amount, 0);
+
+    const dueSoon = recurringBills
+      .filter((t) => new Date(t.date) <= upcomingDate && t.amount > 0)
+      .reduce((sum, t) => sum + t.amount, 0);
+
     if (!pots || !budgets || !transactions || !balance) {
       res.status(500).json({ error: "No results found!" });
       return;
@@ -56,6 +80,9 @@ export const getOverview: RequestHandler = async (
       budgets,
       transactions,
       balance,
+      paidBills,
+      totalUpcoming,
+      dueSoon
     };
 
     res.status(200).json({

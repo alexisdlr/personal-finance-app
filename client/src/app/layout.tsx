@@ -6,7 +6,7 @@ import ToastProvider from "@/components/providers/toast-provider";
 
 const publicSans = localFont({
   src: "./fonts/PublicSans-VariableFont_wght.ttf",
-  variable: "--font-public-sans-mono",
+  variable: "--font-public-sans",
   weight: "100 900",
 });
 

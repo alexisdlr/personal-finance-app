@@ -9,7 +9,6 @@ type BudgetChartProps = {
 const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
 
   // Calcular el total gastado
-  console.log(transactions, 'transactions')
 
   const totalSpent = budgets.slice(0, 4).reduce((sum, budget) => {
     const categorySpent = transactions
@@ -26,11 +25,10 @@ const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
   const circumference = 2 * Math.PI * radius;
   let offset = 0; // Offset inicial para cada segmento
 
-  console.log(totalSpent, 'totalSpent')
   console.log(totalBudgetLimit, 'totalBudgetLimit')
 
   return (
-    <div className="bg-white rounded-lg w-full h-full flex flex-col lg:flex-row justify-between gap-2">
+    <div className="bg-white rounded-lg w-full h-full flex flex-col lg:flex-row justify-between lg:items-center gap-2">
 
       <div className="relative flex items-center justify-center w-38 h-38 mx-auto ">
         <svg className="w-full transform -rotate-90" viewBox="0 0 120 120">
@@ -67,7 +65,7 @@ const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
           <p className="text-sm text-gray-500">of ${totalBudgetLimit} limit</p>
         </div>
       </div>
-      <div className="space-y-2.5 relative grid grid-cols-2 gap-2 w-full h-full">
+      <div className="space-y-2.5 relative grid grid-cols-2 gap-2 lg:gap-4 w-full h-full">
         {budgets.slice(0, 4).map((budget) => (
           <div className="flex gap-2 justify-start w-full h-full sm:max-h-10 lg:max-h-12" key={budget.id}>
             <span
