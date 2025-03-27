@@ -25,10 +25,8 @@ const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
   const circumference = 2 * Math.PI * radius;
   let offset = 0; // Offset inicial para cada segmento
 
-  console.log(totalBudgetLimit, 'totalBudgetLimit')
-
   return (
-    <div className="bg-white rounded-lg w-full h-full flex flex-col lg:flex-row justify-between lg:items-center gap-2">
+    <div className="bg-white rounded-lg w-full h-full flex flex-col lg:flex-row justify-between lg:items-center">
 
       <div className="relative flex items-center justify-center w-38 h-38 mx-auto ">
         <svg className="w-full transform -rotate-90" viewBox="0 0 120 120">
@@ -65,14 +63,14 @@ const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
           <p className="text-sm text-gray-500">of ${totalBudgetLimit} limit</p>
         </div>
       </div>
-      <div className="space-y-2.5 relative grid grid-cols-2 gap-2 lg:gap-4 w-full h-full">
+      <div className="space-y-2.5 relative grid grid-cols-2 md:grid-cols-1 gap-3 2xl:gap-4 h-full">
         {budgets.slice(0, 4).map((budget) => (
           <div className="flex gap-2 justify-start w-full h-full sm:max-h-10 lg:max-h-12" key={budget.id}>
             <span
               className="w-1 h-full rounded-xl"
               style={{ backgroundColor: budget.theme }}
             ></span>
-            <div className="flex flex-col justify-start items-center">
+            <div className="flex flex-col justify-end items-start">
               <div className="flex items-center gap-2 h-full">
                 <span className="text-[10px] text-grey-500">{budget.category}</span>
               </div>

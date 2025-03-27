@@ -4,16 +4,16 @@ import Button from "@/components/auth/button";
 import useLogout from "@/hooks/useLogout";
 import toast from "react-hot-toast";
 import { MotionDiv } from "@/components/animated/motion-div";
-import CardBalance from "@/components/card-balance";
+import CardBalance from "@/components/overview/card-balance";
 import Link from "next/link";
 import Image from "next/image";
 import TotalSaved from "@/components/total-saved";
 import { useGlobalState } from "@/store/global-store";
 import useFetchOverviewData from "@/hooks/use-get-overview-data";
 import { useEffect } from "react";
-import Pots from "@/components/pots-overview";
-import Transactions from "@/components/transactions-overview";
-import BudgetChart from "@/components/budget-chart";
+import Pots from "@/components/overview/pots-overview";
+import Transactions from "@/components/overview/transactions-overview";
+import BudgetChart from "@/components/overview/budget-chart";
 import RecurringBills from "@/components/overview/recurring-bills";
 
 export default function Home() {
