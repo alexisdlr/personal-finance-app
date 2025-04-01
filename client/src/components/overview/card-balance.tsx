@@ -7,9 +7,9 @@ type CardBalanceProps = {
   classname?: string
 }
 
-const CardBalance = ({ type, value, classname }: CardBalanceProps) => {
+const CardBalance = ({ type, value, classname = "" }: CardBalanceProps) => {
   return (
-    <div className={cn(`w-full bg-grey-900 lg:max-w-96 pl-6 pr-10 py-6 lg:w-[350px] md:w-[200px] flex flex-col gap-2 items-start justify-center text-white rounded-xl`, classname)}>
+    <div className={cn(`w-full bg-grey-900 lg:max-w-96 pl-6 pr-10 py-6 lg:w-full md:w-[200px] flex flex-col gap-2 items-start justify-center text-white rounded-xl`, classname)}>
       <span className='text-sm'>
         {type}
       </span>

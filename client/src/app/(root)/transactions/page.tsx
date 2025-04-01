@@ -6,6 +6,15 @@ import { Transaction } from "@/types/global";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useMemo } from "react";
 
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: '2-digit',
+  };
+  return date.toLocaleDateString('en-US', options);
+}
 
 const TransacionsPage = () => {
   const { transactions } = useGlobalState()
@@ -13,27 +22,29 @@ const TransacionsPage = () => {
   const columnHelper = createColumnHelper<Transaction>()
 
   const columns = [
-    columnHelper.accessor('id', {
-      cell: info => info.getValue(),
-    }),
-    columnHelper.accessor('name', {
-      cell: info => info.getValue(),
-    }),
-    // you can use different aproach here
+  
     columnHelper.accessor(row => row.name, {
       id: 'Name',
-      cell: info => <i>{info.getValue()}</i>,
-      header: () => <span>Name</span>,
+      cell: info => <p className="font-bold">{info.getValue()}</p>,
+      header: () => <span className="text-xs text-gray-500">Recipient / Sender</span>,
     }),
-    columnHelper.accessor('amount', {
-      header: () => 'Amount',
-      cell: info => info.renderValue(),
+    columnHelper.accessor('category', {
+      cell: info => <p className="text-xs text-gray-500">{info.getValue()}</p>,
+      header: () => <span className="text-xs text-gray-500">Category</span>,
     }),
+    // you can use different aproach here
+    
     columnHelper.accessor('date', {
-      header: () => 'Date',
-      cell: info => info.getValue(),
-    })
+      header: () =>  <span className="text-xs text-gray-500">Transaction Date</span>,
+      cell: info => <p className="text-xs text-gray-500">{formatDate(info.getValue().toString())}</p>,
+      // cell: info => info.renderValue(),
+    }),
 
+    columnHelper.accessor('amount', {
+      header: () => <span className="text-xs text-gray-500">Amount</span>,
+      cell: info => <p className="text-xs text-gray-500">{info.renderValue()}</p>,
+      
+    }),
 
   ]
   return (
@@ -46,6 +57,7 @@ const TransacionsPage = () => {
       </MotionDiv>
 
       <MotionDiv>
+
         <Table data={transactions} columns={columns} />
       </MotionDiv>
     </div>

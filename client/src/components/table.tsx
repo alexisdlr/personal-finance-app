@@ -36,38 +36,38 @@ const Table = <T extends { id: string | number }>({
   const table = useReactTable({
     data,
     columns: [
-      {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              table.getIsSomePageRowsSelected()
-            }
-            onCheckedChange={(isChecked) => {
-              const newSelectedRows = data.reduce(
-                (acc, row) => ({
-                  ...acc,
-                  [row.id]: isChecked,
-                }),
-                {}
-              );
-              setSelectedRows(newSelectedRows);
-            }}
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={!!selectedRows[row.original.id]}
-            onCheckedChange={(isChecked) => {
-              setSelectedRows((prev) => ({
-                ...prev,
-                [row.original.id]: isChecked === true, // Aseguramos que el valor sea booleano
-              }));
-            }}
-          />
-        ),
-      },
+      // {
+      //   id: "select",
+      //   header: ({ table }) => (
+      //     <Checkbox
+      //       checked={
+      //         table.getIsAllPageRowsSelected() ||
+      //         table.getIsSomePageRowsSelected()
+      //       }
+      //       onCheckedChange={(isChecked) => {
+      //         const newSelectedRows = data.reduce(
+      //           (acc, row) => ({
+      //             ...acc,
+      //             [row.id]: isChecked,
+      //           }),
+      //           {}
+      //         );
+      //         setSelectedRows(newSelectedRows);
+      //       }}
+      //     />
+      //   ),
+      //   cell: ({ row }) => (
+      //     <Checkbox
+      //       checked={!!selectedRows[row.original.id]}
+      //       onCheckedChange={(isChecked) => {
+      //         setSelectedRows((prev) => ({
+      //           ...prev,
+      //           [row.original.id]: isChecked === true, // Aseguramos que el valor sea booleano
+      //         }));
+      //       }}
+      //     />
+      //   ),
+      // },
       ...columns,
       {
         id: "actions",
@@ -124,8 +124,8 @@ const Table = <T extends { id: string | number }>({
 
   return (
     <div className="overflow-x-auto custom-scrollbar bg-white rounded-lg shadow-lg p-4">  
-      <table className="min-w-full divide-y divide-gray-200 border border-gray-300">
-        <thead className="bg-gray-50">
+      <table className="min-w-full divide-gray-200 border border-gray-300">
+        <thead className="">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
