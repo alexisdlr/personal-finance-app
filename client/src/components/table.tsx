@@ -75,7 +75,7 @@ const Table = <T extends { id: string | number }>({
      
           return (
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger asChild className="hidden md:block">
                 <Button variant="ghost" className="h-8 w-8 p-0">
                   <span className="sr-only">Open menu</span>
                   <MoreHorizontal />
@@ -117,7 +117,7 @@ const Table = <T extends { id: string | number }>({
   return (
     <div className="overflow-x-auto custom-scrollbar bg-white p-4">  
       <table className="min-w-full divide-gray-200 border border-gray-300">
-        <thead className="">
+        <thead className="hidden md:table-header-group">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (

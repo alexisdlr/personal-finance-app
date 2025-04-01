@@ -53,8 +53,25 @@ const TransacionsPage = () => {
     }),
 
   ]
+
+  const mobileColumns = [
+    columnHelper.accessor(row => row.name, {
+      id: 'Name',
+      cell: info => <div className="font-bold flex gap-2 items-center">
+        <Image className="rounded-full" src={info.row.original.avatar} alt="ASS" width={30} height={30} />
+        <span className="text-xs text.gray.500">{info.getValue()}</span>
+      </div>,
+    }),
+
+    
+    columnHelper.accessor('amount', {
+      cell: info => <p className="text-xs text-gray-500 text-right">{info.renderValue()}</p>,
+
+    }) 
+  ]
+
   return (
-    <div className="w-full h-full pt-6 px-6 lg:px-10 flex flex-col">
+    <div className="w-full h-full pt-6 sm:px-6 px-4 lg:px-10 flex flex-col">
       <MotionDiv
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -63,11 +80,18 @@ const TransacionsPage = () => {
       </MotionDiv>
 
       <MotionDiv className="bg-white p-5 rounded-lg shadow-lg">
-        <div className="p-3">
-
+        <div className="p-0 lg:p-3">
           <SearchInput globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} placeholder="Search transactions..." />
         </div>
-        <Table data={transactions} columns={columns} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+        {/* MOBILE TABLE */}
+        <div className="block md:hidden overflow-x-auto">
+          <Table data={transactions} columns={mobileColumns} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+
+        </div>
+        {/* DESKTOP TABLE */}
+        <div className="hidden md:block overflow-x-auto">
+          <Table data={transactions} columns={columns} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+        </div>
       </MotionDiv>
     </div>
   )
