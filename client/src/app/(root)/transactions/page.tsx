@@ -1,10 +1,12 @@
 "use client"
 import { MotionDiv } from "@/components/animated/motion-div";
+import SearchInput from "@/components/search-input";
 import Table from "@/components/table"
 import { useGlobalState } from "@/store/global-store";
 import { Transaction } from "@/types/global";
 import { createColumnHelper } from "@tanstack/react-table";
-import { useMemo } from "react";
+import Image from "next/image";
+import { useMemo, useState } from "react";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -17,15 +19,19 @@ const formatDate = (dateString: string) => {
 }
 
 const TransacionsPage = () => {
+  const [globalFilter, setGlobalFilter] = useState<string>('')
   const { transactions } = useGlobalState()
 
   const columnHelper = createColumnHelper<Transaction>()
 
   const columns = [
-  
+
     columnHelper.accessor(row => row.name, {
       id: 'Name',
-      cell: info => <p className="font-bold">{info.getValue()}</p>,
+      cell: info => <div className="font-bold flex gap-2 items-center">
+        <Image className="rounded-full" src={info.row.original.avatar} alt="ASS" width={30} height={30} />
+        <span className="text-xs text.gray.500">{info.getValue()}</span>
+      </div>,
       header: () => <span className="text-xs text-gray-500">Recipient / Sender</span>,
     }),
     columnHelper.accessor('category', {
@@ -33,9 +39,9 @@ const TransacionsPage = () => {
       header: () => <span className="text-xs text-gray-500">Category</span>,
     }),
     // you can use different aproach here
-    
+
     columnHelper.accessor('date', {
-      header: () =>  <span className="text-xs text-gray-500">Transaction Date</span>,
+      header: () => <span className="text-xs text-gray-500">Transaction Date</span>,
       cell: info => <p className="text-xs text-gray-500">{formatDate(info.getValue().toString())}</p>,
       // cell: info => info.renderValue(),
     }),
@@ -43,7 +49,7 @@ const TransacionsPage = () => {
     columnHelper.accessor('amount', {
       header: () => <span className="text-xs text-gray-500">Amount</span>,
       cell: info => <p className="text-xs text-gray-500">{info.renderValue()}</p>,
-      
+
     }),
 
   ]
@@ -56,9 +62,12 @@ const TransacionsPage = () => {
         <h1 className="text-grey-900 font-bold text-3xl mt-2 mb-4">Transactions</h1>
       </MotionDiv>
 
-      <MotionDiv>
+      <MotionDiv className="bg-white p-5 rounded-lg shadow-lg">
+        <div className="p-3">
 
-        <Table data={transactions} columns={columns} />
+          <SearchInput globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} placeholder="Search transactions..." />
+        </div>
+        <Table data={transactions} columns={columns} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
       </MotionDiv>
     </div>
   )

@@ -31,8 +31,6 @@ const Table = <T extends { id: string | number }>({
 }: TableProps<T>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
-  const [selectedRows, setSelectedRows] = useState<Record<string | number, boolean>>({});
-
   const table = useReactTable({
     data,
     columns: [
@@ -113,17 +111,11 @@ const Table = <T extends { id: string | number }>({
         .includes(filterValue.toLowerCase());
     },
   });
-
-  const selectedCount = useMemo(
-    () => Object.values(selectedRows).filter(Boolean).length,
-    [selectedRows]
-    );
-
     
 
 
   return (
-    <div className="overflow-x-auto custom-scrollbar bg-white rounded-lg shadow-lg p-4">  
+    <div className="overflow-x-auto custom-scrollbar bg-white p-4">  
       <table className="min-w-full divide-gray-200 border border-gray-300">
         <thead className="">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -171,10 +163,7 @@ const Table = <T extends { id: string | number }>({
         </tbody>
       </table>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {selectedCount} de{" "}
-          {table.getFilteredRowModel().rows.length} fila(s) seleccionadas.
-        </div>
+      
         <div className="space-x-2">
           <Button
             variant="outline"
