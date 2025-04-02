@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { createColumnHelper } from "@tanstack/react-table";
 import Image from "next/image";
 import { useState } from "react";
+import { cn, formatPrice } from "@/lib/utils";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -49,8 +50,18 @@ const TransacionsPage = () => {
     }),
 
     columnHelper.accessor('amount', {
+      id: 'amount',
       header: () => <span className="text-xs text-gray-500">Amount</span>,
-      cell: info => <p className="text-xs text-gray-500">{info.renderValue()}</p>,
+      cell: info => {
+        const price = info.renderValue() || 0
+        const isNegative = price < 0
+        const formattedPrice = formatPrice(Math.abs(price))
+        return (
+          <p className={cn("text-xs text-gray-500 text-right font-bold", !isNegative && "text-secondary-green")}>
+            {isNegative ? `-${formattedPrice}` : `+${formattedPrice}`}
+          </p>
+        )
+      },
 
     }),
 
