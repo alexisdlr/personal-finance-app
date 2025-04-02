@@ -4,9 +4,10 @@ import SearchInput from "@/components/search-input";
 import Table from "@/components/table"
 import { useGlobalState } from "@/store/global-store";
 import { Transaction } from "@/types/global";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { createColumnHelper } from "@tanstack/react-table";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -21,7 +22,8 @@ const formatDate = (dateString: string) => {
 const TransacionsPage = () => {
   const [globalFilter, setGlobalFilter] = useState<string>('')
   const { transactions } = useGlobalState()
-
+  const category = transactions.map((transaction) => transaction.category)
+  const uniqueCategories = [...new Set(category)]
   const columnHelper = createColumnHelper<Transaction>()
 
   const columns = [
@@ -63,11 +65,11 @@ const TransacionsPage = () => {
       </div>,
     }),
 
-    
+
     columnHelper.accessor('amount', {
       cell: info => <p className="text-xs text-gray-500 text-right">{info.renderValue()}</p>,
 
-    }) 
+    })
   ]
 
   return (
@@ -80,13 +82,48 @@ const TransacionsPage = () => {
       </MotionDiv>
 
       <MotionDiv className="bg-white p-5 rounded-lg shadow-lg">
-        <div className="p-0 lg:p-3">
+        <div className="p-0 lg:p-3 flex items-center justify-between gap-2">
           <SearchInput globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} placeholder="Search transactions..." />
+
+          {/* FILTERS */}
+          <div className="flex items-center justify-between mt-4 mb-2">
+            <div className="flex items-center gap-2 w-full ">
+              <span className="text-sm text-gray-500 min-w-14">Sort by:</span>
+              <Select>
+                <SelectTrigger className="bg-white text-gray-700 px-2 py-1 rounded-md text-xs border-2" aria-label="Sort by">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+
+                <SelectContent className="bg-white shadow-lg rounded-md">
+                  <SelectItem value="latest" className="text-xs text-gray-700 px-2 py-1 hover:bg-gray-100">Latest</SelectItem>
+                  <SelectItem value="oldest" className="text-xs text-gray-700 px-2 py-1 hover:bg-gray-100">Oldest</SelectItem>
+                  <SelectItem value="atoz" className="text-xs text-gray-700 px-2 py-1 hover:bg-gray-100">A to Z</SelectItem>
+                  <SelectItem value="ztoa" className="text-xs text-gray-700 px-2 py-1 hover:bg-gray-100">Z to A</SelectItem>
+                  <SelectItem value="highest" className="text-xs text-gray-700 px-2 py-1 hover:bg-gray-100">Highest</SelectItem>
+                  <SelectItem value="lowest" className="text-xs text-gray-700 px-2 py-1 hover:bg-gray-100">Lowest</SelectItem>
+                </SelectContent>
+              </Select>
+              <span className="text-sm text-gray-500 min-w-14">Category: </span>
+              <Select>
+                <SelectTrigger className="bg-white text-gray-700 px-2 py-1 rounded-md text-xs border-2" aria-label="Sort by">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+
+                <SelectContent className="bg-white shadow-lg rounded-md">
+                  <SelectItem value="all" className="text-xs text-gray-700 px-2 py-1 hover:bg-gray-100">All Transactions</SelectItem>
+                  {
+                    uniqueCategories.map((category, index) => (
+                      <SelectItem key={index} value={category} className="text-xs text-gray-700 px-2 py-1 hover:bg-gray-100">{category}</SelectItem>
+                    ))
+                  }
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </div>
         {/* MOBILE TABLE */}
         <div className="block md:hidden overflow-x-auto">
           <Table data={transactions} columns={mobileColumns} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
-
         </div>
         {/* DESKTOP TABLE */}
         <div className="hidden md:block overflow-x-auto">
