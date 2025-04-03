@@ -16,6 +16,7 @@ import Transactions from "@/components/overview/transactions-overview";
 import BudgetChart from "@/components/overview/budget-chart";
 import RecurringBills from "@/components/overview/recurring-bills";
 import AnimatedSection from "@/components/overview/animated-section";
+import { formatPrice } from "@/lib/utils";
 
 export default function Home() {
   const overviewQuery = useFetchOverviewData()
