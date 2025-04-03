@@ -33,66 +33,7 @@ const Table = <T extends { id: string | number }>({
 
   const table = useReactTable({
     data,
-    columns: [
-      // {
-      //   id: "select",
-      //   header: ({ table }) => (
-      //     <Checkbox
-      //       checked={
-      //         table.getIsAllPageRowsSelected() ||
-      //         table.getIsSomePageRowsSelected()
-      //       }
-      //       onCheckedChange={(isChecked) => {
-      //         const newSelectedRows = data.reduce(
-      //           (acc, row) => ({
-      //             ...acc,
-      //             [row.id]: isChecked,
-      //           }),
-      //           {}
-      //         );
-      //         setSelectedRows(newSelectedRows);
-      //       }}
-      //     />
-      //   ),
-      //   cell: ({ row }) => (
-      //     <Checkbox
-      //       checked={!!selectedRows[row.original.id]}
-      //       onCheckedChange={(isChecked) => {
-      //         setSelectedRows((prev) => ({
-      //           ...prev,
-      //           [row.original.id]: isChecked === true, // Aseguramos que el valor sea booleano
-      //         }));
-      //       }}
-      //     />
-      //   ),
-      // },
-      ...columns,
-      {
-        id: "actions",
-        enableHiding: false,
-        cell: ({ row }) => {
-          const id = row.original
-     
-          return (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild className="hidden md:block">
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
-                  <MoreHorizontal />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-                <DropdownMenuItem
-                >
-                  Eliminar
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )
-        }},
-    ],
+    columns,
     state: {
       sorting,
       globalFilter,
@@ -111,11 +52,11 @@ const Table = <T extends { id: string | number }>({
         .includes(filterValue.toLowerCase());
     },
   });
-    
+
 
 
   return (
-    <div className="overflow-x-auto custom-scrollbar bg-white p-4">  
+    <div className="overflow-x-auto custom-scrollbar bg-white p-4">
       <table className="min-w-full divide-gray-200 border border-gray-300">
         <thead className="hidden md:table-header-group">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -123,9 +64,8 @@ const Table = <T extends { id: string | number }>({
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className={`px-4 py-2 text-left text-sm font-medium text-gray-900 ${
-                    header.id === "select" ? "" : "cursor-pointer"
-                  } whitespace-nowrap`}
+                  className={`px-4 py-2 text-left text-sm font-medium text-gray-900 ${header.id === "select" ? "" : "cursor-pointer"
+                    } whitespace-nowrap`}
                   onClick={header.id === "select" ? undefined : header.column.getToggleSortingHandler()}
                 >
                   {header.isPlaceholder
@@ -163,7 +103,7 @@ const Table = <T extends { id: string | number }>({
         </tbody>
       </table>
       <div className="flex items-center justify-end space-x-2 py-4">
-      
+
         <div className="space-x-2">
           <Button
             variant="outline"
