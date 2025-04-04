@@ -56,8 +56,8 @@ const Table = <T extends { id: string | number }>({
 
 
   return (
-    <div className="overflow-x-auto custom-scrollbar bg-white p-4">
-      <table className="min-w-full divide-gray-200 border border-gray-300">
+    <div className="overflow-x-auto custom-scrollbar bg-white lg:p-4">
+      <table className="min-w-full md:divide-gray-200 md:border border-gray-300">
         <thead className="hidden md:table-header-group">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

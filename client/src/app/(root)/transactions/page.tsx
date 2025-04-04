@@ -12,6 +12,7 @@ import { cn, formatPrice } from "@/lib/utils";
 import { setGlobal } from "next/dist/trace";
 import { set } from "zod";
 import { useReducer } from "react";
+import { Filter, SortAsc } from "lucide-react";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -172,7 +173,7 @@ const TransacionsPage = () => {
   }, [filterValue, transactions, categoryFilter]);
 
   return (
-    <div className="w-full h-full pt-6 sm:px-6 px-4 lg:px-10 flex flex-col pb-24">
+    <div className="w-full h-full pt-6 sm:px-6 px-3 lg:px-10 flex flex-col pb-24">
       <MotionDiv
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -181,16 +182,19 @@ const TransacionsPage = () => {
       </MotionDiv>
 
       <MotionDiv className="bg-white p-5 rounded-lg shadow-lg">
-        <div className="p-0 lg:p-3 flex items-center justify-between gap-2">
+        <div className="p-0 lg:p-3 flex items-center justify-between gap-2 mb-2 md:mb-0">
           <SearchInput globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} placeholder="Search transactions..." />
 
           {/* FILTERS */}
-          <div className="flex items-center justify-between mt-4 mb-2">
+          <div className="flex items-center justify-between md:mt-4 md:mb-2">
             <div className="flex items-center gap-2 w-full ">
-              <span className="text-sm text-gray-500 min-w-14">Sort by:</span>
+              <span className="hidden md:block text-sm text-gray-500 min-w-14">Sort by:</span>
               <Select onValueChange={handleFilterChange}>
                 <SelectTrigger className="bg-white text-gray-700 px-2 py-1 rounded-md text-xs border-2" aria-label="Sort by">
-                  <SelectValue placeholder="Select" />
+                  <span className="!hidden md:!block">
+                    <SelectValue placeholder="Select" />
+                  </span>
+                  <SortAsc className="md:hidden text-black" size={22} />
                 </SelectTrigger>
 
                 <SelectContent className="bg-white shadow-lg rounded-md">
@@ -202,10 +206,13 @@ const TransacionsPage = () => {
                   <SelectItem value="lowest" className="text-xs text-gray-700 px-2 py-1 hover:bg-gray-100">Lowest</SelectItem>
                 </SelectContent>
               </Select>
-              <span className="text-sm text-gray-500 min-w-14">Category: </span>
+              <span className="hidden md:block text-sm text-gray-500 min-w-14">Category: </span>
               <Select defaultValue="all" onValueChange={handleCategoryChange}>
-                <SelectTrigger className="bg-white text-gray-700 px-2 py-1 rounded-md text-xs border-2" aria-label="Sort by">
-                  <SelectValue placeholder="Select" />
+                <SelectTrigger className="bg-white text-gray-700 px-2 py-1 rounded-md text-xs border-2" aria-label="Category">
+                  <span className="!hidden md:!block">
+                    <SelectValue placeholder="Select" />
+                  </span>
+                  <Filter className="md:hidden text-black" size={20} />
                 </SelectTrigger>
 
                 <SelectContent className="bg-white shadow-lg rounded-md">
