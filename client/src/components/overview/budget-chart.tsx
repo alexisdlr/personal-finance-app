@@ -4,9 +4,10 @@ import { Budget, Transaction } from '@/types/global';
 type BudgetChartProps = {
   budgets: Budget[]
   transactions: Transaction[]
+  children?: React.ReactNode
 }
 
-const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
+const BudgetChart = ({ budgets, transactions, children }: BudgetChartProps) => {
 
   // Calcular el total gastado
 
@@ -36,7 +37,7 @@ const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
             r={radius}
             fill="transparent"
             stroke="#e5e7eb"
-            strokeWidth="10"
+            strokeWidth="12"
           />
           {/* Dibujar cada segmento */}
           {budgets.map((category, index) => {
@@ -64,20 +65,7 @@ const BudgetChart = ({ budgets, transactions }: BudgetChartProps) => {
         </div>
       </div>
       <div className="space-y-2.5 relative grid grid-cols-2 md:grid-cols-1 gap-3 2xl:gap-4 h-full">
-        {budgets.slice(0, 4).map((budget) => (
-          <div className="flex gap-2 justify-start w-full h-full sm:max-h-10 lg:max-h-12" key={budget.id}>
-            <span
-              className="w-1 h-full rounded-xl"
-              style={{ backgroundColor: budget.theme }}
-            ></span>
-            <div className="flex flex-col justify-end items-start">
-              <div className="flex items-center gap-2 h-full">
-                <span className="text-[10px] text-grey-500">{budget.category}</span>
-              </div>
-              <span className="text-sm font-bold text-gray-900 text-left">${budget.maximum.toFixed(2)}</span>
-            </div>
-          </div>
-        ))}
+       {children}
       </div>
     </div>
   );
