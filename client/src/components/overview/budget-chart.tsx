@@ -27,9 +27,9 @@ const BudgetChart = ({ budgets, transactions, children }: BudgetChartProps) => {
   let offset = 0; // Offset inicial para cada segmento
 
   return (
-    <div className="bg-white rounded-lg w-full h-full flex flex-col lg:flex-row justify-between lg:items-center">
+    <div className="bg-white rounded-lg w-full h-full flex flex-row lg:flex-col justify-between lg:items-center">
 
-      <div className="relative flex items-center justify-center w-38 h-38 mx-auto ">
+      <div className="relative flex items-center justify-center w-30 h-30 mx-auto ">
         <svg className="w-full transform -rotate-90" viewBox="0 0 120 120">
           <circle
             cx="60"
@@ -60,11 +60,11 @@ const BudgetChart = ({ budgets, transactions, children }: BudgetChartProps) => {
           })}
         </svg>
         <div className="absolute text-center">
-          <span className="text-xl font-bold">${Math.abs(totalSpent).toFixed(2)}</span>
-          <p className="text-sm text-gray-500">of ${totalBudgetLimit} limit</p>
+          <span className="text-3xl font-bold">${Math.abs(totalSpent).toFixed(2)}</span>
+          <p className="text-lg text-gray-500">of ${totalBudgetLimit} limit</p>
         </div>
       </div>
-      <div className="space-y-2.5 relative grid grid-cols-2 md:grid-cols-1 gap-3 2xl:gap-4 h-full">
+      <div className="space-y-2 w-full relative grid grid-cols-2 md:grid-cols-1 gap-2 2xl:gap-4 h-full">
        {children}
       </div>
     </div>
