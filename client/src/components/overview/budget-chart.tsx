@@ -1,14 +1,13 @@
 // components/BudgetChart.tsx
-import { Budget, Transaction } from '@/types/global';
+import { Budget, Transaction } from "@/types/global";
 
 type BudgetChartProps = {
-  budgets: Budget[]
-  transactions: Transaction[]
-  children?: React.ReactNode
-}
+  budgets: Budget[];
+  transactions: Transaction[];
+  children?: React.ReactNode;
+};
 
 const BudgetChart = ({ budgets, transactions, children }: BudgetChartProps) => {
-
   // Calcular el total gastado
 
   const totalSpent = budgets.slice(0, 4).reduce((sum, budget) => {
@@ -18,19 +17,19 @@ const BudgetChart = ({ budgets, transactions, children }: BudgetChartProps) => {
     return sum + categorySpent;
   }, 0);
 
-
-
-  const totalBudgetLimit = budgets.reduce((sum, budget) => sum + budget.maximum, 0);
+  const totalBudgetLimit = budgets.reduce(
+    (sum, budget) => sum + budget.maximum,
+    0,
+  );
   // SVG circle properties
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
   let offset = 0; // Offset inicial para cada segmento
 
   return (
-    <div className="bg-white rounded-lg w-full h-full flex flex-row lg:flex-col justify-between lg:items-center">
-
-      <div className="relative flex items-center justify-center w-30 h-30 mx-auto ">
-        <svg className="w-full transform -rotate-90" viewBox="0 0 120 120">
+    <div className="bg-white rounded-lg w-full h-full flex flex-row lg:items-center space-x-6">
+      <div className="relative flex  items-center justify-center w-full h-30 mx-auto ">
+        <svg className="w-full transform -rotate-90" viewBox="0 0 115 115">
           <circle
             cx="60"
             cy="60"
@@ -41,7 +40,8 @@ const BudgetChart = ({ budgets, transactions, children }: BudgetChartProps) => {
           />
           {/* Dibujar cada segmento */}
           {budgets.map((category, index) => {
-            const segmentLength = (category.maximum / totalBudgetLimit) * circumference;
+            const segmentLength =
+              (category.maximum / totalBudgetLimit) * circumference;
             const circle = (
               <circle
                 key={index}
@@ -50,7 +50,7 @@ const BudgetChart = ({ budgets, transactions, children }: BudgetChartProps) => {
                 r={radius}
                 fill="transparent"
                 stroke={category.theme}
-                strokeWidth="10"
+                strokeWidth="15 "
                 strokeDasharray={`${segmentLength} ${circumference}`}
                 strokeDashoffset={-offset}
               />
@@ -60,12 +60,14 @@ const BudgetChart = ({ budgets, transactions, children }: BudgetChartProps) => {
           })}
         </svg>
         <div className="absolute text-center">
-          <span className="text-3xl font-bold">${Math.abs(totalSpent).toFixed(2)}</span>
-          <p className="text-lg text-gray-500">of ${totalBudgetLimit} limit</p>
+          <span className="text-3xl font-bold leading-[120%] text-gray-900">
+            ${Math.abs(totalSpent).toFixed(0)}
+          </span>
+          <p className="text-sm text-grey-500">of ${totalBudgetLimit} limit</p>
         </div>
       </div>
-      <div className="space-y-2 w-full relative grid grid-cols-2 md:grid-cols-1 gap-2 2xl:gap-4 h-full">
-       {children}
+      <div className="space-y-2 w-full relative grid grid-cols-2 lg:grid-cols-1 gap-4 2xl:gap-4 h-full">
+        {children}
       </div>
     </div>
   );

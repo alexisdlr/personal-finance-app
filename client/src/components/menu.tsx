@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import BudgetIcon from "./Icons/budget-nav";
 import OverviewIcon from "./Icons/overview-nav";
 import TransactionsIcon from "./Icons/transactions-nav";
