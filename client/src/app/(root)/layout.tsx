@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Menu from "@/components/menu";
 import { useAuthStore } from "@/store/auth-store";
 import Image from "next/image";
@@ -35,8 +35,16 @@ export default function OverviewLayout({
 
       <div className="fixed z-50 bottom-0 left-0 xl:top-0 xl:left-0 w-full md:h-full md:w-[8%] lg:w-[16%] xl:w-[18%] py-2 md:py-6 md:px-4 bg-grey-900 rounded-tr-xl  md:rounded-e-xl md:rounded-r-xl ">
         <div className="hidden lg:block py-4 px-6">
-          <Link href={'/'} className="flex items-center justify-center lg:justify-start gap-2 ">
-            <Image src={'/images/logo-large.svg'} width={110} height={20} alt="logo" />
+          <Link
+            href={"/"}
+            className="flex items-center justify-center lg:justify-start gap-2 "
+          >
+            <Image
+              src={"/images/logo-large.svg"}
+              width={110}
+              height={20}
+              alt="logo"
+            />
           </Link>
         </div>
         <Menu />
@@ -48,5 +56,4 @@ export default function OverviewLayout({
       </div>
     </div>
   );
-
 }

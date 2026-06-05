@@ -33,7 +33,11 @@ const Budgets = () => {
                           <div className="w-2 h-full opacity-80" style={{ backgroundColor: budget.theme }}></div>
                           <span className="text-md text-gray-500">{budget.category}</span>
                         </div>
-                        <span className="text-md line-clamp-1 tracking-wider font-semibold">{formatPrice(budget.maximum)} of</span>
+                        <div className="text-sm text-gray-500">
+                          <span className="text-md line-clamp-1 tracking-wider font-bold text-gray-900">
+                            {formatPrice(transactions.filter((transaction) => transaction.category === budget.category).reduce((acc, transaction) => acc + Math.abs(transaction.amount), 0))}
+                          </span> of {formatPrice(budget.maximum)}
+                        </div>
                       </div>
                     </div>
                     <hr />
