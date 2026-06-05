@@ -20,7 +20,7 @@ const AnimatedSection = ({
     animate={{ opacity: 1, y: 0 }}
     className="mt-8 w-full"
   >
-    <div className="flex flex-col bg-white p-8 rounded-xl gap-5 items-center">
+    <div className="flex flex-col bg-white p-6 rounded-xl gap-5 items-center">
       <div className="w-full flex justify-between">
         <h2 className="text-grey-900 font-bold text-3xl">{title}</h2>
         {link && (

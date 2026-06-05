@@ -1,17 +1,19 @@
+import { Skeleton } from "@/components/ui/skeleton";
+
 export default function OverviewSkeleton() {
   return (
-    <div className="w-full h-full pt-6 pb-20 md:pb-4 px-6 lg:px-10 animate-pulse">
+    <div className="w-full h-full pt-6 pb-20 md:pb-4 px-6 lg:px-10 flex flex-col">
       {/* HEADER */}
-      <div className="flex justify-between items-center">
-        <div className="h-10 w-48 rounded bg-gray-200" />
-        <div className="h-10 w-28 rounded-lg bg-gray-200" />
+      <div className="flex justify-between items-center bg-white p-6 animate-pulse rounded-xl">
+        <Skeleton className="h-10 w-40" />
+        <Skeleton className="h-10 w-28 rounded-lg" />
       </div>
 
-      {/* BALANCE CARDS */}
-      <div className="py-8 pb-0">
+      {/* BALANCE SECTION */}
+      <div className="py-8 pb-0 bg-white mt-6 animate-pulse rounded-xl">
         <div className="flex flex-col md:flex-row gap-5">
           {[1, 2, 3].map((item) => (
-            <div key={item} className="w-full h-32 rounded-xl bg-gray-200" />
+            <Skeleton key={item} className="h-32 w-full rounded-xl" />
           ))}
         </div>
       </div>
@@ -21,63 +23,66 @@ export default function OverviewSkeleton() {
         {/* LEFT */}
         <div className="w-full lg:w-[58%] flex flex-col gap-6">
           {/* POTS */}
-          <div className="bg-white rounded-xl p-6">
-            <div className="flex justify-between mb-6">
-              <div className="h-6 w-24 bg-gray-200 rounded" />
-              <div className="h-5 w-20 bg-gray-200 rounded" />
+          <section className="bg-white rounded-xl p-6 animate-pulse">
+            <div className="flex justify-between items-center mb-6">
+              <Skeleton className="h-7 w-24" />
+              <Skeleton className="h-5 w-20" />
             </div>
 
-            <div className="h-36 bg-gray-200 rounded-xl" />
-          </div>
+            <div className="flex flex-col md:flex-row gap-4">
+              <Skeleton className="h-32 flex-1 rounded-xl" />
+              <Skeleton className="h-32 flex-1 rounded-xl" />
+            </div>
+          </section>
 
           {/* TRANSACTIONS */}
-          <div className="bg-white rounded-xl p-6">
-            <div className="flex justify-between mb-6">
-              <div className="h-6 w-36 bg-gray-200 rounded" />
-              <div className="h-5 w-20 bg-gray-200 rounded" />
+          <section className="bg-white rounded-xl p-6 animate-pulse">
+            <div className="flex justify-between items-center mb-6">
+              <Skeleton className="h-7 w-32" />
+              <Skeleton className="h-5 w-20" />
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 ">
               {[1, 2, 3, 4, 5].map((item) => (
-                <div key={item} className="h-14 rounded-lg bg-gray-200" />
+                <Skeleton key={item} className="h-14 w-full rounded-lg" />
               ))}
             </div>
-          </div>
+          </section>
         </div>
 
         {/* RIGHT */}
         <div className="w-full lg:w-[42%] flex flex-col gap-6 mt-6 lg:mt-0">
           {/* BUDGETS */}
-          <div className="bg-white rounded-xl p-6">
-            <div className="flex justify-between mb-6">
-              <div className="h-6 w-24 bg-gray-200 rounded" />
-              <div className="h-5 w-20 bg-gray-200 rounded" />
+          <section className="bg-white rounded-xl p-6 animate-pulse">
+            <div className="flex justify-between items-center mb-6">
+              <Skeleton className="h-7 w-24" />
+              <Skeleton className="h-5 w-20" />
             </div>
 
             <div className="flex flex-col md:flex-row gap-6">
-              <div className="w-40 h-40 rounded-full bg-gray-200 mx-auto" />
+              <Skeleton className="h-40 w-40 rounded-full mx-auto" />
 
-              <div className="flex-1 space-y-3">
+              <div className="flex flex-col gap-3 flex-1">
                 {[1, 2, 3, 4].map((item) => (
-                  <div key={item} className="h-12 rounded-lg bg-gray-200" />
+                  <Skeleton key={item} className="h-12 w-full rounded-lg" />
                 ))}
               </div>
             </div>
-          </div>
+          </section>
 
           {/* RECURRING BILLS */}
-          <div className="bg-white rounded-xl p-6">
-            <div className="flex justify-between mb-6">
-              <div className="h-6 w-40 bg-gray-200 rounded" />
-              <div className="h-5 w-20 bg-gray-200 rounded" />
+          <section className="bg-white rounded-xl p-6 animate-pulse">
+            <div className="flex justify-between items-center mb-6">
+              <Skeleton className="h-7 w-40" />
+              <Skeleton className="h-5 w-20" />
             </div>
 
             <div className="space-y-4">
               {[1, 2, 3].map((item) => (
-                <div key={item} className="h-16 rounded-lg bg-gray-200" />
+                <Skeleton key={item} className="h-16 w-full rounded-lg" />
               ))}
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </div>

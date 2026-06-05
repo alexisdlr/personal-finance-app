@@ -5,9 +5,15 @@ type BudgetChartProps = {
   budgets: Budget[];
   transactions: Transaction[];
   children?: React.ReactNode;
+  page?: string;
 };
 
-const BudgetChart = ({ budgets, transactions, children }: BudgetChartProps) => {
+const BudgetChart = ({
+  budgets,
+  transactions,
+  children,
+  page,
+}: BudgetChartProps) => {
   // Calcular el total gastado
 
   const totalSpent = budgets.slice(0, 4).reduce((sum, budget) => {
@@ -22,13 +28,15 @@ const BudgetChart = ({ budgets, transactions, children }: BudgetChartProps) => {
     0,
   );
   // SVG circle properties
-  const radius = 50;
+  const radius = 45;
   const circumference = 2 * Math.PI * radius;
   let offset = 0; // Offset inicial para cada segmento
 
   return (
     <div className="bg-white rounded-lg w-full h-full flex flex-row lg:items-center space-x-6">
-      <div className="relative flex  items-center justify-center w-full h-30 mx-auto ">
+      <div
+        className={`relative flex  items-center justify-center h-30 mx-auto ${page === "overview" ? "w-[60%]" : "W-full"}`}
+      >
         <svg className="w-full transform -rotate-90" viewBox="0 0 115 115">
           <circle
             cx="60"
@@ -66,7 +74,9 @@ const BudgetChart = ({ budgets, transactions, children }: BudgetChartProps) => {
           <p className="text-sm text-grey-500">of ${totalBudgetLimit} limit</p>
         </div>
       </div>
-      <div className="space-y-2 w-full relative grid grid-cols-2 lg:grid-cols-1 gap-4 2xl:gap-4 h-full">
+      <div
+        className={`space-y-2 relative grid grid-cols-2 lg:grid-cols-1 gap-4 2xl:gap-4 h-full ${page === "overview" ? "W-[40%]" : "w-full"}`}
+      >
         {children}
       </div>
     </div>

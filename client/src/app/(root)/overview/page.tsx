@@ -4,21 +4,16 @@ import { useMemo } from "react";
 import { MotionDiv } from "@/components/animated/motion-div";
 import CardBalance from "@/components/overview/card-balance";
 import Button from "@/components/auth/button";
-
-import TotalSaved from "@/components/total-saved";
+import OverviewLeft from "@/components/overview/overview-left";
 import { useGlobalState } from "@/store/global-store";
-import Pots from "@/components/overview/pots-overview";
-import Transactions from "@/components/overview/transactions-overview";
-import BudgetChart from "@/components/overview/budget-chart";
-import RecurringBills from "@/components/overview/recurring-bills";
-import AnimatedSection from "@/components/overview/animated-section";
+
 import useHandleLogout from "@/hooks/use-handle-logout";
 import useOverview from "@/hooks/use-overview";
 import OverviewSkeleton from "@/components/overview/overview-skeleton";
+import OverviewRight from "@/components/overview/overview-right";
 
 export default function Home() {
   const overviewQuery = useOverview();
-  const setGlobalData = useGlobalState((state) => state.setGlobalData);
   const handleLogout = useHandleLogout();
 
   const {
@@ -93,73 +88,17 @@ export default function Home() {
 
           <div className="w-full flex flex-col lg:flex-row lg:gap-6">
             {/* LEFT */}
-            <div className="w-full lg:w-[58%]">
-              {/* POTS SECTION */}
-              <AnimatedSection title="Pots" link="See Details" linkHref="/pots">
-                <div className="w-full flex flex-col gap-6 md:flex-row justify-between">
-                  <TotalSaved total={totalSaved} />
-                  <Pots pots={pots} />
-                </div>
-              </AnimatedSection>
-
-              {/* TRANSACTIONS SECTION */}
-              <AnimatedSection
-                title="Transactions"
-                link="See Details"
-                linkHref="/transactions"
-              >
-                <div className="w-full flex flex-col gap-6 md:flex-row justify-between">
-                  <Transactions transactions={transactions} />
-                </div>
-              </AnimatedSection>
-            </div>
+            <OverviewLeft
+              totalSaved={totalSaved}
+              pots={pots}
+              transactions={transactions}
+            />
             {/* RIGHT */}
-            <div className="w-full h-full lg:h-auto lg:w-[42%]">
-              {/* BUDGETS SECTION */}
-
-              <AnimatedSection
-                title="Budgets"
-                link="See Details"
-                linkHref="/budgets"
-              >
-                <div className="w-full flex flex-col gap-3 md:flex-row justify-between">
-                  <BudgetChart budgets={budgets} transactions={transactions}>
-                    {budgets.slice(0, 4).map((budget) => (
-                      <div
-                        className="flex gap-2 justify-start w-full h-full sm:max-h-10 lg:max-h-12"
-                        key={budget.id}
-                      >
-                        <span
-                          className="w-1 h-full rounded-xl"
-                          style={{ backgroundColor: budget.theme }}
-                        ></span>
-                        <div className="flex flex-col justify-end items-start">
-                          <div className="flex items-center gap-2 h-full">
-                            <span className="text-[10px] text-grey-500">
-                              {budget.category}
-                            </span>
-                          </div>
-                          <span className="text-sm font-bold text-gray-900 text-left">
-                            ${budget.maximum.toFixed(2)}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </BudgetChart>
-                </div>
-              </AnimatedSection>
-
-              {/* RECURRING BILLS SECTION */}
-              <AnimatedSection
-                title="Recurring Bills"
-                link="See Details"
-                linkHref="/recurring"
-              >
-                <div className="w-full h-full flex flex-col gap-3 md:flex-row justify-between">
-                  <RecurringBills recurringData={recurringData} />
-                </div>
-              </AnimatedSection>
-            </div>
+            <OverviewRight
+              budgets={budgets}
+              transactions={transactions}
+              recurringData={recurringData}
+            />
           </div>
         </div>
       )}
