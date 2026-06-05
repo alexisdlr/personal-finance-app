@@ -1,27 +1,25 @@
-"use client"
+"use client";
 import { useRouter } from "next/navigation";
-import Button from "@/components/auth/button";
+import { useEffect, useMemo } from "react";
 import useLogout from "@/hooks/useLogout";
 import toast from "react-hot-toast";
 import { MotionDiv } from "@/components/animated/motion-div";
 import CardBalance from "@/components/overview/card-balance";
-import Link from "next/link";
-import Image from "next/image";
+import Button from "@/components/auth/button";
+
 import TotalSaved from "@/components/total-saved";
 import { useGlobalState } from "@/store/global-store";
 import useFetchOverviewData from "@/hooks/use-get-overview-data";
-import { useEffect, useMemo } from "react";
 import Pots from "@/components/overview/pots-overview";
 import Transactions from "@/components/overview/transactions-overview";
 import BudgetChart from "@/components/overview/budget-chart";
 import RecurringBills from "@/components/overview/recurring-bills";
 import AnimatedSection from "@/components/overview/animated-section";
-import { formatPrice } from "@/lib/utils";
 
 export default function Home() {
-  const overviewQuery = useFetchOverviewData()
+  const overviewQuery = useFetchOverviewData();
   const setGlobalData = useGlobalState((state) => state.setGlobalData);
-  const router = useRouter()
+  const router = useRouter();
 
   const { mutateAsync: logout } = useLogout();
 
@@ -48,29 +46,38 @@ export default function Home() {
     }
   };
 
-  const { balance, pots, transactions, budgets, paidBills, totalUpcoming, dueSoon } = useGlobalState()
-
-
-  const totalSaved = useMemo(() =>
-    pots.reduce((sum, item) => sum + item.total, 0), [pots]
-  );
-
-  const recurringData = useMemo(() => ({
+  const {
+    balance,
+    pots,
+    transactions,
+    budgets,
     paidBills,
     totalUpcoming,
-    dueSoon
-  }), [paidBills, totalUpcoming, dueSoon]);
+    dueSoon,
+  } = useGlobalState();
+
+  const totalSaved = useMemo(
+    () => pots.reduce((sum, item) => sum + item.total, 0),
+    [pots],
+  );
+
+  const recurringData = useMemo(
+    () => ({
+      paidBills,
+      totalUpcoming,
+      dueSoon,
+    }),
+    [paidBills, totalUpcoming, dueSoon],
+  );
 
   return (
     <div className="w-full h-full pt-6 pb-20 md:pb-4 px-6 lg:px-10 flex flex-col">
-      <MotionDiv
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-
+      <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <header className="flex justify-between items-center">
-          <h1 className="text-grey-900 font-bold text-3xl" >Overview</h1>
-          <Button className="px-8 text-xs font-semibold" onClick={handleLogout}>Logout</Button>
+          <h1 className="text-grey-900 font-bold text-3xl">Overview</h1>
+          <Button className="px-8 text-xs font-semibold" onClick={handleLogout}>
+            Logout
+          </Button>
         </header>
       </MotionDiv>
 
@@ -78,11 +85,20 @@ export default function Home() {
       <MotionDiv
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="py-8 w-full">
-        <div className="flex flex-col md:flex-row justify-start md:justify-between gap-5 flex-wrap items-center">
+        className="py-8 w-full"
+      >
+        <div className="flex flex-col md:flex-row justify-start md:justify-between gap-5 flex-wrap lg:flex-nowrap items-center">
           <CardBalance type="Current Balance" value={balance?.current} />
-          <CardBalance type="Income" value={balance?.income} classname="bg-white text-grey-500 shadow-lg" />
-          <CardBalance type="Expenses" value={balance?.expenses} classname="bg-white text-grey-500 shadow-lg" />
+          <CardBalance
+            type="Income"
+            value={balance?.income}
+            classname="bg-white text-grey-500 shadow-lg"
+          />
+          <CardBalance
+            type="Expenses"
+            value={balance?.expenses}
+            classname="bg-white text-grey-500 shadow-lg"
+          />
         </div>
       </MotionDiv>
 
@@ -98,31 +114,45 @@ export default function Home() {
           </AnimatedSection>
 
           {/* TRANSACTIONS SECTION */}
-          <AnimatedSection title="Transactions" link="See Details" linkHref="/transactions">
+          <AnimatedSection
+            title="Transactions"
+            link="See Details"
+            linkHref="/transactions"
+          >
             <div className="w-full flex flex-col gap-6 md:flex-row justify-between">
               <Transactions transactions={transactions} />
             </div>
           </AnimatedSection>
-
         </div>
         {/* RIGHT */}
         <div className="w-full h-full lg:h-auto lg:w-[40%]">
           {/* BUDGETS SECTION */}
 
-          <AnimatedSection title="Budgets" link="See Details" linkHref="/budgets">
+          <AnimatedSection
+            title="Budgets"
+            link="See Details"
+            linkHref="/budgets"
+          >
             <div className="w-full  flex flex-col gap-3 md:flex-row justify-between">
               <BudgetChart budgets={budgets} transactions={transactions}>
                 {budgets.slice(0, 4).map((budget) => (
-                  <div className="flex gap-2 justify-start w-full h-full sm:max-h-10 lg:max-h-12" key={budget.id}>
+                  <div
+                    className="flex gap-2 justify-start w-full h-full sm:max-h-10 lg:max-h-12"
+                    key={budget.id}
+                  >
                     <span
                       className="w-1 h-full rounded-xl"
                       style={{ backgroundColor: budget.theme }}
                     ></span>
                     <div className="flex flex-col justify-end items-start">
                       <div className="flex items-center gap-2 h-full">
-                        <span className="text-[10px] text-grey-500">{budget.category}</span>
+                        <span className="text-[10px] text-grey-500">
+                          {budget.category}
+                        </span>
                       </div>
-                      <span className="text-sm font-bold text-gray-900 text-left">${budget.maximum.toFixed(2)}</span>
+                      <span className="text-sm font-bold text-gray-900 text-left">
+                        ${budget.maximum.toFixed(2)}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -131,16 +161,17 @@ export default function Home() {
           </AnimatedSection>
 
           {/* RECURRING BILLS SECTION */}
-          <AnimatedSection title="Recurring Bills" link="See Details" linkHref="/recurring">
+          <AnimatedSection
+            title="Recurring Bills"
+            link="See Details"
+            linkHref="/recurring"
+          >
             <div className="w-full h-full flex flex-col gap-3 md:flex-row justify-between">
               <RecurringBills recurringData={recurringData} />
             </div>
           </AnimatedSection>
         </div>
-
       </div>
-
-
     </div>
   );
 }

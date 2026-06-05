@@ -26,7 +26,7 @@ export default function AuthLayout({
           alt="logo"
           className="hidden lg:block absolute top-8 left-6"
         />
-        <div className="py-4 3xl:flex max-w-md rounded-xl absolute bottom-6 left-8 p-2 w-full text-white flex-col items-start justify-start">
+        <div className="hidden lg:block py-4 3xl:flex max-w-md rounded-xl absolute bottom-10 left-10 p-2 w-full text-white flex-col items-start justify-start">
           <div className="max-w-[450px] flex flex-col gap-6">
             <h2 className=" font-bold text-3xl leading-[120%]">
               Keep track of your money and save for your future
@@ -40,7 +40,7 @@ export default function AuthLayout({
       </div>
 
       {/* RIGHT */}
-      <div className="w-full h-full lg:w-[60%] flex justify-center items-center">
+      <div className="w-full h-full px-4 lg:px-0 lg:w-[60%] flex justify-center items-center">
         {children}
       </div>
     </div>
