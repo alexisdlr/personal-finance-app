@@ -7,8 +7,8 @@ import Button from "@/components/auth/button";
 import OverviewLeft from "@/components/overview/overview-left";
 import { useGlobalState } from "@/store/global-store";
 
-import useHandleLogout from "@/hooks/use-handle-logout";
-import useOverview from "@/hooks/use-overview";
+import useHandleLogout from "@/hooks/auth/use-handle-logout";
+import useOverview from "@/hooks/overview/use-overview";
 import OverviewSkeleton from "@/components/overview/overview-skeleton";
 import OverviewRight from "@/components/overview/overview-right";
 

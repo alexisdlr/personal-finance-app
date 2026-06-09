@@ -1,5 +1,11 @@
 "use client";
 
+import * as z from "zod";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import { BUDGET_CATEGORIES, BUDGET_THEMES } from "@/lib/budget-options";
+import { CreateBudgetSchema } from "@/lib/validator";
+
 import {
   Dialog,
   DialogContent,
@@ -7,8 +13,19 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+import { Input } from "@/components/ui/input";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -16,8 +33,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+} from "../ui/select";
 
 type AddBudgetModalProps = {
   open: boolean;
@@ -28,6 +44,19 @@ export default function AddBudgetModal({
   open,
   onOpenChange,
 }: AddBudgetModalProps) {
+  const form = useForm<z.infer<typeof CreateBudgetSchema>>({
+    resolver: zodResolver(CreateBudgetSchema),
+    defaultValues: {
+      category: "",
+      maximum: 0,
+      theme: "",
+    },
+  });
+
+  const onSubmit = (data: z.infer<typeof CreateBudgetSchema>) => {
+    console.log("Form data:", data);
+    // Aquí puedes llamar a tu función para crear el presupuesto usando los datos del formulario
+  };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[560px] bg-white rounded-lg p-6 sm:p-10">
@@ -42,64 +71,121 @@ export default function AddBudgetModal({
           </DialogDescription>
         </DialogHeader>
 
-        <form className="flex flex-col gap-5 mt-4">
-          {/* CATEGORY */}
-          <div className="flex flex-col gap-2">
-            <label className="text-xs font-bold text-gray-500">
-              Budget Category
-            </label>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-5 mt-4"
+          >
+            {/* CATEGORY */}
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs font-bold text-gray-500">
+                    Budget Category
+                  </FormLabel>
 
-            <Select>
-              <SelectTrigger className="w-full p-3">
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="entertainment">Entertainment</SelectItem>
-                  <SelectItem value="bills">Bills</SelectItem>
-                  <SelectItem value="dining-out">Dining Out</SelectItem>
-                  <SelectItem value="personal-care">Personal Care</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-full p-3">
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
 
-          {/* MAXIMUM */}
-          <div className="flex flex-col gap-2">
-            <label className="text-xs font-bold text-gray-500">
-              Maximum Spend
-            </label>
+                    <SelectContent>
+                      <SelectGroup>
+                        {BUDGET_CATEGORIES.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
 
-            <Input
-              type="number"
-              placeholder="e.g. 2000"
-              className="h-12 rounded-lg border px-4"
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
 
-          {/* THEME */}
-          <div className="flex flex-col gap-2">
-            <label className="text-xs font-bold text-gray-500">Theme</label>
+            {/* MAXIMUM */}
+            <FormField
+              control={form.control}
+              name="maximum"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs font-bold text-gray-500">
+                    Maximum Spend
+                  </FormLabel>
 
-            <Select>
-              <SelectTrigger className="w-full p-3">
-                <SelectValue placeholder="Theme" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="green">Green</SelectItem>
-                  <SelectItem value="blue">Blue</SelectItem>
-                  <SelectItem value="orange">Orange</SelectItem>
-                  <SelectItem value="navy">Navy</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="e.g. 2000"
+                      className="h-12 rounded-lg"
+                      value={field.value || ""}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    />
+                  </FormControl>
 
-          <Button type="submit" className="h-12 mt-2">
-            Add Budget
-          </Button>
-        </form>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* THEME */}
+            <FormField
+              control={form.control}
+              name="theme"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs font-bold text-gray-500">
+                    Theme
+                  </FormLabel>
+
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-full p-3">
+                        <SelectValue placeholder="Select a theme" />
+                      </SelectTrigger>
+                    </FormControl>
+
+                    <SelectContent>
+                      <SelectGroup>
+                        {BUDGET_THEMES.map((theme) => (
+                          <SelectItem key={theme} value={theme}>
+                            {theme}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type="submit"
+              className="h-12 mt-2"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                "Add Budget"
+              )}
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

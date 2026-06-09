@@ -31,3 +31,11 @@ export const UserSchemaSignUp = z.object({
     .string()
     .min(3, { message: "Last name must be at least 3 characters" }),
 });
+
+export const CreateBudgetSchema = z.object({
+  category: z.string().min(1, { message: "Category is required" }),
+  maximum: z
+    .number()
+    .min(0, { message: "Maximum spend must be a positive number" }),
+  theme: z.string().min(1, { message: "Theme is required" }),
+});

@@ -17,7 +17,8 @@ const Budgets = () => {
         </div>
         <div className="flex items-center gap-2">
           <Button
-            className="px-4 py-6 text-md font-bold mr-3 rounded-lg"
+            variant="default"
+            className="px-4 py-6 text-md font-bold mr-3 rounded-lg bg-black text-white"
             onClick={() => setIsAddBudgetModalOpen(true)}
           >
             + Add New Budget

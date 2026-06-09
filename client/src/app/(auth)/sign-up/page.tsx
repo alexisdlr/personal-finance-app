@@ -1,7 +1,7 @@
 "use client";
 import * as z from "zod";
 
-import useRegister from "@/hooks/use-register";
+import useRegister from "@/hooks/auth/use-register";
 
 import Link from "next/link";
 import Button from "@/components/auth/button";
