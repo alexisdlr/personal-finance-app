@@ -5,7 +5,7 @@ type BudgetChartProps = {
   budgets: Budget[];
   transactions: Transaction[];
   children?: React.ReactNode;
-  page?: string;
+  page?: "overview" | "budget";
 };
 
 const BudgetChart = ({
@@ -33,7 +33,9 @@ const BudgetChart = ({
   let offset = 0; // Offset inicial para cada segmento
 
   return (
-    <div className="bg-white rounded-lg w-full h-full flex flex-row lg:items-center space-x-6">
+    <div
+      className={`bg-white rounded-lg w-full h-full flex lg:items-center space-x-6 ${page === "overview" ? "flex-row" : "flex-col"}`}
+    >
       <div
         className={`relative flex  items-center justify-center h-30 mx-auto ${page === "overview" ? "w-[60%]" : "W-full"}`}
       >
@@ -46,7 +48,6 @@ const BudgetChart = ({
             stroke="#e5e7eb"
             strokeWidth="12"
           />
-          {/* Dibujar cada segmento */}
           {budgets.map((category, index) => {
             const segmentLength =
               (category.maximum / totalBudgetLimit) * circumference;
