@@ -26,7 +26,7 @@ const BudgetCard = ({ budget, transactions, theme }: BudgetCardProps) => {
 
   return (
     <div className="max-w-[600px] w-full h-full">
-      <div className="bg-white p-4 rounded-lg shadow-md flex flex-col gap-2">
+      <div className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-2">
         <div className="flex flex-col">
           <div className="flex gap-4 items-center">
             <div

@@ -4,9 +4,11 @@ import BudgetChart from "@/components/overview/budget-chart";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { useGlobalState } from "@/store/global-store";
-
+import { useState } from "react";
+import AddBudgetModal from "@/components/budgets/add-budget-modal";
 const Budgets = () => {
   const { budgets, transactions } = useGlobalState();
+  const [isAddBudgetModalOpen, setIsAddBudgetModalOpen] = useState(false);
   return (
     <div className="w-full h-full pt-6 sm:px-6 px-3 lg:px-10 flex flex-col pb-24">
       <div className="flex justify-between items-center my-2">
@@ -14,14 +16,17 @@ const Budgets = () => {
           <h1 className="text-2xl font-bold">Budgets</h1>
         </div>
         <div className="flex items-center gap-2">
-          <Button className="px-3 py-4 text-xs font-semibold">
+          <Button
+            className="px-4 py-6 text-md font-bold mr-3 rounded-lg"
+            onClick={() => setIsAddBudgetModalOpen(true)}
+          >
             + Add New Budget
           </Button>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 ">
         {/* BUDGETS CHART */}
-        <div className="bg-white p-3 h-fit rounded-lg shadow-md">
+        <div className="bg-white p-8 h-fit rounded-lg shadow-md mt-2">
           <BudgetChart
             page="budget"
             budgets={budgets}
@@ -88,6 +93,10 @@ const Budgets = () => {
           ))}
         </div>
       </div>
+      <AddBudgetModal
+        open={isAddBudgetModalOpen}
+        onOpenChange={(open) => setIsAddBudgetModalOpen(open)}
+      />
     </div>
   );
 };
