@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import ReactQueryProvider from "@/components/providers/react-query-provider";
 import ToastProvider from "@/components/providers/toast-provider";
+import ModalRenderer from "@/components/modals/modal-renderer";
 
 const publicSans = localFont({
   src: "./fonts/PublicSans-VariableFont_wght.ttf",
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={publicSans.className}>
         <ReactQueryProvider>
           <ToastProvider />
+          <ModalRenderer />
           {children}
         </ReactQueryProvider>
       </body>

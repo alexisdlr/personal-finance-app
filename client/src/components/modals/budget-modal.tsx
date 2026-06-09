@@ -1,7 +1,7 @@
 "use client";
 
 import * as z from "zod";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { BUDGET_CATEGORIES, BUDGET_THEMES } from "@/lib/budget-options";
 import { CreateBudgetSchema } from "@/lib/validator";
@@ -34,40 +34,79 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-
-type AddBudgetModalProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+import { useModalStore } from "@/store/modal-store";
+type BudgetModalProps = {
+  mode: "create" | "edit";
 };
+import { useEffect } from "react";
+export default function BudgetModal({ mode }: BudgetModalProps) {
+  const isOpen = useModalStore((state) => state.isOpen);
+  const closeModal = useModalStore((state) => state.closeModal);
+  const payload = useModalStore((state) => state.payload);
 
-export default function AddBudgetModal({
-  open,
-  onOpenChange,
-}: AddBudgetModalProps) {
+  const budget = payload;
+
   const form = useForm<z.infer<typeof CreateBudgetSchema>>({
     resolver: zodResolver(CreateBudgetSchema),
     defaultValues: {
-      category: "",
-      maximum: 0,
-      theme: "",
+      category: budget?.category ?? "",
+      maximum: budget?.maximum ?? 0,
+      theme: budget?.theme ?? "",
     },
   });
+  useEffect(() => {
+    if (budget) {
+      form.reset({
+        category: budget.category,
+        maximum: budget.maximum,
+        theme: budget.theme,
+      });
+    } else {
+      form.reset({
+        category: "",
+        maximum: 0,
+        theme: "",
+      });
+    }
+  }, [budget, form]);
 
-  const onSubmit = (data: z.infer<typeof CreateBudgetSchema>) => {
-    console.log("Form data:", data);
-    // Aquí puedes llamar a tu función para crear el presupuesto usando los datos del formulario
+  const onSubmit = async (data: z.infer<typeof CreateBudgetSchema>) => {
+    try {
+      if (mode === "create") {
+        console.log("Create", data);
+
+        // await createBudgetMutation.mutateAsync(data);
+      } else {
+        console.log("Edit", {
+          id: budget.id,
+          ...data,
+        });
+
+        // await updateBudgetMutation.mutateAsync(...)
+      }
+
+      closeModal();
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) closeModal();
+      }}
+    >
       <DialogContent className="sm:max-w-[560px] bg-white rounded-lg p-6 sm:p-10">
         <DialogHeader>
           <DialogTitle className="text-3xl font-bold">
-            Add New Budget
+            {mode === "create" ? "Add New Budget" : "Edit Budget"}
           </DialogTitle>
 
           <DialogDescription className="text-base font-normal text-gray-500 mt-4">
-            Choose a category to set a spending budget. These categories can
-            help you monitor spending.
+            {mode === "create"
+              ? "Choose a category to set a spending budget."
+              : "Update your budget settings."}
           </DialogDescription>
         </DialogHeader>
 
@@ -180,8 +219,10 @@ export default function AddBudgetModal({
             >
               {form.formState.isSubmitting ? (
                 <Loader2 className="animate-spin" />
-              ) : (
+              ) : mode === "create" ? (
                 "Add Budget"
+              ) : (
+                "Save Changes"
               )}
             </Button>
           </form>
