@@ -47,7 +47,7 @@ const TransactionsPage = () => {
   }, [transactions, categoryFilter, sortBy]);
 
   return (
-    <div className="w-full h-screen pt-6 sm:px-6 px-3 lg:px-10 flex flex-col pb-24">
+    <div className="w-full h-full sm:h-screen pt-6 sm:px-6 px-3 lg:px-10 flex flex-col pb-24">
       <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-grey-900 font-bold text-3xl mt-2 mb-10">
           Transactions

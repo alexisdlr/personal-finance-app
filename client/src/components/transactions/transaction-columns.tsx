@@ -81,7 +81,7 @@ export const columns = [
       return (
         <p
           className={cn(
-            "text-sm font-bold w-full ml-auto text-right",
+            "text-xs font-bold w-full ml-auto text-right",
             isNegative ? "text-gray-900" : "text-secondary-green",
           )}
         >
