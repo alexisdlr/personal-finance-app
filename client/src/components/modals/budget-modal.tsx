@@ -1,6 +1,9 @@
 "use client";
-
 import * as z from "zod";
+import useCreateBudget from "@/hooks/budgets/use-create-budget";
+import { useEffect } from "react";
+import { useModalStore } from "@/store/modal-store";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { BUDGET_CATEGORIES, BUDGET_THEMES } from "@/lib/budget-options";
@@ -34,16 +37,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { useModalStore } from "@/store/modal-store";
+
 type BudgetModalProps = {
   mode: "create" | "edit";
 };
-import { useEffect } from "react";
+
 export default function BudgetModal({ mode }: BudgetModalProps) {
   const isOpen = useModalStore((state) => state.isOpen);
   const closeModal = useModalStore((state) => state.closeModal);
   const payload = useModalStore((state) => state.payload);
-
+  const createBudgetMutation = useCreateBudget();
   const budget = payload;
 
   const form = useForm<z.infer<typeof CreateBudgetSchema>>({
@@ -75,7 +78,17 @@ export default function BudgetModal({ mode }: BudgetModalProps) {
       if (mode === "create") {
         console.log("Create", data);
 
-        // await createBudgetMutation.mutateAsync(data);
+        await createBudgetMutation.mutateAsync(data);
+
+        if (createBudgetMutation.isSuccess) {
+          console.log("Budget created successfully");
+        } else {
+          console.error("Error creating budget:", createBudgetMutation.error);
+        }
+
+        if (createBudgetMutation.isError) {
+          console.error("Error creating budget:", createBudgetMutation.error);
+        }
       } else {
         console.log("Edit", {
           id: budget.id,

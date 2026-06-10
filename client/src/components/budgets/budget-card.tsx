@@ -1,22 +1,26 @@
 import { formatPrice } from "@/lib/utils";
 import { Budget, Transaction } from "@/types/global";
-import React from "react";
+import { Edit, Ellipsis } from "lucide-react";
+import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import LatestSpending from "./latest-sepending";
+import { useModalStore } from "@/store/modal-store";
 
 type BudgetCardProps = {
   budget: Budget;
   transactions: Transaction[];
   theme: string;
-  // onClick?: () => void
-  // onMouseEnter?: () => void
-  // onMouseLeave?: () => void
-  // onFocus?: () => void
-  // onBlur?: () => void
-  // onKeyDown?: (event: React.KeyboardEvent) => void
-  // onKeyUp?: (event: React.KeyboardEvent) => void
 };
 
 const BudgetCard = ({ budget, transactions, theme }: BudgetCardProps) => {
+  const { openModal } = useModalStore();
   const spent = transactions
     .filter(
       (transaction) =>
@@ -29,11 +33,50 @@ const BudgetCard = ({ budget, transactions, theme }: BudgetCardProps) => {
       <div className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-2">
         <div className="flex flex-col">
           <div className="flex gap-4 items-center">
-            <div
-              className="size-4 rounded-full"
-              style={{ backgroundColor: `${theme}` }}
-            ></div>
-            <h2 className="text-xl font-bold">{budget.category}</h2>
+            <div className="flex gap-2 items-center h-full">
+              <div
+                className="size-4 rounded-full"
+                style={{ backgroundColor: `${theme}` }}
+              ></div>
+              <h2 className="text-xl font-bold">{budget.category}</h2>
+            </div>
+            <div className="ml-auto relative">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    {" "}
+                    <Ellipsis />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-white rounded-xl shadow-md p-2">
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem
+                      className="cursor-pointer font-light"
+                      onClick={() =>
+                        openModal("EDIT_BUDGET", {
+                          id: budget.id,
+                          category: budget.category,
+                          maximum: budget.maximum,
+                          theme: budget.theme,
+                        })
+                      }
+                    >
+                      Edit Budget
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-gray-200 my-[2px] max-w-[90%] mx-auto" />
+
+                    <DropdownMenuItem
+                      className="cursor-pointer font-light text-red-500"
+                      onClick={() =>
+                        openModal("DELETE_BUDGET", { id: budget.id })
+                      }
+                    >
+                      Delete Budget
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
           <span className="text-sm my-4 text-gray-500">
             Maximum of {formatPrice(budget.maximum)}

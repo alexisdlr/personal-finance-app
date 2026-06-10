@@ -10,7 +10,7 @@ type CreateBudgetPayload = {
 };
 
 interface BudgetResponse {
-  budget?: {
+  newBudget?: {
     id: string;
     amount: number;
     category: string;
@@ -21,15 +21,19 @@ interface BudgetResponse {
 }
 
 const useCreateBudget = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<BudgetResponse, Error, CreateBudgetPayload>({
     mutationFn: async (budgetData: CreateBudgetPayload) => {
       const response = await post({ url, data: budgetData });
       return response;
     },
     onSuccess: (data: BudgetResponse) => {
-      if (data.budget) {
-        useQueryClient().invalidateQueries({
-          queryKey: ["budgets", "overview"],
+      const message = data.message || "";
+
+      if (message.toLowerCase() === "success") {
+        queryClient.invalidateQueries({
+          queryKey: ["overviewData"],
         });
       } else if (data.error) {
         console.error("Registration error:", data.error);

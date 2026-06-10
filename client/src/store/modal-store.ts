@@ -8,7 +8,7 @@ type ModalType =
   | "CREATE_POT"
   | "ADD_MONEY"
   | "WITHDRAW_MONEY"
-  | "DELETE";
+  | "DELETE_BUDGET";
 
 type ModalPayload = any;
 

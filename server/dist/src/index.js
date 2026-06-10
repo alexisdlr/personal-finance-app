@@ -12,6 +12,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 /* ROUTE IMPORTS */
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
+const budgets_routes_1 = __importDefault(require("./routes/budgets.routes"));
 const auth_middleware_1 = require("./middleware/auth-middleware");
 const error_handler_1 = require("./middleware/error-handler");
 const pots_routes_1 = __importDefault(require("./routes/pots.routes"));
@@ -34,6 +35,7 @@ app.use((0, cors_1.default)({
 /* ROUTES */
 app.use("/api", auth_routes_1.default); // http://localhost:8000/api/login
 app.use("/api/pots", auth_middleware_1.authenticateToken, pots_routes_1.default);
+app.use("/api/budgets", auth_middleware_1.authenticateToken, budgets_routes_1.default);
 app.use("/api/overview", auth_middleware_1.authenticateToken, overview_routes_1.default);
 app.use("/api", check_session_routes_1.default);
 // app.use("/products", productRoutes); // http://localhost:8000/products

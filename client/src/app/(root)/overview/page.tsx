@@ -5,29 +5,27 @@ import { MotionDiv } from "@/components/animated/motion-div";
 import CardBalance from "@/components/overview/card-balance";
 import Button from "@/components/auth/button";
 import OverviewLeft from "@/components/overview/overview-left";
-import { useGlobalState } from "@/store/global-store";
 
 import useHandleLogout from "@/hooks/auth/use-handle-logout";
-import useOverview from "@/hooks/overview/use-overview";
 import OverviewSkeleton from "@/components/overview/overview-skeleton";
 import OverviewRight from "@/components/overview/overview-right";
+import useFetchOverviewData from "@/hooks/overview/use-get-overview-data";
+import { Pot } from "@/types/global";
 
 export default function Home() {
-  const overviewQuery = useOverview();
+  const overviewQuery = useFetchOverviewData();
   const handleLogout = useHandleLogout();
 
-  const {
-    balance,
-    pots,
-    transactions,
-    budgets,
-    paidBills,
-    totalUpcoming,
-    dueSoon,
-  } = useGlobalState();
+  const balance = overviewQuery.data?.data.balance;
+  const pots = overviewQuery.data?.data.pots || [];
+  const transactions = overviewQuery.data?.data.transactions || [];
+  const budgets = overviewQuery.data?.data.budgets || [];
+  const paidBills = overviewQuery.data?.data.paidBills || 0;
+  const totalUpcoming = overviewQuery.data?.data.totalUpcoming || 0;
+  const dueSoon = overviewQuery.data?.data.dueSoon || 0;
 
   const totalSaved = useMemo(
-    () => pots.reduce((sum, item) => sum + item.total, 0),
+    () => pots.reduce((sum: number, item: Pot) => sum + item.total, 0),
     [pots],
   );
 

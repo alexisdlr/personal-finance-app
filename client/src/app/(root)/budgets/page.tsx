@@ -1,13 +1,19 @@
 "use client";
+
 import BudgetCard from "@/components/budgets/budget-card";
 import BudgetChart from "@/components/overview/budget-chart";
 import { Button } from "@/components/ui/button";
+import useFetchOverviewData from "@/hooks/overview/use-get-overview-data";
 import { formatPrice } from "@/lib/utils";
-import { useGlobalState } from "@/store/global-store";
 import { useModalStore } from "@/store/modal-store";
+import { Budget, Transaction } from "@/types/global";
+
 const Budgets = () => {
-  const { budgets, transactions } = useGlobalState();
+  const overviewQuery = useFetchOverviewData();
+  const budgets = overviewQuery.data?.data.budgets ?? [];
+  const transactions = overviewQuery.data?.data.transactions ?? [];
   const { openModal } = useModalStore();
+
   return (
     <div className="w-full h-full pt-6 sm:px-6 px-3 lg:px-10 flex flex-col pb-24">
       <div className="flex justify-between items-center my-2">
@@ -37,7 +43,7 @@ const Budgets = () => {
                 Spending Summary
               </h2>
               <div className="flex flex-col gap-2 w-full ">
-                {budgets.map((budget) => (
+                {budgets.map((budget: Budget) => (
                   <>
                     <div
                       className="flex flex-col gap-2 justify-start w-full h-full sm:max-h-10 lg:max-h-12"
@@ -58,11 +64,11 @@ const Budgets = () => {
                             {formatPrice(
                               transactions
                                 .filter(
-                                  (transaction) =>
+                                  (transaction: Transaction) =>
                                     transaction.category === budget.category,
                                 )
                                 .reduce(
-                                  (acc, transaction) =>
+                                  (acc: number, transaction: Transaction) =>
                                     acc + Math.abs(transaction.amount),
                                   0,
                                 ),
@@ -81,12 +87,13 @@ const Budgets = () => {
         </div>
         {/* BUDGETS LIST */}
         <div className="w-full p-3 flex flex-col gap-2">
-          {budgets.map((budget) => (
+          {budgets.map((budget: Budget) => (
             <BudgetCard
               key={budget.id}
               budget={budget}
               transactions={transactions.filter(
-                (transaction) => transaction.category === budget.category,
+                (transaction: Transaction) =>
+                  transaction.category === budget.category,
               )}
               theme={budget.theme}
             />
