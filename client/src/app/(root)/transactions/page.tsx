@@ -14,37 +14,7 @@ import {
   columns,
   mobileColumns,
 } from "@/components/transactions/transaction-columns";
-
-const sortTransactions = (transactions: Transaction[], sortBy: SortOption) => {
-  const sorted = [...transactions];
-
-  switch (sortBy) {
-    case "latest":
-      return sorted.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-      );
-
-    case "oldest":
-      return sorted.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-      );
-
-    case "atoz":
-      return sorted.sort((a, b) => a.name.localeCompare(b.name));
-
-    case "ztoa":
-      return sorted.sort((a, b) => b.name.localeCompare(a.name));
-
-    case "highest":
-      return sorted.sort((a, b) => b.amount - a.amount);
-
-    case "lowest":
-      return sorted.sort((a, b) => a.amount - b.amount);
-
-    default:
-      return sorted;
-  }
-};
+import { sortTransactions } from "@/lib/utils";
 
 const TransactionsPage = () => {
   const { transactions } = useTransactions();

@@ -21,6 +21,7 @@ const columnHelper = createColumnHelper<Transaction>();
 export const columns = [
   columnHelper.accessor((row) => row.name, {
     id: "Name",
+
     cell: (info) => (
       <div className="font-bold flex gap-2 items-center">
         <Image
@@ -30,25 +31,37 @@ export const columns = [
           width={30}
           height={30}
         />
-        <span className="text-xs text-gray-500">{info.getValue()}</span>
+        <span className="text-sm font-bold text-[#201F24]">
+          {info.getValue()}
+        </span>
       </div>
     ),
     header: () => (
-      <span className="text-xs text-gray-500">Recipient / Sender</span>
+      <span className="text-xs  text-[#696868]">Recipient / Sender</span>
     ),
   }),
 
   columnHelper.accessor("category", {
-    cell: (info) => <p className="text-xs text-gray-500">{info.getValue()}</p>,
-    header: () => <span className="text-xs text-gray-500">Category</span>,
+    cell: (info) => (
+      <p className="text-xs text-[#696868] text-center mx-auto">
+        {info.getValue()}
+      </p>
+    ),
+    header: () => (
+      <span className="text-xs text-[#696868] text-center mx-auto">
+        Category
+      </span>
+    ),
   }),
 
   columnHelper.accessor("date", {
     header: () => (
-      <span className="text-xs text-gray-500">Transaction Date</span>
+      <span className="text-xs text-[#696868] text-center mx-auto">
+        Transaction Date
+      </span>
     ),
     cell: (info) => (
-      <p className="text-xs text-gray-500">
+      <p className="text-xs text-[#696868] text-center mx-auto">
         {formatDate(info.getValue().toString())}
       </p>
     ),
@@ -57,7 +70,9 @@ export const columns = [
   columnHelper.accessor("amount", {
     id: "amount",
 
-    header: () => <span className="text-xs text-gray-500">Amount</span>,
+    header: () => (
+      <span className="text-xs text-[#696868] text-right ml-auto">Amount</span>
+    ),
 
     cell: (info) => {
       const amount = info.getValue();
@@ -66,7 +81,7 @@ export const columns = [
       return (
         <p
           className={cn(
-            "text-xs font-bold",
+            "text-sm font-bold w-full ml-auto text-right",
             isNegative ? "text-gray-900" : "text-secondary-green",
           )}
         >

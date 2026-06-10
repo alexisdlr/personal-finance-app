@@ -11,12 +11,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-import {
-  ArrowDown,
-  ArrowUp,
-  ChevronsUpDown,
-  MoreHorizontal,
-} from "lucide-react";
+import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 
 import { Button } from "../ui/button";
 
