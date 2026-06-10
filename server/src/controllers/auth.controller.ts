@@ -5,7 +5,10 @@ const prisma = new PrismaClient();
 
 const jwt = require("jsonwebtoken");
 
-export const login: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+export const login: RequestHandler = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
     const { email, password } = req.body;
 
@@ -13,7 +16,7 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
       res.status(401).json({ error: "Invalid Credentials" });
-      return
+      return;
     }
 
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
@@ -30,8 +33,8 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
       id: user.id,
       email: user.email,
       name: user.firstName,
-      lastName: user.lastName
-    }
+      lastName: user.lastName,
+    };
 
     res.status(200).json({ message: "Login Success!", user: userRes });
   } catch (error) {
@@ -40,7 +43,10 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
   }
 };
 
-export const signUp: RequestHandler = async (req: Request, res: Response): Promise<void> => {
+export const signUp: RequestHandler = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   try {
     const { name, email, password, lastName } = req.body;
 
@@ -49,7 +55,7 @@ export const signUp: RequestHandler = async (req: Request, res: Response): Promi
         .status(200)
         .json({ message: "Something went wrong, missing fields..." });
 
-      return
+      return;
     }
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -62,7 +68,7 @@ export const signUp: RequestHandler = async (req: Request, res: Response): Promi
 
     if (existUser !== null) {
       res.status(500).json({ error: "User Already Exists..." });
-      return
+      return;
     }
 
     const newUser = await prisma.user.create({
@@ -76,7 +82,7 @@ export const signUp: RequestHandler = async (req: Request, res: Response): Promi
 
     if (!newUser) {
       res.status(500).json({ error: "Something went wrong!" });
-      return
+      return;
     }
 
     const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
@@ -87,7 +93,8 @@ export const signUp: RequestHandler = async (req: Request, res: Response): Promi
     res.cookie("finance-app-token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 1000, // Expira en 1 hora
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 60 * 60 * 1000,
     });
 
     // Responder con detalles del usuario creado
@@ -108,11 +115,14 @@ export const signUp: RequestHandler = async (req: Request, res: Response): Promi
 
 export const logout = async (req: Request, res: Response): Promise<void> => {
   try {
-    res.clearCookie("finance-app-token");
+    res.clearCookie("finance-app-token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    });
     res.status(200).json({ message: "Logout Success!" });
   } catch (error) {
-    console.error("Error logout", error)
-    res.status(500).json({error: "Logout Error, something went wrong!"})
+    console.error("Error logout", error);
+    res.status(500).json({ error: "Logout Error, something went wrong!" });
   }
-  
-}
+};

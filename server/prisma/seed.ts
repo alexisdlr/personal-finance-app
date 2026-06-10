@@ -1,20 +1,34 @@
-import { PrismaClient } from '@prisma/client';
-import data from './data.json';
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
+
+import data from "./data.json";
 
 const prisma = new PrismaClient();
 
 async function main() {
+  const salt = bcrypt.genSaltSync(10);
+
+  const password = "root";
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const user = await prisma.user.create({
+    data: {
+      email: "demo@example.com",
+      password: hashedPassword,
+      firstName: "Demo",
+      lastName: "User",
+    },
+  });
   // Insertar balance
   const balance = await prisma.balance.create({
     data: {
       current: data.balance.current,
       income: data.balance.income,
       expenses: data.balance.expenses,
-      user: { connect: { id: 1 } }, // Conectar con el usuario
+      user: { connect: { id: user.id } }, // Conectar con el usuario
     },
   });
 
-  
   // Insertar transacciones
   for (const transaction of data.transactions) {
     await prisma.transaction.create({
@@ -25,8 +39,8 @@ async function main() {
         date: new Date(transaction.date),
         amount: transaction.amount,
         recurring: transaction.recurring,
-        user: { connect: { id: 1 } }, // Conectar con el usuario
-        balance: { connect: { id: balance.id } } , // Conectar con el balance
+        user: { connect: { id: user.id } }, // Conectar con el usuario
+        balance: { connect: { id: balance.id } }, // Conectar con el balance
       },
     });
   }
@@ -38,7 +52,7 @@ async function main() {
         category: budget.category,
         maximum: budget.maximum,
         theme: budget.theme,
-        user: { connect: { id: 1 } }, // Conectar con el usuario
+        user: { connect: { id: user.id } }, // Conectar con el usuario
       },
     });
   }
@@ -51,8 +65,8 @@ async function main() {
         target: pot.target,
         total: pot.total,
         theme: pot.theme,
-        user: { connect: { id: 1 } }, // Conectar con el usuario
-        balance: { connect: {id: balance.id} }, // Conectar con el balance
+        user: { connect: { id: user.id } }, // Conectar con el usuario
+        balance: { connect: { id: balance.id } }, // Conectar con el balance
       },
     });
   }
