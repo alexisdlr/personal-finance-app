@@ -12,8 +12,20 @@ import {
   getPaginationRowModel,
 } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowDown, ArrowUp, ChevronsUpDown, MoreHorizontal } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import {
+  ArrowDown,
+  ArrowUp,
+  ChevronsUpDown,
+  MoreHorizontal,
+} from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 
 type TableProps<T> = {
@@ -53,38 +65,51 @@ const Table = <T extends { id: string | number }>({
     },
   });
 
-
-
   return (
     <div className="overflow-x-auto custom-scrollbar bg-white lg:p-4">
-      <table className="min-w-full md:divide-gray-200 md:border border-gray-300">
+      <table className="min-w-full md:divide-gray-200 ">
         <thead className="hidden md:table-header-group">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className={`px-4 py-2 text-left text-sm font-medium text-gray-900 ${header.id === "select" ? "" : "cursor-pointer"
-                    } whitespace-nowrap`}
-                  onClick={header.id === "select" ? undefined : header.column.getToggleSortingHandler()}
+                  className={`px-4 py-2 text-left text-sm font-medium text-gray-900 ${
+                    header.id === "select" ? "" : "cursor-pointer"
+                  } whitespace-nowrap`}
+                  onClick={
+                    header.id === "select"
+                      ? undefined
+                      : header.column.getToggleSortingHandler()
+                  }
                 >
-                  {header.isPlaceholder
-                    ? null
-                    : (
-                      <div className="flex items-center gap-2">
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        {header.id !== "select" && header.id !== 'actions' && (
-                          <span>
-                            {{
-                              asc: <ArrowUp size={12} className="text-gray-400" />, // Ícono de orden ascendente
-                              desc: <ArrowDown size={12} className="text-gray-400" />, // Ícono de orden descendente
-                            }[header.column.getIsSorted() as string] ?? (
-                                <span className="text-gray-400"><ChevronsUpDown size={12} className="text-gray-400" /> </span> // Ícono por defecto
-                              )}
-                          </span>
-                        )}
-                      </div>
-                    )}
+                  {header.isPlaceholder ? null : (
+                    <div className="flex items-center gap-2">
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                      {header.id !== "select" && header.id !== "actions" && (
+                        <span>
+                          {{
+                            asc: (
+                              <ArrowUp size={12} className="text-gray-400" />
+                            ), // Ícono de orden ascendente
+                            desc: (
+                              <ArrowDown size={12} className="text-gray-400" />
+                            ), // Ícono de orden descendente
+                          }[header.column.getIsSorted() as string] ?? (
+                            <span className="text-gray-400">
+                              <ChevronsUpDown
+                                size={12}
+                                className="text-gray-400"
+                              />{" "}
+                            </span> // Ícono por defecto
+                          )}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </th>
               ))}
             </tr>
@@ -92,9 +117,12 @@ const Table = <T extends { id: string | number }>({
         </thead>
         <tbody className="divide-y divide-gray-200">
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr key={row.id} className="hover:bg-gray-50 my-2">
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="px-4 py-2 text-sm text-gray-700 whitespace-nowrap">
+                <td
+                  key={cell.id}
+                  className="px-4 py-4 text-sm text-gray-700 whitespace-nowrap"
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -103,7 +131,6 @@ const Table = <T extends { id: string | number }>({
         </tbody>
       </table>
       <div className="flex items-center justify-end space-x-2 py-4">
-
         <div className="space-x-2">
           <Button
             variant="outline"

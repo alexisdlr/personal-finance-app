@@ -1,5 +1,6 @@
 "use client";
 
+import { MotionDiv } from "@/components/animated/motion-div";
 import BudgetCard from "@/components/budgets/budget-card";
 import BudgetChart from "@/components/overview/budget-chart";
 import { Button } from "@/components/ui/button";
@@ -16,7 +17,11 @@ const Budgets = () => {
 
   return (
     <div className="w-full h-full pt-6 sm:px-6 px-3 lg:px-10 flex flex-col pb-24">
-      <div className="flex justify-between items-center my-2">
+      <MotionDiv
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex justify-between items-center my-2"
+      >
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold">Budgets</h1>
         </div>
@@ -29,8 +34,12 @@ const Budgets = () => {
             + Add New Budget
           </Button>
         </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 ">
+      </MotionDiv>
+      <MotionDiv
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 "
+      >
         {/* BUDGETS CHART */}
         <div className="bg-white p-8 h-fit rounded-lg shadow-md mt-2">
           <BudgetChart
@@ -99,7 +108,7 @@ const Budgets = () => {
             />
           ))}
         </div>
-      </div>
+      </MotionDiv>
     </div>
   );
 };
