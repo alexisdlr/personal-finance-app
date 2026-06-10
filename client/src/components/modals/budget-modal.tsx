@@ -110,16 +110,16 @@ export default function BudgetModal({ mode }: BudgetModalProps) {
         if (!open) closeModal();
       }}
     >
-      <DialogContent className="sm:max-w-[560px] bg-white rounded-lg p-6 sm:p-10">
+      <DialogContent className="sm:max-w-[560px] bg-white !rounded-2xl p-6 sm:p-10">
         <DialogHeader>
-          <DialogTitle className="text-3xl font-bold">
+          <DialogTitle className="text-3xl font-bold mb-5">
             {mode === "create" ? "Add New Budget" : "Edit Budget"}
           </DialogTitle>
 
-          <DialogDescription className="text-base font-normal text-gray-500 mt-4">
+          <DialogDescription className="text-base font-light text-gray-500 ">
             {mode === "create"
-              ? "Choose a category to set a spending budget."
-              : "Update your budget settings."}
+              ? "Choose a category to set a spending budget. These categories can help you monitor spending."
+              : "As your budgets change, feel free to update your spending limits."}
           </DialogDescription>
         </DialogHeader>
 

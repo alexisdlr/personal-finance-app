@@ -61,11 +61,11 @@ export default function BudgetModal({ module }: BudgetModalProps) {
     >
       <DialogContent className="sm:max-w-[560px] bg-white rounded-lg p-6 sm:p-10">
         <DialogHeader>
-          <DialogTitle className="text-3xl font-bold">
+          <DialogTitle className="text-3xl font-bold mb-5">
             {module === "budget" ? "Delete Budget" : "Edit Budget"}
           </DialogTitle>
 
-          <DialogDescription className="text-base font-normal text-gray-500 mt-4">
+          <DialogDescription className="text-base font-normal text-gray-500 ">
             {module === "budget"
               ? "Are you sure you want to delete this budget? This action cannot be reversed, and all the data inside it will be removed forever."
               : "Update your budget settings."}
