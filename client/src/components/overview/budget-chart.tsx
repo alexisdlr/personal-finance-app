@@ -34,10 +34,10 @@ const BudgetChart = ({
 
   return (
     <div
-      className={`bg-white rounded-lg w-full h-full flex lg:items-center space-x-6 ${page === "overview" ? "flex-row" : "flex-col"}`}
+      className={`bg-white rounded-lg w-full h-full flex lg:items-center sm:space-x-6 ${page === "overview" ? "flex-row" : "flex-col"}`}
     >
       <div
-        className={`relative flex  items-center justify-center h-30 mx-auto ${page === "overview" ? "w-[60%]" : "W-full"}`}
+        className={`relative flex  items-center justify-center h-30 mx-auto ${page === "overview" ? "w-[60%]" : "W-full p-8"}`}
       >
         <svg className="w-full transform -rotate-90" viewBox="0 0 115 115">
           <circle
@@ -76,7 +76,7 @@ const BudgetChart = ({
         </div>
       </div>
       <div
-        className={`space-y-2 relative grid grid-cols-2 lg:grid-cols-1 gap-4 2xl:gap-4 h-full ${page === "overview" ? "W-[40%]" : "w-full"}`}
+        className={`space-y-2 relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 2xl:gap-4 h-full ${page === "overview" ? "W-[40%]" : "w-full"}`}
       >
         {children}
       </div>
