@@ -1,9 +1,9 @@
-import React from "react";
+import { Pot, Transaction } from "@/types/global";
 import Pots from "./pots-overview";
 import Transactions from "./transactions-overview";
 import TotalSaved from "../total-saved";
 import AnimatedSection from "./animated-section";
-import { Pot, Transaction } from "@/types/global";
+
 type OverviewLeftProps = {
   totalSaved: number;
   pots: Pot[];

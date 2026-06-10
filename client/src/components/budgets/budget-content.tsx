@@ -39,7 +39,7 @@ const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
         className="grid grid-cols-1 md:grid-cols-[42%_58%] gap-2 mt-4"
       >
         {/* BUDGETS CHART */}
-        <div className="bg-white md:p-4 h-fit rounded-lg shadow-md mt-2">
+        <div className="bg-white md:p-4 h-fit  rounded-2xl shadow-md mt-2">
           <BudgetChart
             page="budget"
             budgets={budgets}
@@ -59,7 +59,7 @@ const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
                       <div className="w-full h-full bg-transparent rounded-lg flex items-center justify-between p-2">
                         <div className="flex gap-4 items-center h-full">
                           <div
-                            className="w-2 h-full opacity-80"
+                            className="w-1 h-full opacity-80"
                             style={{ backgroundColor: budget.theme }}
                           ></div>
                           <span className="text-sm text-gray-500">

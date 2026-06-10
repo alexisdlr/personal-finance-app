@@ -22,7 +22,7 @@ const AnimatedSection = ({
   >
     <div className="flex flex-col bg-white p-6 rounded-xl gap-5 items-center">
       <div className="w-full flex justify-between">
-        <h2 className="text-grey-900 font-bold text-3xl">{title}</h2>
+        <h2 className="text-grey-900 font-bold text-[20px]">{title}</h2>
         {link && (
           <div className="flex gap-2 items-center">
             <Link

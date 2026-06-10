@@ -74,12 +74,12 @@ export default function Home() {
               <CardBalance
                 type="Income"
                 value={balance?.income}
-                classname="bg-white text-grey-500 shadow-lg"
+                classname="bg-white text-grey-500"
               />
               <CardBalance
                 type="Expenses"
                 value={balance?.expenses}
-                classname="bg-white text-grey-500 shadow-lg"
+                classname="bg-white text-grey-500"
               />
             </div>
           </MotionDiv>

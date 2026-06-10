@@ -37,7 +37,7 @@ const BudgetChart = ({
       className={`bg-white rounded-lg w-full h-full flex lg:items-center sm:space-x-6 ${page === "overview" ? "flex-row" : "flex-col"}`}
     >
       <div
-        className={`relative flex  items-center justify-center h-30 mx-auto ${page === "overview" ? "w-[60%]" : "W-full p-8"}`}
+        className={`relative flex items-center justify-center h-30 mx-auto ${page === "overview" ? "w-[60%]" : "W-full p-8"}`}
       >
         <svg className="w-full transform -rotate-90" viewBox="0 0 115 115">
           <circle
@@ -72,7 +72,9 @@ const BudgetChart = ({
           <span className="text-3xl font-bold leading-[120%] text-gray-900">
             ${Math.abs(totalSpent).toFixed(0)}
           </span>
-          <p className="text-sm text-grey-500">of ${totalBudgetLimit} limit</p>
+          <p className="text-sm text-grey-500 mt-4">
+            of ${totalBudgetLimit} limit
+          </p>
         </div>
       </div>
       <div
