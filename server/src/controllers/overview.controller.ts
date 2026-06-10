@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export const getOverview: RequestHandler = async (
   req: Request,
-  res: Response
+  res: Response,
 ) => {
   try {
     const userId = req.userId;
@@ -31,13 +31,15 @@ export const getOverview: RequestHandler = async (
 
     const budgets = await prisma.budget.findMany({
       where: { userId: Number(userId) },
-     
+
       orderBy: {
         category: "desc",
       },
     });
     const transactions = await prisma.transaction.findMany({
-      where: { userId: Number(userId) },
+      where: {
+        userId: Number(userId),
+      },
       orderBy: {
         id: "desc",
       },
@@ -46,25 +48,20 @@ export const getOverview: RequestHandler = async (
       },
     });
 
-
     const today = new Date();
     const upcomingDate = new Date();
     upcomingDate.setDate(today.getDate() + 7); // Próximos 7 días
 
-    const recurringBills = await prisma.transaction.findMany({
-      where: {
-        userId: Number(userId),
-        recurring: true,
-      },
-    });
+    const recurringBills = transactions.filter((t) => t.recurring === true);
 
     const paidBills = recurringBills
       .filter((t) => t.amount < 0)
       .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
-    const totalUpcoming = recurringBills
-      .filter((t) => t.amount > 0)
-      .reduce((sum, t) => sum + t.amount, 0);
+    const totalBills = recurringBills.reduce(
+      (sum, bill) => sum + Math.abs(bill.amount),
+      0,
+    );
 
     const dueSoon = recurringBills
       .filter((t) => new Date(t.date) <= upcomingDate && t.amount > 0)
@@ -74,15 +71,15 @@ export const getOverview: RequestHandler = async (
       res.status(500).json({ error: "No results found!" });
       return;
     }
-
     const data = {
       pots,
       budgets,
       transactions,
+      recurringBills,
       balance,
       paidBills,
-      totalUpcoming,
-      dueSoon
+      totalBills,
+      dueSoon,
     };
 
     res.status(200).json({

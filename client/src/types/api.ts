@@ -6,9 +6,10 @@ export interface OverviewResponse {
     pots: Pot[];
     budgets: Budget[];
     transactions: Transaction[];
+    recurringBills: Transaction[];
     balance: Balance;
     paidBills: number;
-    totalUpcoming: number;
+    totalBills: number;
     dueSoon: number;
   };
 }
