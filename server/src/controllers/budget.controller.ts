@@ -47,6 +47,52 @@ export const createBudget: RequestHandler = async (
   }
 };
 
+export const updateBudget: RequestHandler = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const userId = req.userId;
+    const { id } = req.params;
+    const { category, maximum, theme } = req.body;
+
+    if (!userId) {
+      res.status(500).json("No user logged");
+      return;
+    }
+
+    if (!category || !maximum || !theme) {
+      res
+        .status(400)
+        .json({ error: "Category, maximum, and theme are required" });
+      return;
+    }
+
+    const updateBudget = await prisma.budget.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        category,
+        maximum,
+        theme,
+      },
+    });
+
+    const data = {
+      updatedBudget: updateBudget,
+    };
+
+    res.status(200).json({
+      message: "Success",
+      data,
+    });
+  } catch (error) {
+    console.error("Budget error:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
 export const deleteBudget: RequestHandler = async (
   req: Request,
   res: Response,

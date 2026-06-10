@@ -37,6 +37,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import useUpdateBudget from "@/hooks/budgets/use-update-budget";
+import toast from "react-hot-toast";
 
 type BudgetModalProps = {
   mode: "create" | "edit";
@@ -47,6 +49,7 @@ export default function BudgetModal({ mode }: BudgetModalProps) {
   const closeModal = useModalStore((state) => state.closeModal);
   const payload = useModalStore((state) => state.payload);
   const createBudgetMutation = useCreateBudget();
+  const updateBudgetMutation = useUpdateBudget();
   const budget = payload;
 
   const form = useForm<z.infer<typeof CreateBudgetSchema>>({
@@ -80,20 +83,35 @@ export default function BudgetModal({ mode }: BudgetModalProps) {
         console.log(response);
         if (response.newBudget || response.message == "Success") {
           console.log("Budget created successfully");
+          toast.success(response.message || "Budget Created!");
         } else {
-          console.error("Error creating budget:", createBudgetMutation.error);
+          console.error("Error creating budget:", response.error);
+          toast.error("Error creating budget");
         }
 
         if (response.error) {
-          console.error("Error creating budget:", createBudgetMutation.error);
+          console.error("Error creating budget:", response.error);
         }
       } else {
-        console.log("Edit", {
+        const dataMutation = {
           id: budget.id,
           ...data,
-        });
+        };
+        console.log("Edit", dataMutation);
 
-        // await updateBudgetMutation.mutateAsync(...)
+        const response = await updateBudgetMutation.mutateAsync(dataMutation);
+
+        if (response.updatedBudget || response.message == "Success") {
+          console.log("Budget updated successfully");
+          toast.success(response.message || "Budget Updated!");
+        } else {
+          console.error("Error updating budget:", response.error);
+          toast.error("Error updating budget");
+        }
+
+        if (response.error) {
+          console.error("Error updated budget:", response.error);
+        }
       }
 
       closeModal();

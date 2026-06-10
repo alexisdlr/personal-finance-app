@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 import useDeleteBudget from "@/hooks/budgets/use-delete-budget";
+import toast from "react-hot-toast";
 
 type BudgetModalProps = {
   module: "budget" | "pot";
@@ -27,19 +28,22 @@ export default function BudgetModal({ module }: BudgetModalProps) {
   const onConfirmDelete = async (data: { id: string }) => {
     try {
       if (module === "budget") {
-        await deleteBudgetMutation.mutateAsync(data);
+        const response = await deleteBudgetMutation.mutateAsync(data);
 
-        if (deleteBudgetMutation.isSuccess) {
+        if (response.message == "Budget deleted successfully") {
+          toast.success(response.message);
+
           console.log("Budget deleted successfully");
         } else {
-          console.error("Error deleting budget:", deleteBudgetMutation.error);
+          console.error("Error deleting budget:", response.error);
+          toast.error("Something went wrong!");
         }
 
-        if (deleteBudgetMutation.isError) {
-          console.error("Error deleting budget:", deleteBudgetMutation.error);
+        if (response.error) {
+          console.error("Error deleting budget:", response.error);
         }
       } else {
-        console.log("Edit", {
+        console.log("POTS", {
           id: budgetId,
         });
 
