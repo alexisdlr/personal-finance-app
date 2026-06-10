@@ -5,7 +5,6 @@ import useRegister from "@/hooks/auth/use-register";
 
 import Link from "next/link";
 import Button from "@/components/auth/button";
-import { MotionDiv } from "@/components/animated/motion-div";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

@@ -1,8 +1,7 @@
-import { redirect } from "next/navigation"
-
+import { redirect } from "next/navigation";
 
 function HomePage() {
-  redirect('/overview')
+  redirect("/home");
 }
 
-export default HomePage
+export default HomePage;

@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import * as z from "zod";
-import useLogin from "@/hooks/auth/useLogin";
+import useLogin from "@/hooks/auth/use-login";
 import toast from "react-hot-toast";
 
 import Button from "@/components/auth/button";
