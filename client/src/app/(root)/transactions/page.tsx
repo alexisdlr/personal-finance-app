@@ -1,129 +1,19 @@
 "use client";
 
-import Image from "next/image";
-import Table from "@/components/table";
+import Table from "@/components/transactions/table";
 import TransactionFilters, {
   SortOption,
 } from "@/components/transactions/transaction-filters";
 
 import { MotionDiv } from "@/components/animated/motion-div";
 import { Transaction } from "@/types/global";
-import { createColumnHelper } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 
-import { cn, formatPrice } from "@/lib/utils";
 import { useTransactions } from "@/hooks/transactions/use-transactions";
-
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "2-digit",
-  });
-};
-
-const columnHelper = createColumnHelper<Transaction>();
-
-const columns = [
-  columnHelper.accessor((row) => row.name, {
-    id: "Name",
-    cell: (info) => (
-      <div className="font-bold flex gap-2 items-center">
-        <Image
-          className="rounded-full"
-          src={info.row.original.avatar}
-          alt={info.getValue()}
-          width={30}
-          height={30}
-        />
-        <span className="text-xs text-gray-500">{info.getValue()}</span>
-      </div>
-    ),
-    header: () => (
-      <span className="text-xs text-gray-500">Recipient / Sender</span>
-    ),
-  }),
-
-  columnHelper.accessor("category", {
-    cell: (info) => <p className="text-xs text-gray-500">{info.getValue()}</p>,
-    header: () => <span className="text-xs text-gray-500">Category</span>,
-  }),
-
-  columnHelper.accessor("date", {
-    header: () => (
-      <span className="text-xs text-gray-500">Transaction Date</span>
-    ),
-    cell: (info) => (
-      <p className="text-xs text-gray-500">
-        {formatDate(info.getValue().toString())}
-      </p>
-    ),
-  }),
-
-  columnHelper.accessor("amount", {
-    id: "amount",
-
-    header: () => <span className="text-xs text-gray-500">Amount</span>,
-
-    cell: (info) => {
-      const amount = info.getValue();
-      const isNegative = amount < 0;
-
-      return (
-        <p
-          className={cn(
-            "text-xs font-bold",
-            isNegative ? "text-gray-900" : "text-secondary-green",
-          )}
-        >
-          {isNegative
-            ? `-${formatPrice(Math.abs(amount))}`
-            : `+${formatPrice(amount)}`}
-        </p>
-      );
-    },
-  }),
-];
-
-const mobileColumns = [
-  columnHelper.accessor((row) => row.name, {
-    id: "Name",
-    cell: (info) => (
-      <div className="font-bold flex gap-2 items-center">
-        <Image
-          className="rounded-full"
-          src={info.row.original.avatar}
-          alt={info.getValue()}
-          width={30}
-          height={30}
-        />
-        <span className="text-xs text-gray-500">{info.getValue()}</span>
-      </div>
-    ),
-  }),
-
-  columnHelper.accessor("amount", {
-    cell: (info) => {
-      const amount = info.getValue();
-      const isNegative = amount < 0;
-
-      return (
-        <p
-          className={cn(
-            "text-xs text-right font-bold",
-            isNegative ? "text-gray-900" : "text-secondary-green",
-          )}
-        >
-          {isNegative
-            ? `-${formatPrice(Math.abs(amount))}`
-            : `+${formatPrice(amount)}`}
-        </p>
-      );
-    },
-  }),
-];
+import {
+  columns,
+  mobileColumns,
+} from "@/components/transactions/transaction-columns";
 
 const sortTransactions = (transactions: Transaction[], sortBy: SortOption) => {
   const sorted = [...transactions];

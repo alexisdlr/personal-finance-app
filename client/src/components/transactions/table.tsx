@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -11,22 +11,14 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   ArrowDown,
   ArrowUp,
   ChevronsUpDown,
   MoreHorizontal,
 } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
+
+import { Button } from "../ui/button";
 
 type TableProps<T> = {
   data: T[];
