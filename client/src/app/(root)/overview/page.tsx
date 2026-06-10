@@ -21,7 +21,7 @@ export default function Home() {
   const transactions = overviewQuery.data?.data.transactions || [];
   const budgets = overviewQuery.data?.data.budgets || [];
   const paidBills = overviewQuery.data?.data.paidBills || 0;
-  const totalUpcoming = overviewQuery.data?.data.totalUpcoming || 0;
+  const totalUpcoming = overviewQuery.data?.data.totalBills || 0;
   const dueSoon = overviewQuery.data?.data.dueSoon || 0;
 
   const totalSaved = useMemo(
