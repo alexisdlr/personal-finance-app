@@ -9,8 +9,9 @@ export const UserSchemaLogin = z.object({
   password: z
     .string()
     .min(4, { message: "Password must be at least 4 characters" })
-    .regex(/[A-Za-z]/, { message: "Password must contain at least one letter" })
-    .regex(/\d/, { message: "Password must contain at least one number" }),
+    .regex(/[A-Za-z]/, {
+      message: "Password must contain at least one letter",
+    }),
 });
 
 export const UserSchemaSignUp = z.object({
