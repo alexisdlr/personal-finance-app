@@ -76,17 +76,15 @@ export default function BudgetModal({ mode }: BudgetModalProps) {
   const onSubmit = async (data: z.infer<typeof CreateBudgetSchema>) => {
     try {
       if (mode === "create") {
-        console.log("Create", data);
-
-        await createBudgetMutation.mutateAsync(data);
-
-        if (createBudgetMutation.isSuccess) {
+        const response = await createBudgetMutation.mutateAsync(data);
+        console.log(response);
+        if (response.newBudget || response.message == "Success") {
           console.log("Budget created successfully");
         } else {
           console.error("Error creating budget:", createBudgetMutation.error);
         }
 
-        if (createBudgetMutation.isError) {
+        if (response.error) {
           console.error("Error creating budget:", createBudgetMutation.error);
         }
       } else {
@@ -212,8 +210,14 @@ export default function BudgetModal({ mode }: BudgetModalProps) {
                     <SelectContent>
                       <SelectGroup>
                         {BUDGET_THEMES.map((theme) => (
-                          <SelectItem key={theme} value={theme}>
-                            {theme}
+                          <SelectItem key={theme.name} value={theme.hexCode}>
+                            <div className="flex items-center gap-2">
+                              <div
+                                className="size-3 rounded-full"
+                                style={{ backgroundColor: theme.hexCode }}
+                              />
+                              <span>{theme.name}</span>
+                            </div>
                           </SelectItem>
                         ))}
                       </SelectGroup>
@@ -227,7 +231,7 @@ export default function BudgetModal({ mode }: BudgetModalProps) {
 
             <Button
               type="submit"
-              className="h-12 mt-2"
+              className="mt-2 h-12 bg-black text-white rounded-lg font-bold text-md py-4"
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? (

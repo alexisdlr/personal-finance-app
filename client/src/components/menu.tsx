@@ -45,16 +45,16 @@ const Menu = () => {
 
         return (
           <div
-            className={`py-2 px-6 lg:px-0 xl:px-6 lg:border-4 lg:border-transparent ${isActive ? " bg-beige-100 rounded-t-lg md:rounded-b-lg lg:rounded-b-none lg:rounded-t-none lg:rounded-tr-lg border-b-4 border-b-secondary-green md:border-b-0 lg:rounded-r-lg lg:border-s-4 lg:border-s-secondary-green" : ""}`}
+            className={`py-2 px-6 lg:px-0 xl:px-3 lg:border-4 lg:border-transparent ${isActive ? " bg-beige-100 rounded-t-lg md:rounded-b-lg lg:rounded-b-none lg:rounded-t-none lg:rounded-tr-lg border-b-4 border-b-secondary-green md:border-b-0 lg:rounded-r-lg lg:border-s-4 lg:border-s-secondary-green" : ""}`}
             key={i.label}
           >
             <Link
               href={i.href}
               key={i.label}
-              className={`transition-all duration-150 hover:text-white flex flex-col lg:pl-2 md:flex-row items-center justify-center lg:justify-start gap-3 text-grey-300 md:px-0 lg:py-2 font-bold ${isActive ? "text-grey-900 hover:text-grey-900" : "text-grey-300"}`}
+              className={`transition-all duration-150 hover:text-white flex flex-col lg:pl-2 md:flex-row items-center justify-center lg:justify-start gap-4 text-grey-300 md:px-0 lg:py-2 font-bold ${isActive ? "text-grey-900 hover:text-grey-900" : "text-grey-300"}`}
             >
               <i.icon color={iconColor} />
-              <span className={`hidden text-[10px] md:text-xs lg:block`}>
+              <span className={`hidden text-[10px] md:text-sm lg:block`}>
                 {i.label}
               </span>
             </Link>

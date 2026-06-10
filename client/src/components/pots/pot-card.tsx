@@ -54,11 +54,11 @@ const PotCard = ({ pot }: PotCardProps) => {
 
       {/* Actions */}
       <div className="grid grid-cols-2 gap-4 mt-8">
-        <Button variant="secondary" className="font-bold">
+        <Button variant="secondary" className="font-bold bg-[#F8F4F0] py-6">
           + Add Money
         </Button>
 
-        <Button variant="secondary" className="font-bold">
+        <Button variant="secondary" className="font-bold bg-[#F8F4F0] py-6">
           Withdraw
         </Button>
       </div>
