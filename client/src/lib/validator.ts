@@ -39,3 +39,9 @@ export const CreateBudgetSchema = z.object({
     .min(0, { message: "Maximum spend must be a positive number" }),
   theme: z.string().min(1, { message: "Theme is required" }),
 });
+
+export const CreatePotSchema = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  target: z.number().min(0, { message: "Target must be a positive number" }),
+  theme: z.string().min(1, { message: "Theme is required" }),
+});

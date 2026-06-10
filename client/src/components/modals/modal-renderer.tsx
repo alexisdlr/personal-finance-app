@@ -6,7 +6,7 @@ import { useModalStore } from "@/store/modal-store";
 
 import BudgetModal from "./budget-modal";
 import DeleteModal from "./delete-modal";
-// import PotModal from "./pot-modal";
+import PotsModal from "./pots-modal";
 
 export default function ModalRenderer() {
   const { type, isOpen } = useModalStore();
@@ -22,8 +22,15 @@ export default function ModalRenderer() {
 
     case "DELETE_BUDGET":
       return <DeleteModal module="budget" />;
-    // case "CREATE_POT":
-    // return <PotModal mode="create" />;
+
+    case "CREATE_POT":
+      return <PotsModal mode="create" />;
+
+    case "EDIT_POT":
+      return <PotsModal mode="edit" />;
+
+    case "DELETE_POT":
+      return <DeleteModal module="pot" />;
 
     default:
       return null;

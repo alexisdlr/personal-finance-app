@@ -1,6 +1,16 @@
 import { Pot } from "@/types/global";
 import { Button } from "../ui/button";
 import { formatPrice } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Ellipsis } from "lucide-react";
+import { useModalStore } from "@/store/modal-store";
 
 type PotCardProps = {
   pot: Pot;
@@ -8,7 +18,7 @@ type PotCardProps = {
 
 const PotCard = ({ pot }: PotCardProps) => {
   const progress = (pot.total / pot.target) * 100;
-
+  const { openModal } = useModalStore();
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm">
       {/* Header */}
@@ -22,9 +32,39 @@ const PotCard = ({ pot }: PotCardProps) => {
           <h2 className="text-xl font-bold">{pot.name}</h2>
         </div>
 
-        <Button variant="ghost" size="icon">
-          ...
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              {" "}
+              <Ellipsis />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-white rounded-xl shadow-md p-2">
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                className="cursor-pointer font-light"
+                onClick={() =>
+                  openModal("EDIT_POT", {
+                    id: pot.id,
+                    name: pot.name,
+                    target: pot.target,
+                    theme: pot.theme,
+                  })
+                }
+              >
+                Edit Pot
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-gray-200 my-[2px] max-w-[90%] mx-auto" />
+
+              <DropdownMenuItem
+                className="cursor-pointer font-light text-red-500"
+                onClick={() => openModal("DELETE_POT", { id: pot.id })}
+              >
+                Delete Pot
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {/* Amount */}

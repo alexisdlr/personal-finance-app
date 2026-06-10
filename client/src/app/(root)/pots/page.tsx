@@ -10,7 +10,7 @@ const PotsPage = () => {
   const { openModal } = useModalStore();
   const { pots } = usePots();
   return (
-    <div className="w-full h-full sm:h-screen pt-6 pb-20 md:pb-4 px-6 lg:px-10 flex flex-col">
+    <div className="w-full h-full  pt-6 pb-20 md:pb-4 px-6 lg:px-10 flex flex-col">
       <MotionDiv
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -23,7 +23,7 @@ const PotsPage = () => {
           <Button
             variant="default"
             className="px-4 py-6 text-md font-bold mr-1 rounded-lg bg-black text-white"
-            onClick={() => openModal("CREATE_BUDGET")}
+            onClick={() => openModal("CREATE_POT")}
           >
             + Add New Pot
           </Button>

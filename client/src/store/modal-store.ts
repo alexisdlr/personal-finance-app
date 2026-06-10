@@ -6,9 +6,11 @@ type ModalType =
   | "CREATE_BUDGET"
   | "EDIT_BUDGET"
   | "CREATE_POT"
+  | "EDIT_POT"
   | "ADD_MONEY"
   | "WITHDRAW_MONEY"
-  | "DELETE_BUDGET";
+  | "DELETE_BUDGET"
+  | "DELETE_POT";
 
 type ModalPayload = any;
 
