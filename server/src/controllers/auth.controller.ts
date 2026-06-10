@@ -25,9 +25,9 @@ export const login: RequestHandler = async (
 
     res.cookie("finance-app-token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Solo en HTTPS en producción
+      secure: true, // Solo en HTTPS en producción
       maxAge: 60 * 60 * 1000, // Expira en 1 hora
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      sameSite: "none",
     });
 
     const userRes = {
@@ -93,8 +93,8 @@ export const signUp: RequestHandler = async (
     // Enviar token como cookie HTTP-only
     res.cookie("finance-app-token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: true,
+      sameSite: "none",
       maxAge: 60 * 60 * 1000,
     });
 
@@ -118,8 +118,8 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
   try {
     res.clearCookie("finance-app-token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: true,
+      sameSite: "none",
     });
     res.status(200).json({ message: "Logout Success!" });
   } catch (error) {

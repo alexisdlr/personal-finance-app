@@ -12,7 +12,7 @@ const checkSession = asyncHandler(
     const token = req.cookies["finance-app-token"];
 
     if (!token) {
-      throw new AuthenticationError("Token not found");
+      throw new AuthenticationError("Token nott found");
     }
 
     try {
