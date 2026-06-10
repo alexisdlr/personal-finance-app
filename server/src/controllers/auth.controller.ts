@@ -27,6 +27,7 @@ export const login: RequestHandler = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // Solo en HTTPS en producción
       maxAge: 60 * 60 * 1000, // Expira en 1 hora
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     const userRes = {

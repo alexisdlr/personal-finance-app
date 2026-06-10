@@ -5,6 +5,4 @@ const router = Router();
 
 router.get("/verify", checkSession);
 
-
-
 export default router;
