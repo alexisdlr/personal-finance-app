@@ -1,17 +1,17 @@
-// hooks/useFetchOverviewData.ts
 import { useQuery } from "@tanstack/react-query";
 import api from "@/services/api";
+import { OverviewResponse } from "@/types/api";
 
-const fetchOverviewData = async () => {
-  const response = await api.get("/overview"); // Ajusta la URL según tu configuración
+const fetchOverviewData = async (): Promise<OverviewResponse> => {
+  const response = await api.get<OverviewResponse>("/overview");
+
   return response.data;
 };
 
 const useFetchOverviewData = () => {
-
-  return useQuery({
+  return useQuery<OverviewResponse>({
     queryKey: ["overviewData"],
-    queryFn: fetchOverviewData
+    queryFn: fetchOverviewData,
   });
 };
 

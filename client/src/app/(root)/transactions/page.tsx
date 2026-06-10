@@ -1,7 +1,5 @@
 "use client";
 
-import useFetchOverviewData from "@/hooks/overview/use-get-overview-data";
-
 import Image from "next/image";
 import Table from "@/components/table";
 import TransactionFilters, {
@@ -14,6 +12,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 
 import { cn, formatPrice } from "@/lib/utils";
+import { useTransactions } from "@/hooks/transactions/use-transactions";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -158,9 +157,7 @@ const sortTransactions = (transactions: Transaction[], sortBy: SortOption) => {
 };
 
 const TransactionsPage = () => {
-  const overviewQuery = useFetchOverviewData();
-
-  const transactions = overviewQuery.data?.data.transactions ?? [];
+  const { transactions } = useTransactions();
 
   const [globalFilter, setGlobalFilter] = useState("");
 
@@ -168,7 +165,7 @@ const TransactionsPage = () => {
 
   const [sortBy, setSortBy] = useState<SortOption>("latest");
 
-  const uniqueCategories = useMemo(
+  const uniqueCategories = useMemo<string[]>(
     () => [
       ...new Set(
         transactions.map((transaction: Transaction) => transaction.category),
