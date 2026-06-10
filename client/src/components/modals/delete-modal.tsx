@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import useDeleteBudget from "@/hooks/budgets/use-delete-budget";

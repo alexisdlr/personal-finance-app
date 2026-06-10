@@ -1,115 +1,26 @@
 "use client";
 
-import { MotionDiv } from "@/components/animated/motion-div";
-import BudgetCard from "@/components/budgets/budget-card";
-import BudgetChart from "@/components/overview/budget-chart";
-import { Button } from "@/components/ui/button";
+import BudgetContent from "@/components/budgets/budget-content";
+import BudgetSkeleton from "@/components/budgets/budget-skeleton";
 import useFetchOverviewData from "@/hooks/overview/use-get-overview-data";
-import { formatPrice } from "@/lib/utils";
-import { useModalStore } from "@/store/modal-store";
-import { Budget, Transaction } from "@/types/global";
 
 const Budgets = () => {
   const overviewQuery = useFetchOverviewData();
   const budgets = overviewQuery.data?.data.budgets ?? [];
   const transactions = overviewQuery.data?.data.transactions ?? [];
-  const { openModal } = useModalStore();
 
   return (
-    <div className="w-full h-full pt-6 sm:px-6 px-3 lg:px-10 flex flex-col pb-24">
-      <MotionDiv
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex justify-between items-center my-2"
-      >
-        <div className="flex flex-col">
-          <h1 className="text-2xl font-bold">Budgets</h1>
+    <>
+      {overviewQuery.isLoading ? (
+        <BudgetSkeleton />
+      ) : overviewQuery.isError ? (
+        <div className="w-full h-full flex items-center justify-center">
+          <p className="text-gray-500">Error loading budgets.</p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="default"
-            className="px-4 py-6 text-md font-bold mr-3 rounded-lg bg-black text-white"
-            onClick={() => openModal("CREATE_BUDGET")}
-          >
-            + Add New Budget
-          </Button>
-        </div>
-      </MotionDiv>
-      <MotionDiv
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 "
-      >
-        {/* BUDGETS CHART */}
-        <div className="bg-white p-8 h-fit rounded-lg shadow-md mt-2">
-          <BudgetChart
-            page="budget"
-            budgets={budgets}
-            transactions={transactions}
-          >
-            <div className="px-2 flex flex-col items-start w-full">
-              <h2 className="mt-3 mb-2 text-gray-900 font-bold text-xl">
-                Spending Summary
-              </h2>
-              <div className="flex flex-col gap-2 w-full ">
-                {budgets.map((budget: Budget) => (
-                  <>
-                    <div
-                      className="flex flex-col gap-2 justify-start w-full h-full sm:max-h-10 lg:max-h-12"
-                      key={budget.id}
-                    >
-                      <div className="w-full h-full bg-transparent rounded-lg flex items-center justify-between p-2">
-                        <div className="flex gap-2 items-center h-full">
-                          <div
-                            className="w-2 h-full opacity-80"
-                            style={{ backgroundColor: budget.theme }}
-                          ></div>
-                          <span className="text-md text-gray-500">
-                            {budget.category}
-                          </span>
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          <span className="text-md line-clamp-1 tracking-wider font-bold text-gray-900">
-                            {formatPrice(
-                              transactions
-                                .filter(
-                                  (transaction: Transaction) =>
-                                    transaction.category === budget.category,
-                                )
-                                .reduce(
-                                  (acc: number, transaction: Transaction) =>
-                                    acc + Math.abs(transaction.amount),
-                                  0,
-                                ),
-                            )}
-                          </span>{" "}
-                          of {formatPrice(budget.maximum)}
-                        </div>
-                      </div>
-                    </div>
-                    <hr />
-                  </>
-                ))}
-              </div>
-            </div>
-          </BudgetChart>
-        </div>
-        {/* BUDGETS LIST */}
-        <div className="w-full p-3 flex flex-col gap-2">
-          {budgets.map((budget: Budget) => (
-            <BudgetCard
-              key={budget.id}
-              budget={budget}
-              transactions={transactions.filter(
-                (transaction: Transaction) =>
-                  transaction.category === budget.category,
-              )}
-              theme={budget.theme}
-            />
-          ))}
-        </div>
-      </MotionDiv>
-    </div>
+      ) : (
+        <BudgetContent budgets={budgets} transactions={transactions} />
+      )}
+    </>
   );
 };
 
