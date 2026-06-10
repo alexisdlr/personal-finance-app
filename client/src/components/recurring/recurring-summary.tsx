@@ -1,4 +1,4 @@
-import { Receipt } from "lucide-react";
+import { ReceiptText } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 
 type Props = {
@@ -17,7 +17,7 @@ export default function RecurringSummary({
   return (
     <div className="flex flex-col gap-6">
       <div className="bg-black text-white rounded-xl p-6">
-        <Receipt size={28} />
+        <ReceiptText size={50} />
 
         <p className="text-sm mt-8">Total Bills</p>
 

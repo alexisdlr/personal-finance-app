@@ -19,12 +19,12 @@ export default function RecurringContent({
   dueSoonTotal,
 }: Props) {
   return (
-    <div className="w-full h-full pt-6 pb-20 md:pb-4 px-6 lg:px-10 flex flex-col">
+    <div className="w-full sm:h-screen pt-6 pb-20 md:pb-4 px-6 lg:px-10 flex flex-col">
       <MotionDiv
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-3xl font-bold">Recurring Bills</h1>
+        <h1 className="text-3xl font-bold mt-2">Recurring Bills</h1>
       </MotionDiv>
 
       <MotionDiv
