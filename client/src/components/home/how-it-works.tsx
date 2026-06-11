@@ -32,16 +32,16 @@ export default function HowItWorks() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
 
-        <div className="text-center max-w-3xl mx-auto">
-          <span className="inline-flex items-center rounded-full border border-beige-500/30 bg-white px-4 py-2 text-sm font-medium text-grey-500">
+        <div className=" text-center max-w-3xl mx-auto">
+          <span className="inline-flex  items-center rounded-full border shadow-2xl shadow-green border-beige-500/30 bg-white px-4 py-2 text-sm font-bold ring-1 ring-neutral-500 text-grey-500">
             How It Works
           </span>
 
-          <h2 className="mt-6 text-4xl md:text-5xl font-bold text-grey-900">
+          <h2 className="mt-12 text-4xl md:text-6xl font-extrabold text-grey-900">
             Take control of your finances in three simple steps
           </h2>
 
-          <p className="mt-6 text-lg text-grey-500">
+          <p className="mt-8 text-lg text-grey-500">
             Everything you need to track spending, manage budgets, and build
             better financial habits.
           </p>

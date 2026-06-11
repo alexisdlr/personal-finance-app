@@ -6,7 +6,7 @@ import { MotionDiv } from "../animated/motion-div";
 
 const Hero = () => {
   return (
-    <section className="w-full px-4 py-24 flex items-center gap-12 justify-between">
+    <section className="w-full max-w-7xl mx-auto px-8 md:px-4 py-24 flex flex-col md:flex-row items-center gap-12 justify-between">
       <MotionDiv
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -21,11 +21,11 @@ const Hero = () => {
             Simplify your money management.
           </span>
         </div>
-        <h2 className="text-primary text-7xl font-black">
+        <h2 className="text-primary text-5 xl md:text-7xl font-black">
           Take Control Of your <span className="text-turquoise">Financial</span>{" "}
           <span className="text-beige-500">Future</span>
         </h2>
-        <p className="text-neutral-500 text-xl">
+        <p className="text-neutral-500 text-base md:text-xl">
           Finance is a personal finance platform designed to help users track
           spending, organize income, and gain financial clarity without
           complexity.

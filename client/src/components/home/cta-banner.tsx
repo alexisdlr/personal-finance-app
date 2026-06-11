@@ -6,7 +6,7 @@ type Props = {};
 
 const Banner = (props: Props) => {
   return (
-    <section className="relative overflow-hidden rounded-[32px] py-24 px-6 md:px-12">
+    <section className="relative max-w-7xl mx-auto overflow-hidden rounded-[32px] py-24 px-6 md:px-12">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-turquoise/90  to-[#F8F4EF]" />
 

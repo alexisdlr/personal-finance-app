@@ -15,13 +15,12 @@ const Home = (props: Props) => {
   return (
     <div className=" h-full">
       <Header />
-      <main className="max-w-7xl mx-auto">
+      <main className="w-full h-full">
         <Hero />
+
         <Features />
         <HowItWorks />
         <Banner />
-
-        {/* TODO: Features, How it works, Footer */}
       </main>
     </div>
   );

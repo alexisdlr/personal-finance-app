@@ -3,7 +3,7 @@ import FeatureCards from "./features-cards";
 
 const Features = () => {
   return (
-    <section className="w-full py-28 flex flex-col items-center gap-12 justify-between">
+    <section className="w-full max-w-7xl mx-auto py-28 flex flex-col items-center gap-12 justify-between">
       <div className="flex flex-col items-center gap-12">
         <div className="flex justify-center items-center shadow-2xl shadow-green py-1.5 px-4 rounded-4xl bg-white ring-1 ring-neutral-500">
           <span className="font-bold text-sm">Features</span>

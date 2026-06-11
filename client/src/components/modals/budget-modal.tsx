@@ -97,20 +97,13 @@ export default function BudgetModal({ mode }: BudgetModalProps) {
           id: budget.id,
           ...data,
         };
-        console.log("Edit", dataMutation);
 
         const response = await updateBudgetMutation.mutateAsync(dataMutation);
 
         if (response.updatedBudget || response.message == "Success") {
-          console.log("Budget updated successfully");
           toast.success(response.message || "Budget Updated!");
         } else {
-          console.error("Error updating budget:", response.error);
           toast.error("Error updating budget");
-        }
-
-        if (response.error) {
-          console.error("Error updated budget:", response.error);
         }
       }
 
@@ -126,7 +119,7 @@ export default function BudgetModal({ mode }: BudgetModalProps) {
         if (!open) closeModal();
       }}
     >
-      <DialogContent className="sm:max-w-[560px] bg-white !rounded-2xl p-6 sm:p-10">
+      <DialogContent className="sm:max-w-140 bg-white rounded-2xl! p-6 sm:p-10">
         <DialogHeader>
           <DialogTitle className="text-3xl font-bold mb-5">
             {mode === "create" ? "Add New Budget" : "Edit Budget"}

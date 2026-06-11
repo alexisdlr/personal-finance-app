@@ -8,7 +8,10 @@ import { publicSans } from "./styles/fonts";
 import "./styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "Personal Finance App | Frontend Mentor",
+  title: {
+    template: "Personal Finance | %s",
+    default: "Personal Finance",
+  },
   description: "Solution to the Frontend Mentor Personal Finance App challenge",
   creator: "Alexis De Leon",
   authors: [{ name: "Alexis De Leon", url: "https://github.com/alexisdlr" }],
@@ -26,6 +29,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${publicSans.className}`}>
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+      </head>
       <body>
         <ReactQueryProvider>
           <ToastProvider />

@@ -29,7 +29,7 @@ const BudgetCard = ({ budget, transactions, theme }: BudgetCardProps) => {
     .reduce((acc, transaction) => acc + Math.abs(transaction.amount), 0);
 
   return (
-    <div className="max-w-[600px] w-full h-full">
+    <div className="max-w-150 w-full h-full">
       <div className="bg-white p-4 md:p-8 rounded-2xl shadow-md flex flex-col gap-2">
         <div className="flex flex-col">
           <div className="flex gap-4 items-center">
@@ -63,7 +63,7 @@ const BudgetCard = ({ budget, transactions, theme }: BudgetCardProps) => {
                     >
                       Edit Budget
                     </DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-gray-200 my-[2px] max-w-[90%] mx-auto" />
+                    <DropdownMenuSeparator className="bg-gray-200 my-0.5 max-w-[90%] mx-auto" />
 
                     <DropdownMenuItem
                       className="cursor-pointer font-light text-red-500"

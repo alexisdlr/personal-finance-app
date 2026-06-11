@@ -14,7 +14,7 @@ type BudgetContentProps = {
 const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
   const { openModal } = useModalStore();
   return (
-    <div className="w-full h-full pt-6 sm:px-6 px-3 lg:px-10 flex flex-col pb-24">
+    <div className="w-full h-full px-3 flex flex-col ">
       <MotionDiv
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -63,8 +63,8 @@ const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
                             {budget.category}
                           </span>
                         </div>
-                        <div className="text-sm text-gray-500 flex gap-2">
-                          <span className="text-base line-clamp-1 tracking-wider font-bold text-gray-900">
+                        <div className="text-sm text-gray-500 flex items-center gap-2">
+                          <span className="text-base line-clamp-1 tracking-wider font-bold text-primary">
                             {formatPrice(
                               transactions
                                 .filter(
