@@ -73,7 +73,10 @@ const LoginPage = () => {
                 <Loader2 className="animate-spin duration-300 text-grey-900" />
               </div>
             ) : (
-              <Button type="submit" className="w-full font-semibold text-sm">
+              <Button
+                type="submit"
+                className="w-full font-semibold text-sm cursor-pointer"
+              >
                 Login
               </Button>
             )}

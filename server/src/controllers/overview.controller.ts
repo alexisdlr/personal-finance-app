@@ -67,16 +67,15 @@ export const getOverview: RequestHandler = async (
       .filter((t) => new Date(t.date) <= upcomingDate && t.amount > 0)
       .reduce((sum, t) => sum + t.amount, 0);
 
-    if (!pots || !budgets || !transactions || !balance) {
-      res.status(500).json({ error: "No results found!" });
-      return;
-    }
     const data = {
-      pots,
-      budgets,
-      transactions,
-      recurringBills,
-      balance,
+      pots: pots ?? [],
+      budgets: budgets ?? [],
+      transactions: transactions ?? [],
+      balance: balance ?? {
+        current: 0,
+        income: 0,
+        expenses: 0,
+      },
       paidBills,
       totalBills,
       dueSoon,

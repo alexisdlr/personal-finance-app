@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <div className="w-full h-full bg-primary">{children}</div>
+      <div className="w-full h-full bg-beige-100">{children}</div>
     </>
   );
 }

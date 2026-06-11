@@ -1,4 +1,6 @@
-// components/BudgetChart.tsx
+"use client";
+
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { Budget, Transaction } from "@/types/global";
 
 type BudgetChartProps = {
@@ -14,12 +16,11 @@ const BudgetChart = ({
   children,
   page,
 }: BudgetChartProps) => {
-  // Calcular el total gastado
-
-  const totalSpent = budgets.slice(0, 4).reduce((sum, budget) => {
+  const totalSpent = budgets.reduce((sum, budget) => {
     const categorySpent = transactions
       .filter((transaction) => transaction.category === budget.category)
-      .reduce((acc, transaction) => acc + transaction.amount, 0);
+      .reduce((acc, transaction) => acc + Math.abs(transaction.amount), 0);
+
     return sum + categorySpent;
   }, 0);
 
@@ -27,58 +28,63 @@ const BudgetChart = ({
     (sum, budget) => sum + budget.maximum,
     0,
   );
-  // SVG circle properties
-  const radius = 45;
-  const circumference = 2 * Math.PI * radius;
-  let offset = 0; // Offset inicial para cada segmento
+
+  const chartData = budgets.map((budget) => ({
+    name: budget.category,
+    value: budget.maximum,
+    color: budget.theme,
+  }));
 
   return (
     <div
-      className={`bg-white rounded-lg w-full h-full flex lg:items-center sm:space-x-6 ${page === "overview" ? "flex-row" : "flex-col"}`}
+      className={`bg-white rounded-lg w-full h-full flex lg:items-center sm:space-x-6 ${
+        page === "overview" ? "flex-row" : "flex-col"
+      }`}
     >
+      {/* CHART */}
       <div
-        className={`relative flex items-center justify-center h-30 mx-auto ${page === "overview" ? "w-[60%]" : "W-full p-8"}`}
+        className={`relative flex items-center justify-center mx-auto ${
+          page === "overview"
+            ? "w-[220px] h-[220px]"
+            : "w-[280px] h-[280px] p-6"
+        }`}
       >
-        <svg className="w-full transform -rotate-90" viewBox="0 0 115 115">
-          <circle
-            cx="60"
-            cy="60"
-            r={radius}
-            fill="transparent"
-            stroke="#e5e7eb"
-            strokeWidth="12"
-          />
-          {budgets.map((category, index) => {
-            const segmentLength =
-              (category.maximum / totalBudgetLimit) * circumference;
-            const circle = (
-              <circle
-                key={index}
-                cx="60"
-                cy="60"
-                r={radius}
-                fill="transparent"
-                stroke={category.theme}
-                strokeWidth="15 "
-                strokeDasharray={`${segmentLength} ${circumference}`}
-                strokeDashoffset={-offset}
-              />
-            );
-            offset += segmentLength; // Actualizar el offset para el siguiente segmento
-            return circle;
-          })}
-        </svg>
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={chartData}
+              dataKey="value"
+              innerRadius={70}
+              outerRadius={90}
+              paddingAngle={2}
+              strokeWidth={0}
+            >
+              {chartData.map((entry) => (
+                <Cell key={entry.name} fill={entry.color} />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+
+        {/* CENTER LABEL */}
         <div className="absolute text-center">
-          <span className="text-3xl font-bold leading-[120%] text-gray-900">
-            ${Math.abs(totalSpent).toFixed(0)}
-          </span>
-          <p className="text-sm text-grey-500 mt-4">
+          <h3 className="text-3xl font-bold text-gray-900">
+            ${totalSpent.toFixed(0)}
+          </h3>
+
+          <p className="text-sm text-gray-500 mt-2">
             of ${totalBudgetLimit} limit
           </p>
         </div>
       </div>
+
+      {/* RIGHT CONTENT */}
       <div
-        className={`space-y-2 relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 2xl:gap-4 h-full ${page === "overview" ? "W-[40%]" : "w-full"}`}
+        className={`grid gap-4 h-full ${
+          page === "overview"
+            ? "w-full lg:w-[40%]"
+            : "w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-1"
+        }`}
       >
         {children}
       </div>

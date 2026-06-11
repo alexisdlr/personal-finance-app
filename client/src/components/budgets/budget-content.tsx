@@ -1,3 +1,4 @@
+import React from "react";
 import { useModalStore } from "@/store/modal-store";
 import { MotionDiv } from "../animated/motion-div";
 import { Button } from "@/components/ui/button";
@@ -5,7 +6,6 @@ import BudgetChart from "../overview/budget-chart";
 import BudgetCard from "./budget-card";
 import { Budget, Transaction } from "@/types/global";
 import { formatPrice } from "@/lib/utils";
-
 type BudgetContentProps = {
   budgets: Budget[];
   transactions: Transaction[];
@@ -51,11 +51,8 @@ const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
               </h2>
               <div className="flex flex-col gap-2 w-full">
                 {budgets.map((budget: Budget) => (
-                  <>
-                    <div
-                      className="flex flex-col gap-2 justify-start w-full h-full sm:max-h-10 lg:max-h-12"
-                      key={budget.id}
-                    >
+                  <React.Fragment key={budget.id}>
+                    <div className="flex flex-col gap-2 justify-start w-full h-full sm:max-h-10 lg:max-h-12">
                       <div className="w-full h-full bg-transparent rounded-lg flex items-center justify-between p-2">
                         <div className="flex gap-4 items-center h-full">
                           <div
@@ -88,7 +85,7 @@ const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
                       </div>
                     </div>
                     <hr />
-                  </>
+                  </React.Fragment>
                 ))}
               </div>
             </div>
