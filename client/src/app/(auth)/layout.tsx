@@ -9,8 +9,8 @@ export default function AuthLayout({
     <div className="bg-beige-100 h-screen w-full flex flex-col lg:flex-row text-black lg:p-4 overflow-y-hidden">
       {/* LEFT */}
 
-      <div className="w-full lg:h-full lg:rounded-xl overflow-hidden lg:w-[40%] xl:w-[45%] flex items-center lg:justify-start lg:bg-auth lg:bg-cover lg:bg-bottom lg:relative">
-        <div className="lg:hidden bg-grey-900 flex items-center justify-center p-2 w-full h-[60px] rounded-b-xl">
+      <div className="w-full lg:h-full lg:rounded-xl overflow-hidden lg:w-[40%] xl:w-[45%] flex items-center lg:justify-start lg:bg-[url('/images/illustration-authentication.svg')] lg:bg-cover lg:bg-bottom lg:relative">
+        <div className="lg:hidden bg-grey-900 flex items-center justify-center p-2 w-full h-15 rounded-b-xl">
           <Image
             src="/images/logo-large.svg"
             width={121}
@@ -27,7 +27,7 @@ export default function AuthLayout({
           className="hidden lg:block absolute top-8 left-6"
         />
         <div className="hidden lg:block py-4 3xl:flex max-w-md rounded-xl absolute bottom-10 left-10 p-2 w-full text-white flex-col items-start justify-start">
-          <div className="max-w-[450px] flex flex-col gap-6">
+          <div className="max-w-112.5 flex flex-col gap-6">
             <h2 className=" font-bold text-3xl leading-[120%]">
               Keep track of your money and save for your future
             </h2>

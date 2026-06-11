@@ -47,7 +47,7 @@ export default function Home() {
           <p className="text-red-500">Failed to load overview data.</p>
         </div>
       ) : (
-        <div className="w-full h-full sm:h-screen 2xl:h-full pt-6 pb-20 md:pb-4 px-6 lg:px-10 flex flex-col">
+        <div className="w-full h-full lg:h-screen 2xl:h-full pt-6 pb-20 md:pb-4 px-6 lg:px-10 flex flex-col">
           <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

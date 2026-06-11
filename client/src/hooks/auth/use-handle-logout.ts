@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import useLogout from "./useLogout";
+import useLogout from "./use-logout";
 import { toast } from "react-hot-toast";
 
 export default function useHandleLogout() {

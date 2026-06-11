@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
 import ReactQueryProvider from "@/components/providers/react-query-provider";
 import ToastProvider from "@/components/providers/toast-provider";
 import ModalRenderer from "@/components/modals/modal-renderer";
 
-const publicSans = localFont({
-  src: "./fonts/PublicSans-VariableFont_wght.ttf",
-  variable: "--font-public-sans",
-  weight: "100 900 700 400",
-});
+import { publicSans } from "./styles/fonts";
+import "./styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Personal Finance App | Frontend Mentor",
@@ -29,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={publicSans.className}>
+    <html lang="en" className={`${publicSans.className}`}>
+      <body>
         <ReactQueryProvider>
           <ToastProvider />
           <ModalRenderer />
