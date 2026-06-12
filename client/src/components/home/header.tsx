@@ -2,10 +2,11 @@
 import Link from "next/link";
 import { MotionHeader } from "../animated/motion-header";
 import { Button } from "../ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { Logo, LogoDark } from "../shared/logo";
+import ButtonDemo from "./button-demo";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -45,12 +46,10 @@ const Header = () => {
         <div className="hidden lg:flex gap-2 items-center">
           <Button
             variant={"secondary"}
-            className="px-8 py-5 font-bold text-md ring-1"
+            className="px-8 py-5 font-bold text-lg ring-1"
           >
+            <User size={30} className="size-5" />
             <Link href={"/login"}>Log In</Link>
-          </Button>
-          <Button className="px-8 py-5.5 text-md cursor-pointer hover:opacity-70">
-            Book a demo <ArrowRight />
           </Button>
         </div>
       </div>

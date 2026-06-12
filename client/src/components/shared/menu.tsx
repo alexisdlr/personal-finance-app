@@ -1,45 +1,14 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import OverviewIcon from "../Icons/overview-nav";
-import BudgetIcon from "../Icons/budget-nav";
-import TransactionsIcon from "../Icons/transactions-nav";
-import PotsIcon from "../Icons/pots-nav";
-import RecurringIcon from "../Icons/recurring-nav";
+
 import clsx from "clsx";
 import { AnimatePresence } from "framer-motion";
 import { MotionDiv } from "../animated/motion-div";
+import { menuItems } from "@/lib/menu-items";
 
 type MenuProps = {
   collapsed: boolean;
 };
-
-const menuItems = [
-  {
-    icon: OverviewIcon,
-    label: "Overview",
-    href: "/overview",
-  },
-  {
-    icon: BudgetIcon,
-    label: "Budgets",
-    href: "/budgets",
-  },
-  {
-    icon: TransactionsIcon,
-    label: "Transactions",
-    href: "/transactions",
-  },
-  {
-    icon: PotsIcon,
-    label: "Pots",
-    href: "/pots",
-  },
-  {
-    icon: RecurringIcon,
-    label: "Recurring Bills",
-    href: "/recurring",
-  },
-];
 
 const Menu = ({ collapsed }: MenuProps) => {
   const pathname = usePathname();
@@ -85,7 +54,7 @@ const Menu = ({ collapsed }: MenuProps) => {
                     : "text-ring group-hover:text-background",
                 )}
               >
-                <i.icon color={iconColor}></i.icon>
+                {i.icon}
               </span>
 
               {!collapsed && (

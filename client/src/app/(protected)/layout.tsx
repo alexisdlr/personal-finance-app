@@ -1,4 +1,5 @@
 "use client";
+import BottomNav from "@/components/shared/bottom-navbar";
 import Menu from "@/components/shared/menu";
 import Sidebar from "@/components/shared/sidebar";
 import { useAuthStore } from "@/store/auth-store";
@@ -42,6 +43,8 @@ export default function OverviewLayout({
           {children}
         </div>
       </main>
+
+      <BottomNav />
     </div>
   );
 }

@@ -44,9 +44,7 @@ const BudgetChart = ({
       {/* CHART */}
       <div
         className={`relative flex items-center justify-center mx-auto ${
-          page === "overview"
-            ? "w-[220px] h-[220px]"
-            : "w-[280px] h-[280px] p-6"
+          page === "overview" ? "w-55 h-55" : "w-70 h-70 p-6"
         }`}
       >
         <ResponsiveContainer width="100%" height="100%">
@@ -57,7 +55,7 @@ const BudgetChart = ({
               innerRadius={70}
               outerRadius={90}
               paddingAngle={2}
-              strokeWidth={0}
+              strokeWidth={10}
             >
               {chartData.map((entry) => (
                 <Cell key={entry.name} fill={entry.color} />
