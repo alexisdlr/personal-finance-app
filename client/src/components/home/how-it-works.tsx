@@ -1,6 +1,7 @@
 // components/landing/how-it-works.tsx
 
 import { UserPlus, Receipt, Target, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const steps = [
   {
@@ -83,7 +84,7 @@ export default function HowItWorks() {
 
                   {/* Icon */}
 
-                  <div className="relative z-10 flex items-center justify-center w-16 h-16 rounded-2xl bg-green/10">
+                  <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-green/10">
                     <Icon className="text-green" size={28} />
                   </div>
 
@@ -96,8 +97,10 @@ export default function HowItWorks() {
                   </p>
 
                   <div className="mt-8 flex items-center gap-2 text-green font-semibold">
-                    Learn more
-                    <ArrowRight size={18} />
+                    <Link href={"/login"}>
+                      Learn more
+                      <ArrowRight size={18} />
+                    </Link>
                   </div>
                 </div>
               );

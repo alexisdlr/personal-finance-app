@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { MotionHeader } from "../animated/motion-header";
-import Image from "next/image";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -10,7 +9,6 @@ import { Logo, LogoDark } from "../shared/logo";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);

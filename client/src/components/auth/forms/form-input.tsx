@@ -18,7 +18,9 @@ export default function FormInput({ label, error, ...props }: FormInputProps) {
         className="w-full rounded-lg ring-1 ring-beige-500 outline-none px-4 py-2"
       />
 
-      {error && <p className="text-red-500 text-xs">{error.message}</p>}
+      {error && (
+        <p className="text-red-500 text-xs text-right mt-1">{error.message}</p>
+      )}
     </div>
   );
 }

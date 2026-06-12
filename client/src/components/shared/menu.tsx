@@ -91,10 +91,10 @@ const Menu = ({ collapsed }: MenuProps) => {
               {!collapsed && (
                 <AnimatePresence initial={false}>
                   <MotionDiv
-                    initial={{ opacity: 0, x: -8 }}
+                    initial={{ opacity: 0, x: -80 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -8 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 1 }}
                     className="text-base font-bold whitespace-nowrap"
                   >
                     {i.label}
