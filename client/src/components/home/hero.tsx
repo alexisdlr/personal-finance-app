@@ -41,7 +41,7 @@ const Hero = () => {
             Simplify your money management.
           </span>
         </div>
-        <h2 className="text-primary text-5 xl md:text-7xl font-black">
+        <h2 className="text-primary text-5xl text-center md:text-7xl font-black">
           Take Control Of your <span className="text-turquoise">Financial</span>{" "}
           <span className="text-beige-500">Future</span>
         </h2>
@@ -50,7 +50,7 @@ const Hero = () => {
           spending, organize income, and gain financial clarity without
           complexity.
         </p>
-        <div className="flex gap-6 items-center">
+        <div className="flex flex-col lg:flex-row gap-6 items-center">
           <Button className="bg-primary-foreground text-primary p-5 font-bold ring-1 ring-black hover:bg-primary hover:text-white cursor-pointer text-lg">
             Start for free
           </Button>

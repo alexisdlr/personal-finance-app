@@ -42,7 +42,7 @@ const Header = () => {
             </Link>
           )}
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="hidden lg:flex gap-2 items-center">
           <Button
             variant={"secondary"}
             className="px-8 py-5 font-bold text-md ring-1"

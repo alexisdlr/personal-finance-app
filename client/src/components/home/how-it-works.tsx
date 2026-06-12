@@ -29,7 +29,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="py-32 px-6">
+    <section className="py-32 px-5 lg:px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
 
@@ -42,7 +42,7 @@ export default function HowItWorks() {
             Take control of your finances in three simple steps
           </h2>
 
-          <p className="mt-8 text-lg text-grey-500">
+          <p className="mt-8 text-sm lg:text-lg text-grey-500">
             Everything you need to track spending, manage budgets, and build
             better financial habits.
           </p>
@@ -50,7 +50,7 @@ export default function HowItWorks() {
 
         {/* Steps */}
 
-        <div className="relative mt-20">
+        <div className="px-4 lg:px-0 relative mt-20">
           {/* Connection line */}
 
           <div className="hidden lg:block absolute top-20 left-0 right-0 h-px bg-grey-100" />
