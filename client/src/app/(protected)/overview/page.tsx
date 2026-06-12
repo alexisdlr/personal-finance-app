@@ -13,8 +13,9 @@ import Pots from "@/components/overview/pots";
 import Transactions from "@/components/overview/transactions";
 import Budgets from "@/components/overview/budgets";
 import Recurring from "@/components/overview/recurring";
+import { LogOut } from "lucide-react";
 
-export default function Home() {
+export default function Overview() {
   const overviewQuery = useFetchOverviewData();
   const handleLogout = useHandleLogout();
 
@@ -56,13 +57,22 @@ export default function Home() {
   }
 
   return (
-    <div className="w-full h-full lg:h-screen 2xl:h-full pt-1 md:pb-4 px-3 flex flex-col">
+    <div className="w-full h-full lg:h-screen 2xl:h-full lg:mt-6 md:pb-4 px-3 flex flex-col">
       <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <header className="flex justify-between items-center">
-          <h1 className="text-grey-900 font-bold text-3xl">Overview</h1>
+          <div className="flex flex-col gap-2">
+            <h1 className="text-grey-900 font-bold text-4xl">Overview</h1>
+            <p className="text-grey-500 max-w-2xl">
+              Monitor your financial health, track spending, and manage budgets
+              across accounts all in one place.
+            </p>
+          </div>
 
-          <Button className="px-8 text-xs font-semibold" onClick={handleLogout}>
-            Logout
+          <Button
+            className="px-8 text-lg font-semibold flex items-center gap-2"
+            onClick={handleLogout}
+          >
+            Logout <LogOut size={30} className="size-6" />
           </Button>
         </header>
       </MotionDiv>

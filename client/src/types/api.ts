@@ -26,6 +26,7 @@ export interface PotData {
   name: string;
   total: number;
   theme: string;
+  target: number;
 }
 export interface OverviewResponse {
   message: string;

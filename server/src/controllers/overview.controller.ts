@@ -78,11 +78,12 @@ export const getOverview: RequestHandler = async (
 
     const totalSaved = pots.reduce((sum, pot) => sum + pot.total, 0);
 
-    const topPots = pots.slice(0, 4).map((pot) => ({
+    const topPots = pots.map((pot) => ({
       id: pot.id,
       name: pot.name,
       total: pot.total,
       theme: pot.theme,
+      target: pot.target,
     }));
 
     // ==========================

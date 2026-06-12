@@ -1,4 +1,3 @@
-import { Pot } from "@/types/global";
 import { Button } from "../ui/button";
 import { formatPrice } from "@/lib/utils";
 import {
@@ -11,9 +10,10 @@ import {
 } from "../ui/dropdown-menu";
 import { Ellipsis } from "lucide-react";
 import { useModalStore } from "@/store/modal-store";
+import { PotData } from "@/types/api";
 
 type PotCardProps = {
-  pot: Pot;
+  pot: PotData;
 };
 
 const PotCard = ({ pot }: PotCardProps) => {
@@ -71,7 +71,9 @@ const PotCard = ({ pot }: PotCardProps) => {
       <div className="flex items-end justify-between mb-5">
         <span className="text-sm text-gray-500">Total Saved</span>
 
-        <span className="text-4xl font-bold">{formatPrice(pot.total)}</span>
+        <span className="text-4xl font-bold">
+          {formatPrice(pot.total || 0)}
+        </span>
       </div>
 
       {/* Progress */}
@@ -89,7 +91,7 @@ const PotCard = ({ pot }: PotCardProps) => {
       <div className="flex justify-between mt-3 text-xs text-gray-500">
         <span>{progress.toFixed(1)}%</span>
 
-        <span>Target of {formatPrice(pot.target)}</span>
+        <span>Target of {formatPrice(pot.target || 0)}</span>
       </div>
 
       {/* Actions */}

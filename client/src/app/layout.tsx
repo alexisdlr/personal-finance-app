@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import ReactQueryProvider from "@/components/providers/react-query-provider";
 import ToastProvider from "@/components/providers/toast-provider";
 import ModalRenderer from "@/components/modals/modal-renderer";

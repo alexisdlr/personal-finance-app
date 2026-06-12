@@ -217,6 +217,11 @@
     @apply font-sans;
   }
 }
+@layer utilities {
+  .pb-safe {
+    padding-bottom: max(96px, calc(96px + env(safe-area-inset-bottom)));
+  }
+}
 .grid-layout {
   display: grid;
   gap: 1.5rem;

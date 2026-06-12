@@ -11,9 +11,9 @@ type BudgetsProps = {
 
 const Budgets = ({ budgets, totalLimit, totalSpent }: BudgetsProps) => {
   return (
-    <div className="area-budgets">
-      <AnimatedSection title="Budgets" link="See Details" linkHref="/budgets">
-        <div className=" grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="area-budgets bg-background rounded-12 grid min-h-54.5 grid-cols-1 gap-5 px-5 py-6 sm:px-8">
+      <div className="@container">
+        <div className=" grid grid-cols-1 @lg:grid-cols-2 gap-4 place-items-center">
           <ChartPieDonutText
             budgets={budgets}
             totalLimit={totalLimit}
@@ -40,7 +40,7 @@ const Budgets = ({ budgets, totalLimit, totalSpent }: BudgetsProps) => {
             </div>
           </div>
         </div>
-      </AnimatedSection>
+      </div>
     </div>
   );
 };
