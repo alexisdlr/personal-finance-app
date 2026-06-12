@@ -1,5 +1,5 @@
 import { formatPrice } from "@/lib/utils";
-import { Budget, Transaction } from "@/types/global";
+import { Budget, BudgetWithData, Transaction } from "@/types/global";
 import { Edit, Ellipsis } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -12,10 +12,11 @@ import {
 } from "../ui/dropdown-menu";
 import LatestSpending from "./latest-sepending";
 import { useModalStore } from "@/store/modal-store";
+import { TransactionData } from "@/types/api";
 
 type BudgetCardProps = {
-  budget: Budget;
-  transactions: Transaction[];
+  budget: BudgetWithData;
+  transactions: TransactionData[];
   theme: string;
 };
 

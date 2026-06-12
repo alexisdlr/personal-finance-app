@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { formatPrice } from "@/lib/utils";
-import { Transaction } from "@/types/global";
+import { TransactionData } from "@/types/api";
 
 type Props = {
-  transactions: Transaction[];
+  transactions: TransactionData[];
 };
 
 export default function LatestSpending({ transactions }: Props) {

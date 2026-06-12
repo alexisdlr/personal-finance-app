@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const DUE_SOON_DAYS = 5;
+
 export const getOverview: RequestHandler = async (
   req: Request,
   res: Response,
@@ -11,11 +13,20 @@ export const getOverview: RequestHandler = async (
     const userId = req.userId;
 
     if (!userId) {
-      res.status(401).json({ error: "No user logged" });
+      res.status(401).json({
+        error: "No user logged",
+      });
+
       return;
     }
 
-    const [pots, balance, budgets, transactions] = await Promise.all([
+    const [balance, pots, budgets, transactions] = await Promise.all([
+      prisma.balance.findFirst({
+        where: {
+          userId: Number(userId),
+        },
+      }),
+
       prisma.pot.findMany({
         where: {
           userId: Number(userId),
@@ -25,18 +36,9 @@ export const getOverview: RequestHandler = async (
         },
       }),
 
-      prisma.balance.findFirst({
-        where: {
-          userId: Number(userId),
-        },
-      }),
-
       prisma.budget.findMany({
         where: {
           userId: Number(userId),
-        },
-        orderBy: {
-          category: "desc",
         },
       }),
 
@@ -45,74 +47,151 @@ export const getOverview: RequestHandler = async (
           userId: Number(userId),
         },
         orderBy: {
-          id: "desc",
+          date: "desc",
         },
       }),
     ]);
 
-    // ========= BUDGET STATS =========
+    // ==========================
+    // REFERENCE MONTH
+    // ==========================
 
-    const budgetsWithStats = budgets.map((budget) => {
-      const categoryTransactions = transactions.filter(
-        (transaction) =>
-          transaction.category === budget.category && transaction.amount < 0,
-      );
+    const latestTx = transactions.length > 0 ? transactions[0] : null;
 
-      const spent = categoryTransactions.reduce(
-        (sum, transaction) => sum + Math.abs(transaction.amount),
-        0,
-      );
+    const referenceDate = latestTx?.date ?? new Date();
 
-      const remaining = Math.max(budget.maximum - spent, 0);
+    const referenceMonth = referenceDate.toISOString().slice(0, 7);
+
+    // ==========================
+    // BALANCE
+    // ==========================
+
+    const current = balance?.current ?? 0;
+
+    const income = balance?.income ?? 0;
+
+    const expenses = balance?.expenses ?? 0;
+
+    // ==========================
+    // POTS
+    // ==========================
+
+    const totalSaved = pots.reduce((sum, pot) => sum + pot.total, 0);
+
+    const topPots = pots.slice(0, 4).map((pot) => ({
+      id: pot.id,
+      name: pot.name,
+      total: pot.total,
+      theme: pot.theme,
+    }));
+
+    // ==========================
+    // BUDGETS
+    // ==========================
+
+    const budgetData = budgets.map((budget) => {
+      const spent = transactions
+        .filter(
+          (transaction) =>
+            transaction.category === budget.category &&
+            transaction.amount < 0 &&
+            transaction.date.toISOString().startsWith(referenceMonth),
+        )
+        .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
 
       return {
         ...budget,
         spent,
-        remaining,
+        remaining: budget.maximum - spent,
       };
     });
 
-    // ========= RECURRING =========
-
-    const today = new Date();
-
-    const upcomingDate = new Date();
-    upcomingDate.setDate(today.getDate() + 7);
-
-    const recurringBills = transactions.filter(
-      (transaction) => transaction.recurring,
-    );
-
-    const paidBills = recurringBills
-      .filter((transaction) => transaction.amount < 0)
-      .reduce((sum, transaction) => sum + Math.abs(transaction.amount), 0);
-
-    const totalBills = recurringBills.reduce(
-      (sum, transaction) => sum + Math.abs(transaction.amount),
+    const totalSpent = budgetData.reduce(
+      (sum, budget) => sum + budget.spent,
       0,
     );
 
-    const dueSoon = recurringBills
-      .filter(
-        (transaction) =>
-          new Date(transaction.date) <= upcomingDate && transaction.amount > 0,
-      )
-      .reduce((sum, transaction) => sum + transaction.amount, 0);
+    const totalLimit = budgetData.reduce(
+      (sum, budget) => sum + budget.maximum,
+      0,
+    );
+
+    // ==========================
+    // LATEST TRANSACTIONS
+    // ==========================
+
+    const latestTransactions = transactions.slice(0, 5).map((t) => ({
+      id: t.id,
+      avatar: t.avatar,
+      name: t.name,
+      amount: t.amount,
+      date: t.date,
+      category: t.category,
+    }));
+
+    // ==========================
+    // RECURRING BILLS
+    // ==========================
+
+    const recurring = transactions.filter(
+      (transaction) => transaction.recurring,
+    );
+
+    const today = referenceDate.getDate();
+
+    const bills = recurring.map((bill) => {
+      const day = new Date(bill.date).getDate();
+
+      const paid = bill.date.toISOString().startsWith(referenceMonth);
+
+      return {
+        amount: Math.abs(bill.amount),
+        paid,
+        dueSoon: !paid && day > today && day <= today + DUE_SOON_DAYS,
+      };
+    });
+
+    const paid = bills.filter((b) => b.paid);
+
+    const upcoming = bills.filter((b) => !b.paid);
+
+    const dueSoon = bills.filter((b) => b.dueSoon);
 
     res.status(200).json({
       message: "Success",
+
       data: {
-        pots,
-        budgets: budgetsWithStats,
-        transactions,
-        balance: balance ?? {
-          current: 0,
-          income: 0,
-          expenses: 0,
+        balance: current,
+        income,
+        expenses,
+
+        totalSaved,
+
+        pots: topPots,
+
+        budgets: budgetData,
+
+        totalSpent,
+
+        totalLimit,
+
+        transactions: latestTransactions,
+
+        bills: {
+          totalBills: bills.reduce((sum, bill) => sum + bill.amount, 0),
+
+          paidCount: paid.length,
+
+          paidTotal: paid.reduce((sum, bill) => sum + bill.amount, 0),
+
+          upcomingCount: upcoming.length,
+
+          upcomingTotal: upcoming.reduce((sum, bill) => sum + bill.amount, 0),
+
+          dueSoonCount: dueSoon.length,
+
+          dueSoonTotal: dueSoon.reduce((sum, bill) => sum + bill.amount, 0),
         },
-        paidBills,
-        totalBills,
-        dueSoon,
       },
     });
   } catch (error) {

@@ -217,3 +217,45 @@
     @apply font-sans;
   }
 }
+.grid-layout {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "stats"
+    "pots"
+    "transactions"
+    "budgets"
+    "bills";
+}
+
+@media (min-width: 64rem) {
+  .grid-layout {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "stats        stats"
+      "pots         budgets"
+      "transactions budgets"
+      "transactions bills";
+  }
+}
+
+.area-stats {
+  grid-area: stats;
+}
+
+.area-pots {
+  grid-area: pots;
+}
+
+.area-transactions {
+  grid-area: transactions;
+}
+
+.area-budgets {
+  grid-area: budgets;
+}
+
+.area-bills {
+  grid-area: bills;
+}

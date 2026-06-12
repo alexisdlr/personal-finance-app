@@ -2,13 +2,15 @@ import React from "react";
 import { useModalStore } from "@/store/modal-store";
 import { MotionDiv } from "../animated/motion-div";
 import { Button } from "@/components/ui/button";
-import { ChartPieDonutText } from "../overview/budget-chart";
 import BudgetCard from "./budget-card";
 import { BudgetWithData, Transaction } from "@/types/global";
 import { formatPrice } from "@/lib/utils";
+import { TransactionData } from "@/types/api";
+import BudgetSummary from "./budget-summary";
+import { ChartPieDonutText } from "../shared/budget-chart";
 type BudgetContentProps = {
   budgets: BudgetWithData[];
-  transactions: Transaction[];
+  transactions: TransactionData[];
 };
 
 const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
@@ -51,50 +53,7 @@ const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
             totalLimit={totalLimit}
             totalSpent={totalSpent}
           />
-          <div className="px-2 flex flex-col items-start w-full h-full ">
-            <h2 className="my-4 text-gray-900 font-bold text-xl">
-              Spending Summary
-            </h2>
-            <div className="flex flex-col gap-2 w-full">
-              {budgets.map((budget: BudgetWithData) => (
-                <React.Fragment key={budget.id}>
-                  <div className="flex flex-col gap-2 justify-start w-full h-full ">
-                    <div className="w-full h-full bg-transparent rounded-lg flex items-center justify-between p-2">
-                      <div className="flex gap-4 items-center h-full">
-                        <div
-                          className="w-1 h-6 rounded-2xl opacity-80"
-                          style={{ backgroundColor: budget.theme }}
-                        ></div>
-                        <span className="text-sm text-gray-500">
-                          {budget.category}
-                        </span>
-                      </div>
-                      <div className="text-sm text-gray-500 flex items-center gap-2">
-                        <span className="text-base line-clamp-1 tracking-wider font-bold text-primary">
-                          {formatPrice(
-                            transactions
-                              .filter(
-                                (transaction: Transaction) =>
-                                  transaction.category === budget.category,
-                              )
-                              .reduce(
-                                (acc: number, transaction: Transaction) =>
-                                  acc + Math.abs(transaction.amount),
-                                0,
-                              ),
-                          )}
-                        </span>{" "}
-                        <span className="text-xs font-normal">
-                          of {formatPrice(budget.maximum)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <hr />
-                </React.Fragment>
-              ))}
-            </div>
-          </div>
+          <BudgetSummary budgets={budgets} transactions={transactions} />
         </div>
         {/* BUDGETS LIST */}
         <div className="w-full flex flex-col items-end gap-6">
@@ -103,7 +62,7 @@ const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
               key={budget.id}
               budget={budget}
               transactions={transactions.filter(
-                (transaction: Transaction) =>
+                (transaction: TransactionData) =>
                   transaction.category === budget.category,
               )}
               theme={budget.theme}

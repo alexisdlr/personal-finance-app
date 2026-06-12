@@ -18,9 +18,9 @@ const AnimatedSection = ({
   <MotionDiv
     initial={{ opacity: 0, y: -20 }}
     animate={{ opacity: 1, y: 0 }}
-    className="mt-8 w-full"
+    className="w-full "
   >
-    <div className="flex flex-col bg-white p-6 rounded-xl gap-5 items-center">
+    <div className="h-fit flex flex-col bg-white p-6 rounded-xl gap-5 items-center">
       <div className="w-full flex justify-between">
         <h2 className="text-grey-900 font-bold text-[20px]">{title}</h2>
         {link && (

@@ -1,7 +1,7 @@
 import { Pot } from "@/types/global";
 
 type PotsProps = {
-  pots: Pot[];
+  pots: Pick<Pot, "id" | "name" | "total" | "theme">[];
 };
 
 type PotItemProps = {
@@ -14,7 +14,7 @@ const PotItem = ({ cat, value, theme }: PotItemProps) => {
   return (
     <div className="flex items-center gap-3">
       <div
-        className={`w-1 h-[2.5rem] rounded-xl`}
+        className={`w-1 h-10 rounded-xl`}
         style={{ backgroundColor: theme }}
       />
       <div className="flex flex-col h-full gap-2 items-start justify-center p-2 xl:px-4 xl:pl-1 rounded-lg">
@@ -24,7 +24,7 @@ const PotItem = ({ cat, value, theme }: PotItemProps) => {
     </div>
   );
 };
-const Pots = ({ pots }: PotsProps) => {
+const PotsList = ({ pots }: PotsProps) => {
   return (
     <div className="w-full lg:w-auto grid grid-cols-2 gap-2 max-w-md mx-auto">
       {pots.slice(0, 4).map((p) => (
@@ -34,4 +34,4 @@ const Pots = ({ pots }: PotsProps) => {
   );
 };
 
-export default Pots;
+export default PotsList;
