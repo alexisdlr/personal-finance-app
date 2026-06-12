@@ -6,7 +6,6 @@ import TransactionFilters, {
 } from "@/components/transactions/transaction-filters";
 
 import { MotionDiv } from "@/components/animated/motion-div";
-import { Transaction } from "@/types/global";
 import { useMemo, useState } from "react";
 
 import { useTransactions } from "@/hooks/transactions/use-transactions";
@@ -15,6 +14,7 @@ import {
   mobileColumns,
 } from "@/components/transactions/transaction-columns";
 import { sortTransactions } from "@/lib/utils";
+import { TransactionData } from "@/types/api";
 
 const TransactionsPage = () => {
   const { transactions } = useTransactions();
@@ -28,7 +28,9 @@ const TransactionsPage = () => {
   const uniqueCategories = useMemo<string[]>(
     () => [
       ...new Set(
-        transactions.map((transaction: Transaction) => transaction.category),
+        transactions.map(
+          (transaction: TransactionData) => transaction.category,
+        ),
       ),
     ],
     [transactions],
@@ -39,7 +41,8 @@ const TransactionsPage = () => {
 
     if (categoryFilter !== "all") {
       filtered = filtered.filter(
-        (transaction: Transaction) => transaction.category === categoryFilter,
+        (transaction: TransactionData) =>
+          transaction.category === categoryFilter,
       );
     }
 

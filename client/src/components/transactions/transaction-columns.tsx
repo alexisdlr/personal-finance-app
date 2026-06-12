@@ -1,10 +1,10 @@
 "use client";
 
-import { Transaction } from "@/types/global";
 import { cn, formatPrice } from "@/lib/utils";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import Image from "next/image";
+import { TransactionData } from "@/types/api";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -16,7 +16,7 @@ const formatDate = (dateString: string) => {
   });
 };
 
-const columnHelper = createColumnHelper<Transaction>();
+const columnHelper = createColumnHelper<TransactionData>();
 
 export const columns = [
   columnHelper.accessor((row) => row.name, {

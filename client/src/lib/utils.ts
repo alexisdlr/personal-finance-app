@@ -1,5 +1,5 @@
 import { SortOption } from "@/components/transactions/transaction-filters";
-import { Transaction } from "@/types/global";
+import { TransactionData } from "@/types/api";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -23,7 +23,7 @@ export const MODALS = {
 } as const;
 
 export const sortTransactions = (
-  transactions: Transaction[],
+  transactions: TransactionData[],
   sortBy: SortOption,
 ) => {
   const sorted = [...transactions];
