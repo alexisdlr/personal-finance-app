@@ -47,3 +47,9 @@ export type Pot = {
   balanceId: number;
   userId: number;
 };
+
+export type BudgetWithData = Budget & {
+  spent: number;
+  remaining: number;
+  latestTransactions: Transaction[];
+};

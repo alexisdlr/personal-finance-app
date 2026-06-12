@@ -1,10 +1,10 @@
-import { Balance, Budget, Pot, Transaction } from "@/types/global";
+import { Balance, BudgetWithData, Pot, Transaction } from "@/types/global";
 
 export interface OverviewResponse {
   message: string;
   data: {
     pots: Pot[];
-    budgets: Budget[];
+    budgets: BudgetWithData[];
     transactions: Transaction[];
     recurringBills: Transaction[];
     balance: Balance;

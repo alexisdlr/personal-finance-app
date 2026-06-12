@@ -1,6 +1,6 @@
 import { Transaction, Budget } from "@/types/global";
 import AnimatedSection from "./animated-section";
-import BudgetChart from "./budget-chart";
+import { ChartPieDonutText } from "./budget-chart";
 import RecurringBills from "./recurring-bills";
 
 type OverviewRightProps = {
@@ -24,6 +24,7 @@ const OverviewRight = ({
 
       <AnimatedSection title="Budgets" link="See Details" linkHref="/budgets">
         <div className="w-full flex flex-col gap-3 md:flex-row justify-between">
+          {/* <ChartPieDonutText />
           <BudgetChart
             page="overview"
             budgets={budgets}
@@ -50,7 +51,7 @@ const OverviewRight = ({
                 </div>
               </div>
             ))}
-          </BudgetChart>
+          </BudgetChart> */}
         </div>
       </AnimatedSection>
 

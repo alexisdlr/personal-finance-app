@@ -1,93 +1,98 @@
 "use client";
 
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { Budget, Transaction } from "@/types/global";
+import * as React from "react";
+import { Label, Pie, PieChart } from "recharts";
+import {
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
+import type { BudgetWithData } from "@/types/global";
 
-type BudgetChartProps = {
-  budgets: Budget[];
-  transactions: Transaction[];
-  children?: React.ReactNode;
-  page?: "overview" | "budget";
-};
-
-const BudgetChart = ({
-  budgets,
-  transactions,
-  children,
-  page,
-}: BudgetChartProps) => {
-  const totalSpent = budgets.reduce((sum, budget) => {
-    const categorySpent = transactions
-      .filter((transaction) => transaction.category === budget.category)
-      .reduce((acc, transaction) => acc + Math.abs(transaction.amount), 0);
-
-    return sum + categorySpent;
-  }, 0);
-
-  const totalBudgetLimit = budgets.reduce(
-    (sum, budget) => sum + budget.maximum,
-    0,
-  );
-
-  const chartData = budgets.map((budget) => ({
-    name: budget.category,
-    value: budget.maximum,
-    color: budget.theme,
+export function ChartPieDonutText({
+  budgets = [],
+  totalSpent,
+  totalLimit,
+}: {
+  budgets: BudgetWithData[];
+  totalSpent: number;
+  totalLimit: number;
+}) {
+  const chartData = budgets.map((b) => ({
+    category: b.category,
+    value: b.maximum,
+    spent: b.spent,
+    fill: b.theme,
   }));
 
+  const chartConfig = Object.fromEntries(
+    budgets.map((b) => [b.category, { label: b.category, color: b.theme }]),
+  ) satisfies ChartConfig;
+
   return (
-    <div
-      className={`bg-white rounded-lg w-full h-full flex lg:items-center sm:space-x-6 ${
-        page === "overview" ? "flex-row" : "flex-col"
-      }`}
-    >
-      {/* CHART */}
-      <div
-        className={`relative flex items-center justify-center mx-auto ${
-          page === "overview" ? "w-55 h-55" : "w-70 h-70 p-6"
-        }`}
-      >
-        <ResponsiveContainer width="100%" height="100%">
+    <div>
+      <CardHeader className="sr-only items-center pb-0">
+        <CardTitle>Budget chart</CardTitle>
+        <CardDescription>Showing spending summary</CardDescription>
+      </CardHeader>
+
+      <CardContent className="flex-none p-0">
+        <ChartContainer
+          config={chartConfig}
+          className="aspect-square h-65 w-65"
+        >
           <PieChart>
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
             <Pie
               data={chartData}
               dataKey="value"
-              innerRadius={70}
-              outerRadius={90}
-              paddingAngle={2}
-              strokeWidth={10}
+              nameKey="category"
+              innerRadius={67}
+              strokeWidth={5}
             >
-              {chartData.map((entry) => (
-                <Cell key={entry.name} fill={entry.color} />
-              ))}
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                    return (
+                      <text
+                        x={viewBox.cx}
+                        y={viewBox.cy}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                      >
+                        <tspan
+                          x={viewBox.cx}
+                          y={viewBox.cy}
+                          className="fill-foreground text-2xl font-bold"
+                        >
+                          ${totalSpent}
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 24}
+                          className="fill-muted-foreground text-xs"
+                        >
+                          of ${totalLimit} limit
+                        </tspan>
+                      </text>
+                    );
+                  }
+                }}
+              />
             </Pie>
           </PieChart>
-        </ResponsiveContainer>
-
-        {/* CENTER LABEL */}
-        <div className="absolute text-center">
-          <h3 className="text-3xl font-bold text-gray-900">
-            ${totalSpent.toFixed(0)}
-          </h3>
-
-          <p className="text-sm text-gray-500 mt-2">
-            of ${totalBudgetLimit} limit
-          </p>
-        </div>
-      </div>
-
-      {/* RIGHT CONTENT */}
-      <div
-        className={`grid gap-4 h-full ${
-          page === "overview"
-            ? "w-full lg:w-[40%]"
-            : "w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-1"
-        }`}
-      >
-        {children}
-      </div>
+        </ChartContainer>
+      </CardContent>
     </div>
   );
-};
-
-export default BudgetChart;
+}
