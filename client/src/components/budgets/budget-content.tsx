@@ -18,7 +18,7 @@ const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
   const totalSpent = budgets.reduce((sum, b) => sum + b.spent, 0);
   const totalLimit = budgets.reduce((sum, b) => sum + b.maximum, 0);
   return (
-    <div className="w-full h-full px-3 flex flex-col ">
+    <div className="w-full h-full px-3 lg:mt-6 flex flex-col ">
       <MotionDiv
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -34,7 +34,7 @@ const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
         <div className="flex items-center gap-2">
           <Button
             variant="default"
-            className="px-4 py-6 text-md font-bold mr-1 rounded-lg bg-black text-white"
+            className="px-4 py-6 text-md font-bold mr-1 cursor-pointer rounded-lg bg-black text-white"
             onClick={() => openModal("CREATE_BUDGET")}
           >
             + Add New Budget

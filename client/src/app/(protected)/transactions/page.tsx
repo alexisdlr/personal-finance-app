@@ -15,6 +15,7 @@ import {
 } from "@/components/transactions/transaction-columns";
 import { sortTransactions } from "@/lib/utils";
 import { TransactionData } from "@/types/api";
+import { Button } from "@/components/ui/button";
 
 const TransactionsPage = () => {
   const { transactions } = useTransactions();
@@ -50,14 +51,24 @@ const TransactionsPage = () => {
   }, [transactions, categoryFilter, sortBy]);
 
   return (
-    <div className="w-full h-full sm:h-screen pt-6 sm:px-6 px-3  flex flex-col pb-24">
+    <div className="w-full h-full sm:h-full lg:mt-6 px-3 flex flex-col ">
       <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-grey-900 font-bold text-3xl mt-2 mb-10">
-          Transactions
-        </h1>
+        <header className="flex justify-between items-center">
+          <div className="flex flex-col">
+            <h1 className="text-grey-900 font-bold text-4xl">Transactions</h1>
+            <p className="text-grey-500 max-w-2xl truncate lg:text-balance lg:whitespace-normal lg:overflow-visible mt-2">
+              Manage your transaction history. Use the filters to search, sort,
+              and categorize your expenses and income for better financial
+              insights.
+            </p>
+          </div>
+          <Button className="px-6 py-6 text-lg font-semibold flex items-center gap-2 cursor-pointer">
+            + New Transaction
+          </Button>
+        </header>
       </MotionDiv>
 
-      <MotionDiv className="bg-white p-5 rounded-lg shadow-lg">
+      <MotionDiv className="bg-white p-5 rounded-lg shadow-lg mt-8">
         <TransactionFilters
           search={globalFilter}
           setSearch={setGlobalFilter}

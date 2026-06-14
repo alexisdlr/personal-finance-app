@@ -2,6 +2,8 @@ import React from "react";
 import AnimatedSection from "./animated-section";
 import { ChartPieDonutText } from "../shared/budget-chart";
 import { BudgetWithData } from "@/types/global";
+import Link from "next/link";
+import { NavIcons } from "../shared/nav-icons";
 
 type BudgetsProps = {
   budgets: BudgetWithData[];
@@ -13,6 +15,16 @@ const Budgets = ({ budgets, totalLimit, totalSpent }: BudgetsProps) => {
   return (
     <div className="area-budgets bg-background rounded-12 grid min-h-54.5 grid-cols-1 gap-5 px-5 py-6 sm:px-8">
       <div className="@container">
+        <div className="flex items-center justify-between">
+          <h2 className="text-primary text-xl font-bold">Budgets</h2>
+          <Link
+            className="group hover:text-primary text-muted-foreground focus-visible:outline-primary flex items-center gap-3 rounded-xs text-sm capitalize transition-colors focus-visible:outline-1"
+            href="/budgets"
+          >
+            See details
+            {NavIcons.chevronRight}
+          </Link>
+        </div>
         <div className=" grid grid-cols-1 @lg:grid-cols-2 gap-4 place-items-center">
           <ChartPieDonutText
             budgets={budgets}

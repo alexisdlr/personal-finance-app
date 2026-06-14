@@ -28,28 +28,29 @@ export interface PotData {
   theme: string;
   target: number;
 }
+export interface OverviewData {
+  balance: number;
+
+  income: number;
+
+  expenses: number;
+
+  totalSaved: number;
+
+  pots: PotData[];
+
+  budgets: BudgetWithData[];
+
+  totalSpent: number;
+
+  totalLimit: number;
+
+  transactions: TransactionData[];
+
+  bills: RecurringBillsSummary;
+}
 export interface OverviewResponse {
   message: string;
 
-  data: {
-    balance: number;
-
-    income: number;
-
-    expenses: number;
-
-    totalSaved: number;
-
-    pots: PotData[];
-
-    budgets: BudgetWithData[];
-
-    totalSpent: number;
-
-    totalLimit: number;
-
-    transactions: TransactionData[];
-
-    bills: RecurringBillsSummary;
-  };
+  data: OverviewData;
 }

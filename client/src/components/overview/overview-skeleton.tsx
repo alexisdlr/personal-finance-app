@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function OverviewSkeleton() {
   return (
-    <div className="w-full h-full pt-6 pb-20 md:pb-4 px-6 lg:px-10 flex flex-col">
+    <div className="w-full h-full pt-6 pb-20 md:pb-4 px-3  flex flex-col">
       {/* HEADER */}
       <div className="flex justify-between items-center bg-white p-6 animate-pulse rounded-xl">
         <Skeleton className="h-10 w-40" />
