@@ -1,9 +1,9 @@
 import React from "react";
-import AnimatedSection from "./animated-section";
 import { ChartPieDonutText } from "../shared/budget-chart";
 import { BudgetWithData } from "@/types/global";
 import Link from "next/link";
 import { NavIcons } from "../shared/nav-icons";
+import { MotionDiv } from "../animated/motion-div";
 
 type BudgetsProps = {
   budgets: BudgetWithData[];
@@ -13,7 +13,11 @@ type BudgetsProps = {
 
 const Budgets = ({ budgets, totalLimit, totalSpent }: BudgetsProps) => {
   return (
-    <div className="area-budgets bg-background rounded-12 grid min-h-54.5 grid-cols-1 gap-5 px-5 py-6 sm:px-8">
+    <MotionDiv
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="area-budgets bg-background rounded-12 grid min-h-54.5 grid-cols-1 gap-5 px-5 py-6 sm:px-8"
+    >
       <div className="@container">
         <div className="flex items-center justify-between">
           <h2 className="text-primary text-xl font-bold">Budgets</h2>
@@ -53,7 +57,7 @@ const Budgets = ({ budgets, totalLimit, totalSpent }: BudgetsProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </MotionDiv>
   );
 };
 

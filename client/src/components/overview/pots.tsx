@@ -1,6 +1,4 @@
 import React from "react";
-import AnimatedSection from "./animated-section";
-import TotalSaved from "../shared/total-saved";
 import PotsList from "./pots-list";
 import { PotData } from "@/types/api";
 import Image from "next/image";

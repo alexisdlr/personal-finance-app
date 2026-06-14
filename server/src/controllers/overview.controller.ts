@@ -119,7 +119,7 @@ export const getOverview: RequestHandler = async (
     // LATEST TRANSACTIONS
     // ==========================
 
-    const latestTransactions = transactions.slice(0, 5).map((t) => ({
+    const latestTransactions = transactions.map((t) => ({
       id: t.id,
       avatar: t.avatar,
       name: t.name,
