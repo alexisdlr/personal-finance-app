@@ -3,12 +3,14 @@
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Filter, SortAsc } from "lucide-react";
 import SearchInput from "./search-input";
+import { NavIcons } from "../shared/nav-icons";
 
 export type SortOption =
   | "latest"
@@ -31,6 +33,12 @@ type TransactionFiltersProps = {
   categories: string[];
 };
 
+const filterTriggerClassName =
+  "flex h-9 w-9 shrink-0 items-center justify-center border-0 bg-transparent p-0 shadow-none outline-0 focus:ring-0 focus-visible:ring-0 " +
+  "[&>span:first-child]:flex [&>span:first-child]:items-center [&>span:first-child]:justify-center md:[&>span:first-child]:hidden " +
+  "[&>span:nth-child(2)]:!hidden md:[&>span:nth-child(2)]:!block md:[&>span:nth-child(2)]:min-w-0 md:[&>span:nth-child(2)]:flex-1 md:[&>span:nth-child(2)]:truncate " +
+  "md:h-12.5 md:w-35 md:min-w-35 md:justify-between md:gap-2 md:border-2 md:bg-white md:px-3 md:py-1 md:text-xs md:text-gray-700";
+
 export default function TransactionFilters({
   search,
   setSearch,
@@ -48,65 +56,76 @@ export default function TransactionFilters({
         placeholder="Search transactions..."
       />
 
-      <div className="flex items-center justify-between md:mt-4 md:mb-2">
-        <div className="flex items-center gap-2 w-full">
+      <div className="flex items-center md:mt-4 md:mb-2">
+        <div className="flex items-center gap-4 md:gap-8">
           {/* SORT */}
-          <span className="hidden md:block text-sm text-gray-500 min-w-14">
-            Sort by:
-          </span>
-
-          <Select
-            value={sortBy}
-            onValueChange={(value) => setSortBy(value as SortOption)}
-          >
-            <SelectTrigger
-              className="bg-white text-gray-700 px-2 py-1 rounded-md text-xs border-2"
-              aria-label="Sort by"
+          <div className="flex items-center gap-2">
+            <span className="hidden text-sm text-muted-foreground whitespace-nowrap md:inline">
+              Sort by
+            </span>
+            <Select
+              value={sortBy}
+              onValueChange={(value) => setSortBy(value as SortOption)}
             >
-              <span className="hidden md:block">
-                <SelectValue />
-              </span>
+              <SelectTrigger
+                className={filterTriggerClassName}
+                aria-label="Sort by"
+              >
+                <span>{NavIcons.sort}</span>
+                <span>
+                  <SelectValue
+                    className="text-base text-primary"
+                    placeholder="Latest"
+                  />
+                </span>
+              </SelectTrigger>
 
-              <SortAsc className="md:hidden text-black" size={22} />
-            </SelectTrigger>
-
-            <SelectContent>
-              <SelectItem value="latest">Latest</SelectItem>
-              <SelectItem value="oldest">Oldest</SelectItem>
-              <SelectItem value="atoz">A to Z</SelectItem>
-              <SelectItem value="ztoa">Z to A</SelectItem>
-              <SelectItem value="highest">Highest</SelectItem>
-              <SelectItem value="lowest">Lowest</SelectItem>
-            </SelectContent>
-          </Select>
+              <SelectContent position="popper" side="bottom" sideOffset={4}>
+                <SelectGroup>
+                  <SelectLabel className="sr-only">Sort by</SelectLabel>
+                  <SelectItem value="latest">Latest</SelectItem>
+                  <SelectItem value="oldest">Oldest</SelectItem>
+                  <SelectItem value="atoz">A to Z</SelectItem>
+                  <SelectItem value="ztoa">Z to A</SelectItem>
+                  <SelectItem value="highest">Highest</SelectItem>
+                  <SelectItem value="lowest">Lowest</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
 
           {/* CATEGORY */}
-          <span className="hidden md:block text-sm text-gray-500 min-w-14">
-            Category:
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="hidden text-sm text-gray-500 whitespace-nowrap md:inline">
+              Category:
+            </span>
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger
+                className={filterTriggerClassName}
+                aria-label="Category"
+              >
+                <span>{NavIcons.filter}</span>
+                <span>
+                  <SelectValue
+                    className="text-base text-primary"
+                    placeholder="All transactions"
+                  />
+                </span>
+              </SelectTrigger>
 
-          <Select value={category} onValueChange={setCategory}>
-            <SelectTrigger
-              className="bg-white text-gray-700 px-2 py-1 rounded-md text-xs border-2"
-              aria-label="Category"
-            >
-              <span className="hidden md:block">
-                <SelectValue />
-              </span>
-
-              <Filter className="md:hidden text-black" size={20} />
-            </SelectTrigger>
-
-            <SelectContent>
-              <SelectItem value="all">All Transactions</SelectItem>
-
-              {categories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+              <SelectContent position="popper" side="bottom" sideOffset={4}>
+                <SelectGroup>
+                  <SelectLabel className="sr-only">Category</SelectLabel>
+                  <SelectItem value="all">All transactions</SelectItem>
+                  {categories.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
     </div>

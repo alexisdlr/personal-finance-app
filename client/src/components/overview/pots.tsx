@@ -1,10 +1,11 @@
 import React from "react";
-import PotsList from "./pots-list";
 import { PotData } from "@/types/api";
 import Image from "next/image";
 import { NavIcons } from "../shared/nav-icons";
 import Link from "next/link";
 import { MotionDiv } from "../animated/motion-div";
+import EmptyState from "../shared/empty-state";
+import PotsIcon from "../Icons/pots-nav";
 
 type Props = {
   totalSaved: number;
@@ -30,24 +31,11 @@ const Pots = ({ totalSaved, pots }: Props) => {
       </div>
 
       {pots.length === 0 ? (
-        <div className="flex flex-col items-center gap-4 text-center">
-          <div className="bg-sidebar-accent grid size-14 place-items-center rounded-full">
-            <Image
-              width={24}
-              height={24}
-              src="/images/icon-nav-pots.svg"
-              alt=""
-            />
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <h3 className="text-primary text-base font-bold">No pots yet</h3>
-            <p className="text-muted-foreground text-sm">
-              Create a pot to start saving for specific goals like travel,
-              gadgets, or emergencies.
-            </p>
-          </div>
-        </div>
+        <EmptyState
+          icon={<PotsIcon color="currentColor" width={24} height={24} />}
+          title="No pots yet"
+          description="Create a pot to start saving for specific goals like travel, gadgets, or emergencies."
+        />
       ) : (
         <div className="@container">
           <div className="grid gap-5 @lg:grid-cols-2">

@@ -20,7 +20,12 @@ export default function LatestSpending({ transactions }: Props) {
         <button className="text-sm text-grey-500">See All</button>
       </div>
 
-      {latestTransactions.map((transaction, index) => (
+      {latestTransactions.length === 0 ? (
+        <p className="text-grey-500 text-sm text-center py-4">
+          No spending in this category yet.
+        </p>
+      ) : (
+        latestTransactions.map((transaction, index) => (
         <div key={transaction.name + transaction.date}>
           <div className="flex justify-between items-center py-3">
             <div className="flex items-center gap-3">
@@ -52,7 +57,8 @@ export default function LatestSpending({ transactions }: Props) {
 
           {index !== latestTransactions.length - 1 && <hr />}
         </div>
-      ))}
+        ))
+      )}
     </div>
   );
 }

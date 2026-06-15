@@ -48,7 +48,7 @@ const Hero = () => {
         className="w-full h-full mx-auto"
       >
         <Image
-          src={"/images/hero.png"}
+          src={"/images/hero.webp"}
           width={850}
           height={850}
           style={{

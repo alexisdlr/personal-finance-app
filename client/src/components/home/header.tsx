@@ -2,11 +2,10 @@
 import Link from "next/link";
 import { MotionHeader } from "../animated/motion-header";
 import { Button } from "../ui/button";
-import { ArrowRight, User } from "lucide-react";
+import { User } from "lucide-react";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { Logo, LogoDark } from "../shared/logo";
-import ButtonDemo from "./button-demo";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);

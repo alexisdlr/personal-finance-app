@@ -9,6 +9,8 @@ type ModalType =
   | "EDIT_POT"
   | "ADD_MONEY"
   | "WITHDRAW_MONEY"
+  | "CREATE_TRANSACTION"
+  | "EDIT_TRANSACTION"
   | "DELETE_BUDGET"
   | "DELETE_POT";
 

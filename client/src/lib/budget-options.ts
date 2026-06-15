@@ -5,6 +5,24 @@ export const BUDGET_CATEGORIES = [
   "Personal Care",
 ];
 
+export const TRANSACTION_CATEGORIES = [
+  "General",
+  "Entertainment",
+  "Bills",
+  "Dining Out",
+  "Personal Care",
+  "Groceries",
+  "Transportation",
+  "Lifestyle",
+  "Education",
+  "Shopping",
+];
+
+export const TRANSACTION_TYPES = [
+  { value: "expense", label: "Expense" },
+  { value: "income", label: "Income" },
+] as const;
+
 export const BUDGET_THEMES = [
   { name: "Green", hexCode: "#277C78" },
   { name: "Yellow", hexCode: "#F2CDAC" },

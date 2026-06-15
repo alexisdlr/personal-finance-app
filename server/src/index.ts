@@ -12,6 +12,7 @@ import { authenticateToken } from "./middleware/auth-middleware";
 import { errorHandler } from "./middleware/error-handler";
 import potRoutes from "./routes/pots.routes";
 import overviewRoutes from "./routes/overview.routes";
+import transactionRoutes from "./routes/transactions.routes";
 import checkSessionRoutes from "./routes/check_session.routes";
 /* CONFIGURATIONS */
 dotenv.config();
@@ -36,6 +37,7 @@ app.use(
 app.use("/api", authRoutes); // http://localhost:8000/api/login
 app.use("/api/pots", authenticateToken, potRoutes);
 app.use("/api/budgets", authenticateToken, budgetRoutes);
+app.use("/api/transactions", authenticateToken, transactionRoutes);
 app.use("/api/overview", authenticateToken, overviewRoutes);
 app.use("/api", checkSessionRoutes);
 // app.use("/products", productRoutes); // http://localhost:8000/products

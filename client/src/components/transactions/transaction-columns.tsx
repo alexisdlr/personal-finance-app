@@ -5,6 +5,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 
 import Image from "next/image";
 import { TransactionData } from "@/types/api";
+import { User } from "lucide-react";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -24,13 +25,19 @@ export const columns = [
 
     cell: (info) => (
       <div className="font-bold flex gap-2 items-center">
-        <Image
-          className="rounded-full"
-          src={info.row.original.avatar}
-          alt={info.getValue()}
-          width={30}
-          height={30}
-        />
+        {!info.row.original.avatar.includes("default") ? (
+          <Image
+            className="rounded-full"
+            src={info.row.original.avatar}
+            alt={info.getValue()}
+            width={30}
+            height={30}
+          />
+        ) : (
+          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+            <User className="w-4 h-4 text-gray-500" />
+          </div>
+        )}
         <span className="text-sm font-bold text-[#201F24]">
           {info.getValue()}
         </span>
@@ -82,7 +89,7 @@ export const columns = [
         <p
           className={cn(
             "text-xs font-bold w-full ml-auto text-right",
-            isNegative ? "text-gray-900" : "text-secondary-green",
+            isNegative ? "text-gray-900" : "text-green",
           )}
         >
           {isNegative
@@ -98,13 +105,19 @@ export const mobileColumns = [
     id: "Name",
     cell: (info) => (
       <div className="font-bold flex gap-2 items-center">
-        <Image
-          className="rounded-full"
-          src={info.row.original.avatar}
-          alt={info.getValue()}
-          width={30}
-          height={30}
-        />
+        {!info.row.original.avatar.includes("default") ? (
+          <Image
+            className="rounded-full"
+            src={info.row.original.avatar}
+            alt={info.getValue()}
+            width={30}
+            height={30}
+          />
+        ) : (
+          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+            <User className="w-4 h-4 text-gray-500" />
+          </div>
+        )}
         <span className="text-xs text-gray-500">{info.getValue()}</span>
       </div>
     ),
@@ -119,7 +132,7 @@ export const mobileColumns = [
         <p
           className={cn(
             "text-xs text-right font-bold",
-            isNegative ? "text-gray-900" : "text-secondary-green",
+            isNegative ? "text-gray-900" : "text-green",
           )}
         >
           {isNegative

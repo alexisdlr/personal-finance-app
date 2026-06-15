@@ -126,6 +126,7 @@ export const getOverview: RequestHandler = async (
       amount: t.amount,
       date: t.date,
       category: t.category,
+      recurring: t.recurring,
     }));
 
     // ==========================

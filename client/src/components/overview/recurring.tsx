@@ -3,6 +3,8 @@ import RecurringBillsData from "./recurring-bills-data";
 import Link from "next/link";
 import { NavIcons } from "../shared/nav-icons";
 import { MotionDiv } from "../animated/motion-div";
+import EmptyState from "../shared/empty-state";
+import RecurringIcon from "../Icons/recurring-nav";
 
 type Props = {
   recurringData: {
@@ -10,9 +12,10 @@ type Props = {
     dueSoon: number;
     totalUpcoming: number;
   };
+  totalBills: number;
 };
 
-const Recurring = ({ recurringData }: Props) => {
+const Recurring = ({ recurringData, totalBills }: Props) => {
   return (
     <MotionDiv
       initial={{ opacity: 0, y: -20 }}
@@ -35,7 +38,18 @@ const Recurring = ({ recurringData }: Props) => {
           </div>
         </div>
         <div className="w-full h-full flex flex-col gap-3 md:flex-row justify-between">
-          <RecurringBillsData recurringData={recurringData} />
+          {totalBills === 0 ? (
+            <EmptyState
+              icon={
+                <RecurringIcon color="currentColor" width={24} height={24} />
+              }
+              title="No recurring bills yet"
+              description="Mark transactions as recurring to track your regular payments and due dates."
+              className="w-full"
+            />
+          ) : (
+            <RecurringBillsData recurringData={recurringData} />
+          )}
         </div>
       </div>
     </MotionDiv>

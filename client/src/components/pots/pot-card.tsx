@@ -96,11 +96,35 @@ const PotCard = ({ pot }: PotCardProps) => {
 
       {/* Actions */}
       <div className="grid grid-cols-2 gap-4 mt-8">
-        <Button variant="secondary" className="font-bold bg-[#F8F4F0] py-6">
+        <Button
+          variant="secondary"
+          className="font-bold bg-[#F8F4F0] py-6"
+          onClick={() =>
+            openModal("ADD_MONEY", {
+              id: pot.id,
+              name: pot.name,
+              total: pot.total,
+              target: pot.target,
+              theme: pot.theme,
+            })
+          }
+        >
           + Add Money
         </Button>
 
-        <Button variant="secondary" className="font-bold bg-[#F8F4F0] py-6">
+        <Button
+          variant="secondary"
+          className="font-bold bg-[#F8F4F0] py-6"
+          onClick={() =>
+            openModal("WITHDRAW_MONEY", {
+              id: pot.id,
+              name: pot.name,
+              total: pot.total,
+              target: pot.target,
+              theme: pot.theme,
+            })
+          }
+        >
           Withdraw
         </Button>
       </div>

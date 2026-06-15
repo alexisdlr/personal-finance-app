@@ -5,12 +5,14 @@ import PotCard from "@/components/pots/pot-card";
 import { Button } from "@/components/ui/button";
 import { usePots } from "@/hooks/pots/use-pots";
 import { useModalStore } from "@/store/modal-store";
+import EmptyState from "@/components/shared/empty-state";
+import PotsIcon from "@/components/Icons/pots-nav";
 
 const PotsPage = () => {
   const { openModal } = useModalStore();
   const { pots } = usePots();
   return (
-    <div className="w-full h-full  pt-6 pb-20 md:pb-4 px-6 lg:px-10 flex flex-col">
+    <div className="w-full h-full mt-4 pb-20 md:pb-4 px-3 flex flex-col">
       <MotionDiv
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -42,9 +44,17 @@ const PotsPage = () => {
           mt-8
         "
       >
-        {pots.map((pot) => (
-          <PotCard key={pot.id} pot={pot} />
-        ))}
+        {pots.length === 0 ? (
+          <div className="col-span-full rounded-2xl bg-white flex items-center justify-center w-full h-full p-10">
+            <EmptyState
+              icon={<PotsIcon color="currentColor" width={24} height={24} />}
+              title="No pots yet"
+              description="Create a pot to start saving for specific goals like travel, gadgets, or emergencies."
+            />
+          </div>
+        ) : (
+          pots.map((pot) => <PotCard key={pot.id} pot={pot} />)
+        )}
       </MotionDiv>
     </div>
   );

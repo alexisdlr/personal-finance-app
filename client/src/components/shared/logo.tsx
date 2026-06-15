@@ -2,7 +2,17 @@ import Image from "next/image";
 
 export function Logo() {
   return (
-    <div className="flex items-center gap-2">
+    <>
+      <Image
+        width={64}
+        height={64}
+        src="/images/icon-app.webp"
+        alt=""
+        className="xs:h-16 xs:w-16 h-16 w-16 object-contain"
+        placeholder="empty"
+        priority
+      />
+
       <div className="xs:w-30.5 relative h-8 w-24.25">
         <Image
           src="/images/logo-large.svg"
@@ -13,7 +23,7 @@ export function Logo() {
           priority
         />
       </div>
-    </div>
+    </>
   );
 }
 
@@ -23,7 +33,7 @@ export function LogoDark() {
       <Image
         width={40}
         height={40}
-        src="/images/icon-dark.png"
+        src="/images/icon-dark.webp"
         alt=""
         className="xs:h-10 xs:w-10 h-8 w-8"
         placeholder="empty"

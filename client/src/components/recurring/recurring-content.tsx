@@ -4,6 +4,8 @@ import { MotionDiv } from "@/components/animated/motion-div";
 import RecurringSummary from "./recurring-summary";
 import RecurringBillsTable from "./recurring-table";
 import { Transaction } from "@/types/global";
+import EmptyState from "../shared/empty-state";
+import RecurringIcon from "../Icons/recurring-nav";
 
 type Props = {
   recurringBills: Transaction[];
@@ -38,14 +40,28 @@ export default function RecurringContent({
           mt-8
         "
       >
-        <RecurringSummary
-          totalBills={totalBills}
-          totalBillsCount={recurringBills.length}
-          dueSoonCount={dueSoonCount}
-          dueSoonTotal={dueSoonTotal}
-        />
+        {recurringBills.length === 0 ? (
+          <div className="col-span-full bg-white rounded-xl py-12">
+            <EmptyState
+              icon={
+                <RecurringIcon color="currentColor" width={24} height={24} />
+              }
+              title="No recurring bills yet"
+              description="Mark transactions as recurring to track your regular payments and due dates."
+            />
+          </div>
+        ) : (
+          <>
+            <RecurringSummary
+              totalBills={totalBills}
+              totalBillsCount={recurringBills.length}
+              dueSoonCount={dueSoonCount}
+              dueSoonTotal={dueSoonTotal}
+            />
 
-        <RecurringBillsTable recurringBills={recurringBills} />
+            <RecurringBillsTable recurringBills={recurringBills} />
+          </>
+        )}
       </MotionDiv>
     </div>
   );

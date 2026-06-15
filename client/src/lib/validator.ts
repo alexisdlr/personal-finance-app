@@ -49,3 +49,22 @@ export const CreatePotSchema = z.object({
   target: z.number().min(0, { message: "Target must be a positive number" }),
   theme: z.string().min(1, { message: "Theme is required" }),
 });
+
+export const PotMoneySchema = z.object({
+  amount: z
+    .number()
+    .positive({ message: "Amount must be greater than 0" }),
+});
+
+export const CreateTransactionSchema = z.object({
+  type: z.enum(["expense", "income"], {
+    message: "Transaction type is required",
+  }),
+  name: z.string().min(1, { message: "Recipient / Sender is required" }),
+  amount: z
+    .number()
+    .positive({ message: "Amount must be greater than 0" }),
+  category: z.string().min(1, { message: "Category is required" }),
+  date: z.string().min(1, { message: "Transaction date is required" }),
+  recurring: z.boolean(),
+});

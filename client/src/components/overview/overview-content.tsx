@@ -37,8 +37,6 @@ const OverviewContent = ({ data }: OverviewContentProps) => {
   );
   const totalSpent = budgets.reduce((sum, b) => sum + b.spent, 0);
   const totalLimit = budgets.reduce((sum, b) => sum + b.maximum, 0);
-  const isEmpty =
-    pots.length === 0 && budgets.length === 0 && transactions.length === 0;
 
   return (
     <div className="w-full h-full lg:mt-6 md:pb-4 px-3 flex flex-col">
@@ -92,7 +90,10 @@ const OverviewContent = ({ data }: OverviewContentProps) => {
           totalLimit={totalLimit}
           totalSpent={totalSpent}
         />
-        <Recurring recurringData={recurringData} />
+        <Recurring
+          recurringData={recurringData}
+          totalBills={data?.bills.totalBills ?? 0}
+        />
       </div>
     </div>
   );

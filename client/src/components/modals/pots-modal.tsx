@@ -1,13 +1,18 @@
 "use client";
-import * as z from "zod";
-import useCreateBudget from "@/hooks/budgets/use-create-budget";
-import { useEffect } from "react";
-import { useModalStore } from "@/store/modal-store";
 
+import * as z from "zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
+
+import useCreatePot from "@/hooks/pots/use-create-pot";
+import useUpdatePot from "@/hooks/pots/use-update-pot";
+import { useModalStore } from "@/store/modal-store";
 import { BUDGET_THEMES } from "@/lib/budget-options";
 import { CreatePotSchema } from "@/lib/validator";
+import { PotData } from "@/types/api";
 
 import {
   Dialog,
@@ -16,11 +21,8 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 import { Input } from "@/components/ui/input";
-
 import {
   Form,
   FormControl,
@@ -37,86 +39,80 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import useUpdateBudget from "@/hooks/budgets/use-update-budget";
-import toast from "react-hot-toast";
 
 type PotsModalProps = {
   mode: "create" | "edit";
 };
 
+const getDefaultValues = (
+  pot?: PotData | null,
+): z.infer<typeof CreatePotSchema> => ({
+  name: pot?.name ?? "",
+  target: pot?.target ?? 0,
+  theme: pot?.theme ?? "",
+});
+
 export default function PotsModal({ mode }: PotsModalProps) {
-  const { payload, closeModal, isOpen } = useModalStore((state) => state);
-  const createBudgetMutation = useCreateBudget();
-  const updateBudgetMutation = useUpdateBudget();
+  const isOpen = useModalStore((state) => state.isOpen);
+  const closeModal = useModalStore((state) => state.closeModal);
+  const payload = useModalStore((state) => state.payload) as
+    | PotData
+    | null
+    | undefined;
+
+  const createPotMutation = useCreatePot();
+  const updatePotMutation = useUpdatePot();
   const pot = payload;
-  console.log(pot);
+
   const form = useForm<z.infer<typeof CreatePotSchema>>({
     resolver: zodResolver(CreatePotSchema),
-    defaultValues: {
-      name: pot?.name ?? "",
-      target: pot?.target ?? 0,
-      theme: pot?.theme ?? "",
-    },
+    defaultValues: getDefaultValues(pot),
   });
+
   useEffect(() => {
-    if (pot) {
-      form.reset({
-        name: pot.name,
-        target: pot.target,
-        theme: pot.theme,
-      });
-    } else {
-      form.reset({
-        name: "",
-        target: 0,
-        theme: "",
-      });
-    }
+    form.reset(getDefaultValues(pot));
   }, [pot, form]);
+
+  const isSubmitting =
+    form.formState.isSubmitting ||
+    createPotMutation.isPending ||
+    updatePotMutation.isPending;
 
   const onSubmit = async (data: z.infer<typeof CreatePotSchema>) => {
     try {
-      // if (mode === "create") {
-      //   const response = await createBudgetMutation.mutateAsync(data);
-      //   console.log(response);
-      //   if (response.newBudget || response.message == "Success") {
-      //     console.log("Budget created successfully");
-      //     toast.success(response.message || "Budget Created!");
-      //   } else {
-      //     console.error("Error creating budget:", response.error);
-      //     toast.error("Error creating budget");
-      //   }
+      if (mode === "create") {
+        const response = await createPotMutation.mutateAsync(data);
 
-      //   if (response.error) {
-      //     console.error("Error creating budget:", response.error);
-      //   }
-      // } else {
-      //   const dataMutation = {
-      //     id: pot.id,
-      //     ...data,
-      //   };
-      //   console.log("Edit", dataMutation);
+        if (response.message?.toLowerCase() === "success") {
+          toast.success(response.message || "Pot created!");
+          closeModal();
+        } else {
+          toast.error(response.error || "Error creating pot");
+        }
+      } else {
+        if (!pot?.id) {
+          toast.error("Pot not found");
+          return;
+        }
 
-      //   const response = await updateBudgetMutation.mutateAsync(dataMutation);
+        const response = await updatePotMutation.mutateAsync({
+          id: pot.id,
+          ...data,
+        });
 
-      //   if (response.updatedBudget || response.message == "Success") {
-      //     console.log("Budget updated successfully");
-      //     toast.success(response.message || "Budget Updated!");
-      //   } else {
-      //     console.error("Error updating budget:", response.error);
-      //     toast.error("Error updating budget");
-      //   }
-
-      //   if (response.error) {
-      //     console.error("Error updated budget:", response.error);
-      //   }
-      // }
-
-      closeModal();
+        if (response.message?.toLowerCase() === "success") {
+          toast.success(response.message || "Pot updated!");
+          closeModal();
+        } else {
+          toast.error(response.error || "Error updating pot");
+        }
+      }
     } catch (error) {
       console.error(error);
+      toast.error("Something went wrong");
     }
   };
+
   return (
     <Dialog
       open={isOpen}
@@ -127,7 +123,7 @@ export default function PotsModal({ mode }: PotsModalProps) {
       <DialogContent className="sm:max-w-[560px] bg-white !rounded-2xl p-6 sm:p-10">
         <DialogHeader>
           <DialogTitle className="text-3xl font-bold mb-5">
-            {mode === "create" ? "Add New Pot" : "Edit Pot"}
+            {mode === "create" ? "Add New Pot" : `Edit '${pot?.name}'`}
           </DialogTitle>
 
           <DialogDescription className="text-base font-light text-gray-500 ">
@@ -142,7 +138,6 @@ export default function PotsModal({ mode }: PotsModalProps) {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-5 mt-4"
           >
-            {/* CATEGORY */}
             <FormField
               control={form.control}
               name="name"
@@ -157,8 +152,7 @@ export default function PotsModal({ mode }: PotsModalProps) {
                       type="text"
                       placeholder="e.g. Rainy Days"
                       className="h-12 rounded-lg"
-                      value={field.value || ""}
-                      onChange={(e) => field.onChange(e.target.value)}
+                      {...field}
                     />
                   </FormControl>
 
@@ -167,7 +161,6 @@ export default function PotsModal({ mode }: PotsModalProps) {
               )}
             />
 
-            {/* MAXIMUM */}
             <FormField
               control={form.control}
               name="target"
@@ -192,7 +185,6 @@ export default function PotsModal({ mode }: PotsModalProps) {
               )}
             />
 
-            {/* THEME */}
             <FormField
               control={form.control}
               name="theme"
@@ -202,10 +194,7 @@ export default function PotsModal({ mode }: PotsModalProps) {
                     Theme
                   </FormLabel>
 
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="w-full p-3">
                         <SelectValue placeholder="Select a theme" />
@@ -236,10 +225,10 @@ export default function PotsModal({ mode }: PotsModalProps) {
 
             <Button
               type="submit"
-              className="mt-2 h-12 bg-black text-white rounded-lg font-bold text-md py-4"
-              disabled={form.formState.isSubmitting}
+              className="cursor-pointer mt-2 h-12 bg-black text-white rounded-lg font-bold text-md py-4"
+              disabled={isSubmitting}
             >
-              {form.formState.isSubmitting ? (
+              {isSubmitting ? (
                 <Loader2 className="animate-spin" />
               ) : mode === "create" ? (
                 "Add Pot"

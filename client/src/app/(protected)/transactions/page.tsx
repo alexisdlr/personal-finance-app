@@ -16,9 +16,13 @@ import {
 import { sortTransactions } from "@/lib/utils";
 import { TransactionData } from "@/types/api";
 import { Button } from "@/components/ui/button";
+import { useModalStore } from "@/store/modal-store";
+import { ColumnDef } from "@tanstack/react-table";
+import TransactionsIcon from "@/components/Icons/transactions-nav";
 
 const TransactionsPage = () => {
-  const { transactions } = useTransactions();
+  const { openModal } = useModalStore();
+  const { transactions, isLoading } = useTransactions();
 
   const [globalFilter, setGlobalFilter] = useState("");
 
@@ -50,25 +54,42 @@ const TransactionsPage = () => {
     return sortTransactions(filtered, sortBy);
   }, [transactions, categoryFilter, sortBy]);
 
+  const hasNoTransactions = !isLoading && transactions.length === 0;
+
+  const emptyTitle = hasNoTransactions
+    ? "No transactions yet"
+    : "No results found";
+  const emptyDescription = hasNoTransactions
+    ? "Add your first transaction to start tracking your income and expenses."
+    : "Try adjusting your search or filters to find what you're looking for.";
+  const emptyIcon = (
+    <TransactionsIcon color="currentColor" width={24} height={24} />
+  );
+
   return (
     <div className="w-full h-full sm:h-full lg:mt-6 px-3 flex flex-col ">
       <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <header className="flex justify-between items-center">
           <div className="flex flex-col">
-            <h1 className="text-grey-900 font-bold text-4xl">Transactions</h1>
-            <p className="text-grey-500 max-w-2xl truncate lg:text-balance lg:whitespace-normal lg:overflow-visible mt-2">
+            <h1 className="text-grey-900 font-bold text-2xl sm:text-4xl">
+              Transactions
+            </h1>
+            <p className="text-grey-500 max-w-2xl hidden lg:block lg:text-balance lg:whitespace-normal lg:overflow-visible mt-2">
               Manage your transaction history. Use the filters to search, sort,
               and categorize your expenses and income for better financial
               insights.
             </p>
           </div>
-          <Button className="px-6 py-6 text-lg font-semibold flex items-center gap-2 cursor-pointer">
+          <Button
+            onClick={() => openModal("CREATE_TRANSACTION")}
+            className="px-6 py-6 text-sm sm:text-lg font-semibold flex items-center gap-2 cursor-pointer"
+          >
             + New Transaction
           </Button>
         </header>
       </MotionDiv>
 
-      <MotionDiv className="bg-white p-5 rounded-lg shadow-lg mt-8">
+      <MotionDiv className="bg-white p-3 rounded-lg shadow-lg mt-8">
         <TransactionFilters
           search={globalFilter}
           setSearch={setGlobalFilter}
@@ -83,9 +104,13 @@ const TransactionsPage = () => {
         <div className="block md:hidden overflow-x-auto">
           <Table
             data={transactionsFiltered}
-            columns={mobileColumns}
+            columns={mobileColumns as ColumnDef<TransactionData, unknown>[]}
             globalFilter={globalFilter}
             setGlobalFilter={setGlobalFilter}
+            isLoading={isLoading}
+            emptyTitle={emptyTitle}
+            emptyDescription={emptyDescription}
+            emptyIcon={emptyIcon}
           />
         </div>
 
@@ -93,9 +118,13 @@ const TransactionsPage = () => {
         <div className="hidden md:block overflow-x-auto">
           <Table
             data={transactionsFiltered}
-            columns={columns}
+            columns={columns as ColumnDef<TransactionData, unknown>[]}
             globalFilter={globalFilter}
             setGlobalFilter={setGlobalFilter}
+            isLoading={isLoading}
+            emptyTitle={emptyTitle}
+            emptyDescription={emptyDescription}
+            emptyIcon={emptyIcon}
           />
         </div>
       </MotionDiv>

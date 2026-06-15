@@ -9,9 +9,8 @@ import React from "react";
 export const metadata: Metadata = {
   title: "Home",
 };
-type Props = {};
 
-const Home = (props: Props) => {
+const Home = () => {
   return (
     <div className=" h-full">
       <Header />

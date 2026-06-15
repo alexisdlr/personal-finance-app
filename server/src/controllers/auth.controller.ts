@@ -76,6 +76,13 @@ export const signUp: RequestHandler = async (
         password: hashedPassword,
         firstName: name,
         lastName: lastName,
+        balances: {
+          create: {
+            current: 0,
+            income: 0,
+            expenses: 0,
+          },
+        },
       },
     });
 

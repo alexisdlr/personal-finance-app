@@ -20,6 +20,7 @@ export interface TransactionData {
   amount: number;
   date: string;
   category: string;
+  recurring?: boolean;
 }
 export interface PotData {
   id: number;
