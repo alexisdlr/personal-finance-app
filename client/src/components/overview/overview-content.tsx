@@ -43,8 +43,10 @@ const OverviewContent = ({ data }: OverviewContentProps) => {
       <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <header className="flex justify-between items-center">
           <div className="flex flex-col gap-2">
-            <h1 className="text-grey-900 font-bold text-4xl">Overview</h1>
-            <p className="text-grey-500 max-w-3xs truncate lg:max-w-2xl ">
+            <h1 className="text-grey-900 font-bold text-3xl md:text-4xl">
+              Overview
+            </h1>
+            <p className="text-grey-500 max-w-3xs truncate lg:max-w-2xl hidden md:block">
               Monitor your financial health, track spending, and manage budgets
               across accounts all in one place.
             </p>
