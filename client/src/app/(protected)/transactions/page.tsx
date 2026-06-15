@@ -17,7 +17,6 @@ import { sortTransactions } from "@/lib/utils";
 import { TransactionData } from "@/types/api";
 import { Button } from "@/components/ui/button";
 import { useModalStore } from "@/store/modal-store";
-import { ColumnDef } from "@tanstack/react-table";
 import TransactionsIcon from "@/components/Icons/transactions-nav";
 
 const TransactionsPage = () => {
@@ -104,7 +103,7 @@ const TransactionsPage = () => {
         <div className="block md:hidden overflow-x-auto">
           <Table
             data={transactionsFiltered}
-            columns={mobileColumns as ColumnDef<TransactionData, unknown>[]}
+            columns={mobileColumns}
             globalFilter={globalFilter}
             setGlobalFilter={setGlobalFilter}
             isLoading={isLoading}
@@ -118,7 +117,7 @@ const TransactionsPage = () => {
         <div className="hidden md:block overflow-x-auto">
           <Table
             data={transactionsFiltered}
-            columns={columns as ColumnDef<TransactionData, unknown>[]}
+            columns={columns}
             globalFilter={globalFilter}
             setGlobalFilter={setGlobalFilter}
             isLoading={isLoading}

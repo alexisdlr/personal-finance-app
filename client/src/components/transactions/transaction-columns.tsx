@@ -1,7 +1,7 @@
 "use client";
 
 import { cn, formatPrice } from "@/lib/utils";
-import { createColumnHelper } from "@tanstack/react-table";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import Image from "next/image";
 import { TransactionData } from "@/types/api";
@@ -99,7 +99,8 @@ export const columns = [
       );
     },
   }),
-];
+] as ColumnDef<TransactionData, unknown>[];
+
 export const mobileColumns = [
   columnHelper.accessor((row) => row.name, {
     id: "Name",
@@ -142,4 +143,4 @@ export const mobileColumns = [
       );
     },
   }),
-];
+] as ColumnDef<TransactionData, unknown>[];

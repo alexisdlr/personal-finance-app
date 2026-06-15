@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { createColumnHelper } from "@tanstack/react-table";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { formatPrice } from "@/lib/utils";
 import { Transaction } from "@/types/global";
 
@@ -54,4 +54,4 @@ export const recurringColumns = [
       </div>
     ),
   }),
-];
+] as ColumnDef<Transaction, unknown>[];
