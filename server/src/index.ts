@@ -14,6 +14,8 @@ import potRoutes from "./routes/pots.routes";
 import overviewRoutes from "./routes/overview.routes";
 import transactionRoutes from "./routes/transactions.routes";
 import checkSessionRoutes from "./routes/check_session.routes";
+import profileRoutes from "./routes/profile.routes";
+import { blockDemoUserWrites } from "./middleware/block-demo-user";
 /* CONFIGURATIONS */
 dotenv.config();
 const app = express();
@@ -35,10 +37,11 @@ app.use(
 /* ROUTES */
 
 app.use("/api", authRoutes); // http://localhost:8000/api/login
-app.use("/api/pots", authenticateToken, potRoutes);
-app.use("/api/budgets", authenticateToken, budgetRoutes);
-app.use("/api/transactions", authenticateToken, transactionRoutes);
+app.use("/api/pots", authenticateToken, blockDemoUserWrites, potRoutes);
+app.use("/api/budgets", authenticateToken, blockDemoUserWrites, budgetRoutes);
+app.use("/api/transactions", authenticateToken, blockDemoUserWrites, transactionRoutes);
 app.use("/api/overview", authenticateToken, overviewRoutes);
+app.use("/api/profile", authenticateToken, blockDemoUserWrites, profileRoutes);
 app.use("/api", checkSessionRoutes);
 // app.use("/products", productRoutes); // http://localhost:8000/products
 // app.use("/users", userRoutes); // http://localhost:8000/users

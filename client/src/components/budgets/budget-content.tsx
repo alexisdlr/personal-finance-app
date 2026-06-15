@@ -9,6 +9,7 @@ import BudgetSummary from "./budget-summary";
 import { ChartPieDonutText } from "../shared/budget-chart";
 import EmptyState from "../shared/empty-state";
 import BudgetIcon from "../Icons/budget-nav";
+import { useIsDemoUser } from "@/hooks/use-is-demo-user";
 type BudgetContentProps = {
   budgets: BudgetWithData[];
   transactions: TransactionData[];
@@ -16,10 +17,11 @@ type BudgetContentProps = {
 
 const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
   const { openModal } = useModalStore();
+  const { isReadOnly } = useIsDemoUser();
   const totalSpent = budgets.reduce((sum, b) => sum + b.spent, 0);
   const totalLimit = budgets.reduce((sum, b) => sum + b.maximum, 0);
   return (
-    <div className="w-full h-full px-3 lg:mt-6 flex flex-col ">
+    <div className="w-full h-full mt-6 flex flex-col ">
       <MotionDiv
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -32,15 +34,17 @@ const BudgetContent = ({ budgets, transactions }: BudgetContentProps) => {
             financial goals
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="default"
-            className="px-4 py-6 text-md font-bold mr-1 cursor-pointer rounded-lg bg-black text-white"
-            onClick={() => openModal("CREATE_BUDGET")}
-          >
-            + Add New Budget
-          </Button>
-        </div>
+        {!isReadOnly && (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="default"
+              className="px-4 py-6 text-md font-bold mr-1 cursor-pointer rounded-lg bg-black text-white"
+              onClick={() => openModal("CREATE_BUDGET")}
+            >
+              + Add New Budget
+            </Button>
+          </div>
+        )}
       </MotionDiv>
       <MotionDiv
         initial={{ opacity: 0, y: -20 }}

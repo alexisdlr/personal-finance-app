@@ -68,3 +68,37 @@ export const CreateTransactionSchema = z.object({
   date: z.string().min(1, { message: "Transaction date is required" }),
   recurring: z.boolean(),
 });
+
+const passwordSchema = z
+  .string()
+  .min(8, { message: "Password must be at least 8 characters" })
+  .regex(/[A-Za-z]/, {
+    message: "Password must contain at least one letter",
+  })
+  .regex(/\d/, {
+    message: "Password must contain at least one number",
+  });
+
+export const UpdateProfileSchema = z.object({
+  name: z.string().min(3, { message: "Name must be at least 3 characters" }),
+  lastName: z
+    .string()
+    .min(3, { message: "Last name must be at least 3 characters" }),
+  email: z
+    .string()
+    .email({ message: "Invalid email format" })
+    .min(3, { message: "Email must be at least 3 characters" }),
+});
+
+export const ChangePasswordSchema = z
+  .object({
+    currentPassword: z
+      .string()
+      .min(1, { message: "Current password is required" }),
+    newPassword: passwordSchema,
+    confirmPassword: z.string().min(1, { message: "Please confirm your password" }),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });

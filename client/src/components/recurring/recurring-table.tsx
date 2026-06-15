@@ -1,10 +1,10 @@
 import { recurringColumns } from "./recurring-columns";
-import { Transaction } from "@/types/global";
+import { TransactionData } from "@/types/api";
 import Table from "../transactions/table";
 import RecurringIcon from "../Icons/recurring-nav";
 
 type Props = {
-  recurringBills: Transaction[];
+  recurringBills: TransactionData[];
 };
 
 export default function RecurringBillsTable({ recurringBills }: Props) {

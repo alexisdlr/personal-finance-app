@@ -18,9 +18,11 @@ import { TransactionData } from "@/types/api";
 import { Button } from "@/components/ui/button";
 import { useModalStore } from "@/store/modal-store";
 import TransactionsIcon from "@/components/Icons/transactions-nav";
+import { useIsDemoUser } from "@/hooks/use-is-demo-user";
 
 const TransactionsPage = () => {
   const { openModal } = useModalStore();
+  const { isReadOnly } = useIsDemoUser();
   const { transactions, isLoading } = useTransactions();
 
   const [globalFilter, setGlobalFilter] = useState("");
@@ -66,25 +68,27 @@ const TransactionsPage = () => {
   );
 
   return (
-    <div className="w-full h-full sm:h-full lg:mt-6 px-3 flex flex-col ">
+    <div className="w-full h-screen sm:h-full lg:mt-6  flex flex-col ">
       <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <header className="flex justify-between items-center">
           <div className="flex flex-col">
             <h1 className="text-grey-900 font-bold text-2xl sm:text-4xl">
               Transactions
             </h1>
-            <p className="text-grey-500 max-w-2xl hidden lg:block lg:text-balance lg:whitespace-normal lg:overflow-visible mt-2">
+            <p className="text-grey-500 max-w-2xl hidden lg:block  lg:max-w-3xl lg:text-balance lg:whitespace-normal lg:overflow-visible mt-4">
               Manage your transaction history. Use the filters to search, sort,
               and categorize your expenses and income for better financial
               insights.
             </p>
           </div>
-          <Button
-            onClick={() => openModal("CREATE_TRANSACTION")}
-            className="px-6 py-6 text-sm sm:text-lg font-semibold flex items-center gap-2 cursor-pointer"
-          >
-            + New Transaction
-          </Button>
+          {!isReadOnly && (
+            <Button
+              onClick={() => openModal("CREATE_TRANSACTION")}
+              className="px-6 py-6 text-sm sm:text-lg font-semibold flex items-center gap-2 cursor-pointer"
+            >
+              + New Transaction
+            </Button>
+          )}
         </header>
       </MotionDiv>
 

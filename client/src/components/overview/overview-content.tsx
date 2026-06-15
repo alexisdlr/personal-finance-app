@@ -39,7 +39,7 @@ const OverviewContent = ({ data }: OverviewContentProps) => {
   const totalLimit = budgets.reduce((sum, b) => sum + b.maximum, 0);
 
   return (
-    <div className="w-full h-full lg:mt-6 md:pb-4 px-3 flex flex-col">
+    <div className="w-full h-full lg:mt-6 md:pb-4 flex flex-col">
       <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <header className="flex justify-between items-center">
           <div className="flex flex-col gap-2">

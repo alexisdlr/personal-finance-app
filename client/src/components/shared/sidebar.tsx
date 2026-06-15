@@ -7,6 +7,7 @@ import { MotionDiv } from "../animated/motion-div";
 import { ArrowBigRightDash, User } from "lucide-react";
 import { NavIcons } from "./nav-icons";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -26,7 +27,8 @@ const Sidebar = () => {
         </nav>
         <div className="mt-20 border-background/10 relative my-2 w-full border-t pl-8" />
 
-        <Button
+        <Link
+          href="/profile"
           aria-label={collapsed ? "Expand menu" : "Minimize menu"}
           className="group bg-transparent justify-start text-ring hover:bg-background/10 hover:text-background rounded-r-12 flex min-h-14 w-full cursor-pointer items-center gap-5 border-l-4 border-transparent py-4 pl-4"
         >
@@ -47,7 +49,7 @@ const Sidebar = () => {
               </MotionDiv>
             )}
           </AnimatePresence>
-        </Button>
+        </Link>
         <Button
           onClick={() => setCollapsed((prev) => !prev)}
           aria-label={collapsed ? "Expand menu" : "Minimize menu"}

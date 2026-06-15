@@ -19,6 +19,8 @@ const pots_routes_1 = __importDefault(require("./routes/pots.routes"));
 const overview_routes_1 = __importDefault(require("./routes/overview.routes"));
 const transactions_routes_1 = __importDefault(require("./routes/transactions.routes"));
 const check_session_routes_1 = __importDefault(require("./routes/check_session.routes"));
+const profile_routes_1 = __importDefault(require("./routes/profile.routes"));
+const block_demo_user_1 = require("./middleware/block-demo-user");
 /* CONFIGURATIONS */
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -35,10 +37,11 @@ app.use((0, cors_1.default)({
 }));
 /* ROUTES */
 app.use("/api", auth_routes_1.default); // http://localhost:8000/api/login
-app.use("/api/pots", auth_middleware_1.authenticateToken, pots_routes_1.default);
-app.use("/api/budgets", auth_middleware_1.authenticateToken, budgets_routes_1.default);
-app.use("/api/transactions", auth_middleware_1.authenticateToken, transactions_routes_1.default);
+app.use("/api/pots", auth_middleware_1.authenticateToken, block_demo_user_1.blockDemoUserWrites, pots_routes_1.default);
+app.use("/api/budgets", auth_middleware_1.authenticateToken, block_demo_user_1.blockDemoUserWrites, budgets_routes_1.default);
+app.use("/api/transactions", auth_middleware_1.authenticateToken, block_demo_user_1.blockDemoUserWrites, transactions_routes_1.default);
 app.use("/api/overview", auth_middleware_1.authenticateToken, overview_routes_1.default);
+app.use("/api/profile", auth_middleware_1.authenticateToken, block_demo_user_1.blockDemoUserWrites, profile_routes_1.default);
 app.use("/api", check_session_routes_1.default);
 // app.use("/products", productRoutes); // http://localhost:8000/products
 // app.use("/users", userRoutes); // http://localhost:8000/users

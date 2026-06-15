@@ -12,6 +12,7 @@ import {
 } from "../ui/dropdown-menu";
 import LatestSpending from "./latest-sepending";
 import { useModalStore } from "@/store/modal-store";
+import { useIsDemoUser } from "@/hooks/use-is-demo-user";
 import { TransactionData } from "@/types/api";
 
 type BudgetCardProps = {
@@ -22,6 +23,7 @@ type BudgetCardProps = {
 
 const BudgetCard = ({ budget, transactions, theme }: BudgetCardProps) => {
   const { openModal } = useModalStore();
+  const { isReadOnly } = useIsDemoUser();
   const spent = transactions
     .filter(
       (transaction) =>
@@ -41,43 +43,45 @@ const BudgetCard = ({ budget, transactions, theme }: BudgetCardProps) => {
               ></div>
               <h2 className="text-xl font-bold">{budget.category}</h2>
             </div>
-            <div className="ml-auto relative">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    {" "}
-                    <Ellipsis />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-white rounded-xl shadow-md p-2">
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem
-                      className="cursor-pointer font-light"
-                      onClick={() =>
-                        openModal("EDIT_BUDGET", {
-                          id: budget.id,
-                          category: budget.category,
-                          maximum: budget.maximum,
-                          theme: budget.theme,
-                        })
-                      }
-                    >
-                      Edit Budget
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-gray-200 my-0.5 max-w-[90%] mx-auto" />
+            {!isReadOnly && (
+              <div className="ml-auto relative">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      {" "}
+                      <Ellipsis />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-white rounded-xl shadow-md p-2">
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem
+                        className="cursor-pointer font-light"
+                        onClick={() =>
+                          openModal("EDIT_BUDGET", {
+                            id: budget.id,
+                            category: budget.category,
+                            maximum: budget.maximum,
+                            theme: budget.theme,
+                          })
+                        }
+                      >
+                        Edit Budget
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator className="bg-gray-200 my-0.5 max-w-[90%] mx-auto" />
 
-                    <DropdownMenuItem
-                      className="cursor-pointer font-light text-red-500"
-                      onClick={() =>
-                        openModal("DELETE_BUDGET", { id: budget.id })
-                      }
-                    >
-                      Delete Budget
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+                      <DropdownMenuItem
+                        className="cursor-pointer font-light text-red-500"
+                        onClick={() =>
+                          openModal("DELETE_BUDGET", { id: budget.id })
+                        }
+                      >
+                        Delete Budget
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            )}
           </div>
           <span className="text-sm my-4 text-gray-500">
             Maximum of {formatPrice(budget.maximum)}

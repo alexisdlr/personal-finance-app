@@ -1,6 +1,9 @@
 // store/modal-store.ts
 
 import { create } from "zustand";
+import toast from "react-hot-toast";
+import { isDemoUserId } from "@/lib/demo-user";
+import { useAuthStore } from "./auth-store";
 
 type ModalType =
   | "CREATE_BUDGET"
@@ -31,12 +34,20 @@ export const useModalStore = create<ModalStore>((set) => ({
   type: null,
   payload: null,
 
-  openModal: (type, payload = null) =>
+  openModal: (type, payload = null) => {
+    const user = useAuthStore.getState().user;
+
+    if (isDemoUserId(user?.id)) {
+      toast.error("Demo account is read-only");
+      return;
+    }
+
     set({
       isOpen: true,
       type,
       payload,
-    }),
+    });
+  },
 
   closeModal: () =>
     set({

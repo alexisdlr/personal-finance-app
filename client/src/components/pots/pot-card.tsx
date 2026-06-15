@@ -10,6 +10,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Ellipsis } from "lucide-react";
 import { useModalStore } from "@/store/modal-store";
+import { useIsDemoUser } from "@/hooks/use-is-demo-user";
 import { PotData } from "@/types/api";
 
 type PotCardProps = {
@@ -19,6 +20,7 @@ type PotCardProps = {
 const PotCard = ({ pot }: PotCardProps) => {
   const progress = (pot.total / pot.target) * 100;
   const { openModal } = useModalStore();
+  const { isReadOnly } = useIsDemoUser();
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm">
       {/* Header */}
@@ -32,39 +34,41 @@ const PotCard = ({ pot }: PotCardProps) => {
           <h2 className="text-xl font-bold">{pot.name}</h2>
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              {" "}
-              <Ellipsis />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-white rounded-xl shadow-md p-2">
-            <DropdownMenuGroup>
-              <DropdownMenuItem
-                className="cursor-pointer font-light"
-                onClick={() =>
-                  openModal("EDIT_POT", {
-                    id: pot.id,
-                    name: pot.name,
-                    target: pot.target,
-                    theme: pot.theme,
-                  })
-                }
-              >
-                Edit Pot
-              </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-gray-200 my-[2px] max-w-[90%] mx-auto" />
+        {!isReadOnly && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                {" "}
+                <Ellipsis />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-white rounded-xl shadow-md p-2">
+              <DropdownMenuGroup>
+                <DropdownMenuItem
+                  className="cursor-pointer font-light"
+                  onClick={() =>
+                    openModal("EDIT_POT", {
+                      id: pot.id,
+                      name: pot.name,
+                      target: pot.target,
+                      theme: pot.theme,
+                    })
+                  }
+                >
+                  Edit Pot
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-gray-200 my-[2px] max-w-[90%] mx-auto" />
 
-              <DropdownMenuItem
-                className="cursor-pointer font-light text-red-500"
-                onClick={() => openModal("DELETE_POT", { id: pot.id })}
-              >
-                Delete Pot
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                <DropdownMenuItem
+                  className="cursor-pointer font-light text-red-500"
+                  onClick={() => openModal("DELETE_POT", { id: pot.id })}
+                >
+                  Delete Pot
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
 
       {/* Amount */}
@@ -94,40 +98,41 @@ const PotCard = ({ pot }: PotCardProps) => {
         <span>Target of {formatPrice(pot.target || 0)}</span>
       </div>
 
-      {/* Actions */}
-      <div className="grid grid-cols-2 gap-4 mt-8">
-        <Button
-          variant="secondary"
-          className="font-bold bg-[#F8F4F0] py-6"
-          onClick={() =>
-            openModal("ADD_MONEY", {
-              id: pot.id,
-              name: pot.name,
-              total: pot.total,
-              target: pot.target,
-              theme: pot.theme,
-            })
-          }
-        >
-          + Add Money
-        </Button>
+      {!isReadOnly && (
+        <div className="grid grid-cols-2 gap-4 mt-8">
+          <Button
+            variant="secondary"
+            className="font-bold bg-[#F8F4F0] py-6"
+            onClick={() =>
+              openModal("ADD_MONEY", {
+                id: pot.id,
+                name: pot.name,
+                total: pot.total,
+                target: pot.target,
+                theme: pot.theme,
+              })
+            }
+          >
+            + Add Money
+          </Button>
 
-        <Button
-          variant="secondary"
-          className="font-bold bg-[#F8F4F0] py-6"
-          onClick={() =>
-            openModal("WITHDRAW_MONEY", {
-              id: pot.id,
-              name: pot.name,
-              total: pot.total,
-              target: pot.target,
-              theme: pot.theme,
-            })
-          }
-        >
-          Withdraw
-        </Button>
-      </div>
+          <Button
+            variant="secondary"
+            className="font-bold bg-[#F8F4F0] py-6"
+            onClick={() =>
+              openModal("WITHDRAW_MONEY", {
+                id: pot.id,
+                name: pot.name,
+                total: pot.total,
+                target: pot.target,
+                theme: pot.theme,
+              })
+            }
+          >
+            Withdraw
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

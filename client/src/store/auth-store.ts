@@ -13,6 +13,12 @@ interface AuthState {
     lastName: string;
     email: string;
   }) => void;
+  updateUser: (user: {
+    id: string;
+    name: string;
+    lastName: string;
+    email: string;
+  }) => void;
   logout: () => void;
   checkAuth: () => Promise<void>;
 }
@@ -27,6 +33,10 @@ export const useAuthStore = create<AuthState>()(
         set({
           isAuthenticated: true,
           isAuthLoaded: true,
+          user,
+        }),
+      updateUser: (user) =>
+        set({
           user,
         }),
       logout: () => {

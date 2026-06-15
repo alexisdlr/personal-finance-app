@@ -3,13 +3,17 @@
 import { MotionDiv } from "@/components/animated/motion-div";
 import RecurringSummary from "./recurring-summary";
 import RecurringBillsTable from "./recurring-table";
-import { Transaction } from "@/types/global";
+import { TransactionData } from "@/types/api";
 import EmptyState from "../shared/empty-state";
 import RecurringIcon from "../Icons/recurring-nav";
 
-type Props = {
-  recurringBills: Transaction[];
+type RecurringContentProps = {
+  recurringBills: TransactionData[];
   totalBills: number;
+  paidCount: number;
+  paidTotal: number;
+  upcomingCount: number;
+  upcomingTotal: number;
   dueSoonCount: number;
   dueSoonTotal: number;
 };
@@ -17,11 +21,15 @@ type Props = {
 export default function RecurringContent({
   recurringBills,
   totalBills,
+  paidCount,
+  paidTotal,
+  upcomingCount,
+  upcomingTotal,
   dueSoonCount,
   dueSoonTotal,
-}: Props) {
+}: RecurringContentProps) {
   return (
-    <div className="w-full sm:h-screen pt-6 pb-20 md:pb-4 px-6 lg:px-10 flex flex-col">
+    <div className="w-full sm:h-screen mt-6 pb-20 md:pb-4 flex flex-col">
       <MotionDiv
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -54,7 +62,10 @@ export default function RecurringContent({
           <>
             <RecurringSummary
               totalBills={totalBills}
-              totalBillsCount={recurringBills.length}
+              paidCount={paidCount}
+              paidTotal={paidTotal}
+              upcomingCount={upcomingCount}
+              upcomingTotal={upcomingTotal}
               dueSoonCount={dueSoonCount}
               dueSoonTotal={dueSoonTotal}
             />

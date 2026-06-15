@@ -3,14 +3,20 @@ import { formatPrice } from "@/lib/utils";
 
 type Props = {
   totalBills: number;
-  totalBillsCount: number;
+  paidCount: number;
+  paidTotal: number;
+  upcomingCount: number;
+  upcomingTotal: number;
   dueSoonCount: number;
   dueSoonTotal: number;
 };
 
 export default function RecurringSummary({
   totalBills,
-  totalBillsCount,
+  paidCount,
+  paidTotal,
+  upcomingCount,
+  upcomingTotal,
   dueSoonCount,
   dueSoonTotal,
 }: Props) {
@@ -28,10 +34,18 @@ export default function RecurringSummary({
         <h3 className="font-bold text-lg mb-5">Summary</h3>
 
         <div className="flex justify-between py-3 border-b">
-          <span className="text-sm text-gray-500">Total Bills</span>
+          <span className="text-sm text-gray-500">Paid Bills</span>
 
           <span className="font-bold">
-            {totalBillsCount} ({formatPrice(totalBills)})
+            {paidCount} ({formatPrice(paidTotal)})
+          </span>
+        </div>
+
+        <div className="flex justify-between py-3 border-b">
+          <span className="text-sm text-gray-500">Total Upcoming</span>
+
+          <span className="font-bold">
+            {upcomingCount} ({formatPrice(upcomingTotal)})
           </span>
         </div>
 

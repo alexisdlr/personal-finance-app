@@ -7,12 +7,14 @@ import { usePots } from "@/hooks/pots/use-pots";
 import { useModalStore } from "@/store/modal-store";
 import EmptyState from "@/components/shared/empty-state";
 import PotsIcon from "@/components/Icons/pots-nav";
+import { useIsDemoUser } from "@/hooks/use-is-demo-user";
 
 const PotsPage = () => {
   const { openModal } = useModalStore();
+  const { isReadOnly } = useIsDemoUser();
   const { pots } = usePots();
   return (
-    <div className="w-full h-full mt-4 pb-20 md:pb-4 px-3 flex flex-col">
+    <div className="w-full h-full mt-4 pb-20 md:pb-4 flex flex-col">
       <MotionDiv
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -21,15 +23,17 @@ const PotsPage = () => {
         <div className="flex flex-col">
           <h1 className="text-3xl font-bold">Pots</h1>
         </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="default"
-            className="px-4 py-6 text-md font-bold mr-1 rounded-lg bg-black text-white"
-            onClick={() => openModal("CREATE_POT")}
-          >
-            + Add New Pot
-          </Button>
-        </div>
+        {!isReadOnly && (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="default"
+              className="px-4 py-6 text-md font-bold mr-1 rounded-lg bg-black text-white"
+              onClick={() => openModal("CREATE_POT")}
+            >
+              + Add New Pot
+            </Button>
+          </div>
+        )}
       </MotionDiv>
 
       {/* GRID */}

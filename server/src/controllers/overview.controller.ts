@@ -134,7 +134,7 @@ export const getOverview: RequestHandler = async (
     // ==========================
 
     const recurring = transactions.filter(
-      (transaction) => transaction.recurring,
+      (transaction) => transaction.recurring && transaction.amount < 0,
     );
 
     const today = referenceDate.getDate();

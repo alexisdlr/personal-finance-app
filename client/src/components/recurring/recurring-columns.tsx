@@ -3,9 +3,10 @@
 import Image from "next/image";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { formatPrice } from "@/lib/utils";
-import { Transaction } from "@/types/global";
+import { TransactionData } from "@/types/api";
+import { User } from "lucide-react";
 
-const columnHelper = createColumnHelper<Transaction>();
+const columnHelper = createColumnHelper<TransactionData>();
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
 
@@ -22,13 +23,19 @@ export const recurringColumns = [
 
     cell: (info) => (
       <div className="flex items-center gap-3">
-        <Image
-          src={info.row.original.avatar}
-          alt={info.getValue()}
-          width={32}
-          height={32}
-          className="rounded-full"
-        />
+        {info.row.original.avatar.includes("default") ? (
+          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+            <User className="w-4 h-4 text-gray-500" />
+          </div>
+        ) : (
+          <Image
+            src={info.row.original.avatar}
+            alt={info.getValue()}
+            width={32}
+            height={32}
+            className="rounded-full"
+          />
+        )}
 
         <span className="font-bold text-sm">{info.getValue()}</span>
       </div>
@@ -54,4 +61,4 @@ export const recurringColumns = [
       </div>
     ),
   }),
-] as ColumnDef<Transaction, unknown>[];
+] as ColumnDef<TransactionData, unknown>[];
