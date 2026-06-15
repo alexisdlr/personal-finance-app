@@ -34,7 +34,7 @@ export default function ProfileContent() {
       <div className="flex items-center justify-between">
         <div className="flex flex-col">
           <h1 className="lg:text-4xl text-3xl font-bold">Profile</h1>
-          <p className="text-gray-500 mt-2 text-balance max-w-2xl">
+          <p className="hidden md:block text-gray-500 mt-2 text-balance max-w-2xl">
             Manage your profile information and preferences.
           </p>
         </div>

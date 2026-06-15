@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { MotionDiv } from "../animated/motion-div";
 import ButtonDemo from "./button-demo";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -33,7 +34,7 @@ const Hero = () => {
         </p>
         <div className="flex flex-col lg:flex-row gap-6 items-center">
           <Button className="bg-primary-foreground text-primary p-5 font-bold ring-1 ring-black hover:bg-primary hover:text-white cursor-pointer text-lg">
-            Start for free
+            <Link href="/sign-up">Start for free</Link>
           </Button>
           <span className="text-lg text-beige-500">Or</span>
           <ButtonDemo />
